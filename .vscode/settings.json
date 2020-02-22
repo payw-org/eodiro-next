@@ -1,4 +1,3 @@
 {
-  "editor.formatOnSave": true,
-  "emmet.excludeLanguages": ["typescriptreact"]
+  "editor.formatOnSave": true
 }
