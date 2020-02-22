@@ -1,0 +1,12 @@
+@use '@/assets/styles/main' as *;
+
+#home {
+  width: calc(100% - 3rem);
+  max-width: 30rem;
+  margin: auto;
+
+  .header {
+    font-size: h(12);
+    margin-top: s(5);
+  }
+}
