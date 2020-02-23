@@ -76,12 +76,12 @@ html {
 
 @media only screen and (min-width: 700px) {
   html {
-    font-size: 93%;
+    font-size: 90%;
   }
 }
 @media only screen and (min-width: 1400px) {
   html {
-    font-size: 100%;
+    font-size: 95%;
   }
 }
 
@@ -96,7 +96,7 @@ body {
   word-wrap: break-word;
   word-break: keep-all;
   font-size: 16px;
-  user-select: none;
+  // user-select: none;
   overflow-anchor: none; // prevent always scroll end
   @include bg;
   @include text-color;
