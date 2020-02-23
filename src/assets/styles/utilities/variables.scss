@@ -13,6 +13,8 @@ $base-gray: #808080;
 // logo's gradient level
 $c-step--3: #ff7037;
 $c-step--4: #ff3852;
+$eodiro-primary-color: #ff3852;
+$eodiro-secondary-color: #ff7037;
 
 // translucent colors
 $t-white: rgba(255, 255, 255, 0.08);
@@ -31,7 +33,7 @@ $width-step--2_: 1401px;
 
 // master content sizes
 // check default.vue
-$master-content-max-width: 60rem;
+$master-content-max-width: 65rem;
 $master-content-top-gap: 2rem;
 $master-content-bottom-gap: 9rem;
 
