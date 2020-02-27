@@ -10,11 +10,11 @@ type NavItemProps = {
 
 const NavItem: React.FC<NavItemProps> = ({ to, title }) => {
   return (
-    <Link href={to}>
-      <a className="en-menu-link">
-        <li className="en-menu-item">{title}</li>
-      </a>
-    </Link>
+    // <Link href={to}>
+    <a className="en-menu-link" href={to}>
+      <li className="en-menu-item">{title}</li>
+    </a>
+    // </Link>
   )
 }
 
@@ -22,11 +22,11 @@ const Navigation: React.FC = () => {
   return (
     <nav id="eodiro-navigation">
       <div className="en-wrapper">
-        <Link href="/">
-          <a className="home-link">
+        {/* <Link href="/"> */}
+          <a className="home-link" href='/'>
             <EodiroLogo className="eodiro-logo" />
           </a>
-        </Link>
+        {/* </Link> */}
         <ul className="en-menus-container">
           <NavItem title="빈 강의실" to="/vacant" />
           <NavItem title="강의 검색" to="/" />
