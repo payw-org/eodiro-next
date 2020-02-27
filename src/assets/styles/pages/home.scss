@@ -27,6 +27,7 @@
     margin-top: s(12);
 
     .feature-box {
+      position: relative;
       flex: 1;
       background-color: #fff;
       @include bordered;
