@@ -1,4 +1,4 @@
-import { ColorIcon } from './types/icon'
+import { ColorIcon } from '@/types'
 
 const OpensourceIconColor: ColorIcon = ({ className }) => {
   return (
