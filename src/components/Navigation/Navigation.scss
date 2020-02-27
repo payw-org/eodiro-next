@@ -18,10 +18,14 @@
     align-items: center;
     justify-content: space-between;
 
-    .eodiro-logo {
-      width: 2.5rem;
-      height: auto;
-      margin-left: 0.5rem;
+    .home-link {
+      display: flex;
+
+      .eodiro-logo {
+        width: 2.5rem;
+        height: auto;
+        margin-left: 0.5rem;
+      }
     }
 
     .en-menus-container {

@@ -22,9 +22,13 @@ const Navigation: React.FC = () => {
   return (
     <nav id="eodiro-navigation">
       <div className="en-wrapper">
-        <EodiroLogo className="eodiro-logo" />
+        <Link href="/">
+          <a className="home-link">
+            <EodiroLogo className="eodiro-logo" />
+          </a>
+        </Link>
         <ul className="en-menus-container">
-          <NavItem title="빈 강의실" to="/" />
+          <NavItem title="빈 강의실" to="/vacant" />
           <NavItem title="강의 검색" to="/" />
           <NavItem title="학식 메뉴" to="/" />
           <NavItem title="빼빼로 광장" to="/" />
