@@ -7,5 +7,9 @@
     margin: auto;
     padding-top: 3rem;
     padding-bottom: 5rem;
+
+    &.top-gap {
+      padding-top: 3rem + s(10);
+    }
   }
 }
