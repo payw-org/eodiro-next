@@ -14,3 +14,13 @@ export interface FillableIconProps
 }
 
 export type FillableIcon = React.FC<FillableIconProps>
+
+export interface ClickableIconProps {
+  onClick: (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => void
+}
+
+export interface FillableAndClickableIconProps
+  extends FillableIconProps,
+    ClickableIconProps {}
+
+export type FillableAndClickableIcon = React.FC<FillableAndClickableIconProps>

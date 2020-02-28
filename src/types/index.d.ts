@@ -4,4 +4,7 @@ export {
   ColorIcon,
   FillableIcon,
   FillableIconProps,
+  ClickableIconProps,
+  FillableAndClickableIcon,
+  FillableAndClickableIconProps,
 } from './icon'
