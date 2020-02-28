@@ -2,6 +2,10 @@
 
 #eodiro-home {
   margin: auto;
+  min-height: calc(100vh - 20rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   .header {
     color: $eodiro-primary-color;
@@ -28,18 +32,13 @@
     .feature-box {
       position: relative;
       flex: 1;
-      background-color: #fff;
-      @include bordered;
-      border-radius: r(5);
-      padding: s(6);
       text-align: left;
+      @include block-style;
+      padding: s(6);
+      @include clickable;
 
-      &:hover {
-        opacity: 0.8;
-      }
-
-      &:active {
-        opacity: 0.5;
+      .wrapper {
+        width: 100%;
       }
 
       .icon {
