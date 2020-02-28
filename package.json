@@ -18,7 +18,13 @@
     "@types/node": "^13.7.4",
     "@types/react": "^16.9.22",
     "@zeit/next-sass": "^1.0.1",
+    "autoprefixer": "^9.7.4",
     "node-sass": "npm:sass@^1.25.0",
+    "postcss": "^7.0.27",
     "typescript": "^3.8.2"
-  }
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%"
+  ]
 }
