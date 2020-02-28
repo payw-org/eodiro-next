@@ -14,7 +14,9 @@ export default class VacantApi {
   }) {
     const [err, data] = await useFetch(
       getApiHost() +
-        `/${year}/${semester}/${encodeURIComponent(campus)}/vacant/buildings`,
+        `/${year}/${encodeURIComponent(semester)}/${encodeURIComponent(
+          campus
+        )}/vacant/buildings`,
       {
         method: 'get',
       }
@@ -36,7 +38,7 @@ export default class VacantApi {
   }) {
     const [err, data] = await useFetch(
       getApiHost() +
-        `/${year}/${semester}/${encodeURIComponent(
+        `/${year}/${encodeURIComponent(semester)}/${encodeURIComponent(
           campus
         )}/vacant/${building}/classrooms`,
       {
