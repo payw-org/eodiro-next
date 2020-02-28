@@ -7,7 +7,10 @@
     @content;
   }
   @media (prefers-color-scheme: dark) {
-    .auto-color-scheme & {
+    // .auto-color-scheme & {
+    //   @content;
+    // }
+    & {
       @content;
     }
   }
@@ -18,7 +21,10 @@
     @content;
   }
   @media (prefers-color-scheme: light) {
-    .auto-color-scheme & {
+    // .auto-color-scheme & {
+    //   @content;
+    // }
+    & {
       @content;
     }
   }
