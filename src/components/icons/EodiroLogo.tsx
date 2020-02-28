@@ -1,9 +1,10 @@
 import React from 'react'
 import { FillableIcon } from '@/types'
 
-const EodiroLogo: FillableIcon = ({ fill = '#000', className }) => {
+const EodiroLogo: FillableIcon = ({ fill = '#000', className, appearance }) => {
   return (
     <svg
+      data-appearance={appearance}
       className={className}
       width="128"
       height="128"
