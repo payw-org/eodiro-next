@@ -1,5 +1,5 @@
-@import '@/assets/styles/utilities/variables';
-@import '@/assets/styles/utilities/functions';
+@use '@/assets/styles/utilities/variables' as *;
+@use '@/assets/styles/utilities/functions' as *;
 
 // dark mode
 @mixin dark-mode {

@@ -1,6 +1,6 @@
-@import '@/assets/styles/utilities/mixins';
-@import '@/assets/styles/utilities/functions';
-@import '@/assets/styles/utilities/variables';
+@use '@/assets/styles/utilities/mixins' as *;
+@use '@/assets/styles/utilities/functions' as *;
+@use '@/assets/styles/utilities/variables' as *;
 
 @mixin block-style {
   @include elm-fill;

@@ -1,11 +1,9 @@
-@import '@/assets/styles/global/fonts';
-@import '@/assets/styles/main';
-@import '@/assets/styles/global/typography';
-@import '@/assets/styles/global/simplebar-custom';
-@import '@/assets/styles/global/transition';
-@import '@/assets/styles/global/input';
-@import '@/assets/styles/global/select';
-@import '@/assets/styles/utilities/htmlcss';
+@use '@/assets/styles/global/fonts' as *;
+@use '@/assets/styles/main' as *;
+@use '@/assets/styles/global/transition' as *;
+@use '@/assets/styles/global/input' as *;
+@use '@/assets/styles/global/select' as *;
+@use '@/assets/styles/utilities/htmlcss' as *;
 
 // UI6
 @import '@/assets/styles/utilities/ui6';
