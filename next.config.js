@@ -6,4 +6,7 @@ module.exports = withSass({
     config.resolve.alias['@'] = path.resolve(__dirname, 'src')
     return config
   },
+  devIndicators: {
+    autoPrerender: false,
+  },
 })
