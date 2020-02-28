@@ -7,7 +7,8 @@
   justify-content: space-between;
   width: 100%;
   height: $nav-height;
-  background-color: #fff;
+  z-index: 9999;
+  @include elm-fill;
   @include separator('bottom');
 
   .en-wrapper {
@@ -21,11 +22,12 @@
 
     .home-link {
       display: flex;
+      @include clickable;
 
       .eodiro-logo {
         width: 2.5rem;
         height: auto;
-        margin-left: 0.5rem;
+        margin-left: 0.7rem;
       }
     }
 
@@ -37,13 +39,57 @@
         font-size: b(2);
         font-weight: fw(4);
         margin-left: s(4);
+        @include clickable;
+      }
+    }
 
-        &:hover {
-          opacity: 0.7;
+    .more-tappable {
+      display: none;
+      height: 100%;
+      width: 3rem;
+      @include clickable;
+    }
+  }
+
+  @include smaller-than(700px) {
+    .en-wrapper {
+      .en-menus-container {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: $nav-height;
+        margin: 0;
+        width: 100%;
+        padding: 1.5rem;
+        @include elm-fill;
+        @include separator('bottom');
+
+        &.opened {
+          display: flex;
         }
 
-        &:active {
-          opacity: 0.3;
+        .en-menu-link {
+          margin-bottom: 1.5rem;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .en-menu-item {
+            font-size: b(6);
+            width: 100%;
+            margin: 0;
+          }
+        }
+      }
+
+      .more-tappable {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .more-icon {
+          height: 50%;
         }
       }
     }
