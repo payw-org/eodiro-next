@@ -196,6 +196,21 @@ $border-color-dark: rgba(#fff, 0.17);
   border-radius: r(4);
 }
 
+@mixin clickable {
+  & {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
+}
+
 // Forms
 $input-border-radius: r(4);
 
