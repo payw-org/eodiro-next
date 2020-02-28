@@ -24,8 +24,8 @@ const Navigation: React.FC = () => {
     <nav id="eodiro-navigation">
       <div className="en-wrapper">
         <a className="home-link" href="/">
-          <EodiroLogo className="eodiro-logo" appearance="dark" fill="#fff" />
-          <EodiroLogo className="eodiro-logo" appearance="light" fill="#000" />
+          <EodiroLogo className="eodiro-logo" fill="#ff3852" />
+          {/* <EodiroLogo className="eodiro-logo" appearance="light" fill="#000" /> */}
         </a>
         <ul
           className={buildClassName(
