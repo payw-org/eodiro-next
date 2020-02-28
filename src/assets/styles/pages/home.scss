@@ -8,9 +8,20 @@
   justify-content: center;
 
   .header {
-    color: $eodiro-primary-color;
     font-size: 8rem;
     padding-top: 5rem;
+
+    .name {
+      @include text-color;
+      font-weight: 700;
+      background-image: linear-gradient(
+        to bottom right,
+        $eodiro-primary-color,
+        $eodiro-secondary-color
+      );
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
     @include on-mobile {
       font-size: 5rem;
