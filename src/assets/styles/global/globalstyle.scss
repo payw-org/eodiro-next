@@ -28,11 +28,17 @@ html {
       display: none !important;
     }
 
-    [data-color-scheme='light'] {
+    [data-appearance='light'] {
       display: none !important;
     }
   }
   @media (prefers-color-scheme: dark) {
+    & {
+      [data-appearance='light'] {
+        display: none !important;
+      }
+    }
+
     &.auto-color-scheme {
       background-color: $base-black-soft;
       background-color: #000;
@@ -41,7 +47,7 @@ html {
         display: none !important;
       }
 
-      [data-color-scheme='light'] {
+      [data-appearance='light'] {
         display: none !important;
       }
     }
@@ -54,11 +60,17 @@ html {
       display: none !important;
     }
 
-    [data-color-scheme='dark'] {
+    [data-appearance='dark'] {
       display: none !important;
     }
   }
   @media (prefers-color-scheme: light) {
+    & {
+      [data-appearance='dark'] {
+        display: none !important;
+      }
+    }
+
     &.auto-color-scheme {
       background-color: #fff;
       background-color: $base-white-blue;
@@ -67,7 +79,7 @@ html {
         display: none !important;
       }
 
-      [data-color-scheme='dark'] {
+      [data-appearance='dark'] {
         display: none !important;
       }
     }
