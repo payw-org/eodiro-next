@@ -1,7 +1,8 @@
+import React from 'react'
 import { FillableIcon } from '@/types'
 
 const ArrowRightColorIcon: FillableIcon = ({
-  fill = '#808080',
+  fill = '#9b9b9b',
   className,
   appearance,
 }) => {
