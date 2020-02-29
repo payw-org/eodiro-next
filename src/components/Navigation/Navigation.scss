@@ -8,8 +8,13 @@
   width: 100%;
   height: $nav-height;
   z-index: 9999;
-  @include elm-fill;
   @include separator('bottom');
+  @include elm-fill;
+  // background-color: rgba(#fff, 0.8);
+  // backdrop-filter: blur(30px) saturate(1.7);
+  // @include dark-mode {
+  //   background-color: rgba($base-black-soft, 0.7);
+  // }
 
   .en-wrapper {
     width: 100%;
@@ -48,6 +53,7 @@
       height: 100%;
       width: 3rem;
       @include clickable;
+      margin-right: 0.5rem;
     }
   }
 
@@ -61,8 +67,13 @@
         margin: 0;
         width: 100%;
         padding: 1.5rem;
-        @include elm-fill;
         @include separator('bottom');
+        @include elm-fill;
+        // background-color: rgba(#fff, 0.8);
+        // backdrop-filter: blur(30px) saturate(1.7);
+        // @include dark-mode {
+        //   background-color: rgba($base-black-soft, 0.7);
+        // }
 
         &.opened {
           display: flex;
@@ -79,6 +90,7 @@
             font-size: b(6);
             width: 100%;
             margin: 0;
+            text-align: right;
           }
         }
       }
