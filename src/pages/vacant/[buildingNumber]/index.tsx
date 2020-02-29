@@ -7,7 +7,7 @@ import BaseLayout from '@/layouts/BaseLayout'
 import ArrowBlock from '@/components/ui/ArrowBlock'
 import Grid from '@/layouts/Grid'
 import ServerError from '@/components/ServerError'
-import buildClassName from '@/modules/build-class-name'
+import mergeClassName from '@/modules/merge-class-name'
 
 import './VacantClassroomsPage.scss'
 
@@ -71,7 +71,7 @@ const VacantClassroomsPage: NextPage<VacantClassroomsPageProps> = ({
               return (
                 <ArrowBlock
                   key={info.classroom_number}
-                  className={buildClassName(
+                  className={mergeClassName(
                     'classroom-info-container',
                     inClass ? 'in-class' : 'vacant'
                   )}

@@ -1,5 +1,5 @@
 import React from 'react'
-import buildClassName from '@/modules/build-class-name'
+import mergeClassName from '@/modules/merge-class-name'
 import Navigation from '@/components/Navigation'
 import GlobalFooter from '@/components/GlobalFooter'
 
@@ -22,7 +22,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
       <div id="eodiro-app">
         <Navigation />
         <div
-          className={buildClassName(
+          className={mergeClassName(
             'body-content',
             bodyClassName,
             hasTopGap ? 'top-gap' : ''

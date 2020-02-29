@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './Navigation.scss'
 import EodiroLogo from '@/components/icons/EodiroLogo'
 import ThreeDotsVerticalColorIcon from '../icons/ThreeDotsVerticalColorIcon'
-import buildClassName from '@/modules/build-class-name'
+import mergeClassName from '@/modules/merge-class-name'
 
 type NavItemProps = {
   to: string
@@ -28,7 +28,7 @@ const Navigation: React.FC = () => {
           {/* <EodiroLogo className="eodiro-logo" appearance="light" fill="#000" /> */}
         </a>
         <ul
-          className={buildClassName(
+          className={mergeClassName(
             'en-menus-container',
             isMobileNavMenuOpened ? 'opened' : ''
           )}
