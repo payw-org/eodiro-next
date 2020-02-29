@@ -3,14 +3,6 @@
 @use '@/assets/styles/global/transition' as *;
 @use '@/assets/styles/global/input' as *;
 @use '@/assets/styles/global/select' as *;
-@use '@/assets/styles/utilities/htmlcss' as *;
-
-// UI6
-@import '@/assets/styles/utilities/ui6';
-
-// ::-webkit-scrollbar {
-//   display: none; /* chrome */
-// }
 
 html {
   -ms-text-size-adjust: 100%;
@@ -18,8 +10,6 @@ html {
   -webkit-font-smoothing: antialiased;
   font-size: 85%;
   overflow: auto;
-  -ms-overflow-style: none; /* Edge */
-  scrollbar-width: none; /* Firefox */
 
   &.dark-mode {
     .mode--light {
@@ -108,7 +98,7 @@ body {
   font-size: 16px;
   // user-select: none;
   overflow-anchor: none; // prevent always scroll end
-  @include bg;
+  @include elm-fill;
   @include text-color;
 }
 

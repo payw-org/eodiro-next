@@ -1,4 +1,4 @@
-@import '@/assets/styles/main';
+@use '@/assets/styles/main' as *;
 
 input[type='checkbox'] {
   $checkbox-size: 23px;

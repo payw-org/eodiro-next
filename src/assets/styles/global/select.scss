@@ -1,4 +1,4 @@
-@import '@/assets/styles/main';
+@use '@/assets/styles/main' as *;
 
 .select-wrapper {
   display: flex;
