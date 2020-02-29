@@ -1,15 +1,20 @@
 @use '@/assets/styles/main' as *;
 
-#eodiro-app {
-  .body-content {
-    width: calc(100% - 3rem);
-    max-width: $master-content-max-width;
-    margin: auto;
-    padding-top: 3rem;
-    padding-bottom: 5rem;
+#eodiro-app-scaffold {
+  @include bg;
+  width: 100%;
 
-    &.top-gap {
-      padding-top: 3rem + s(10);
+  #eodiro-app {
+    .body-content {
+      width: calc(100% - 3rem);
+      max-width: $master-content-max-width;
+      margin: auto;
+      padding: 3rem 0 5rem 0;
+      min-height: calc(100vh - #{$footer-height});
+
+      &.top-gap {
+        padding-top: 3rem + s(12);
+      }
     }
   }
 }

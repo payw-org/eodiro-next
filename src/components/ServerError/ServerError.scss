@@ -1,0 +1,20 @@
+@use '@/assets/styles/main' as *;
+
+.server-error {
+  @include elm-fill;
+  @include bordered;
+  @include rounded;
+  padding: s(6);
+
+  .header {
+    margin-bottom: s(3);
+  }
+
+  .info {
+    color: $base-gray;
+
+    .email-address {
+      color: $eodiro-primary-color;
+    }
+  }
+}

@@ -1,7 +1,9 @@
 import React from 'react'
-import Navigation from '@/components/Navigation'
-import './BaseLayout.scss'
 import buildClassName from '@/modules/build-class-name'
+import Navigation from '@/components/Navigation'
+import GlobalFooter from '@/components/GlobalFooter'
+
+import './BaseLayout.scss'
 
 type BaseLayoutProps = {
   appClassName?: string
@@ -16,16 +18,19 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
   hasTopGap = false,
 }) => {
   return (
-    <div id="eodiro-app" className={appClassName}>
-      <Navigation />
-      <div
-        className={buildClassName(
-          'body-content',
-          bodyClassName,
-          hasTopGap ? 'top-gap' : ''
-        )}
-      >
-        {children}
+    <div id="eodiro-app-scaffold" className={appClassName}>
+      <div id="eodiro-app">
+        <Navigation />
+        <div
+          className={buildClassName(
+            'body-content',
+            bodyClassName,
+            hasTopGap ? 'top-gap' : ''
+          )}
+        >
+          {children}
+        </div>
+        <GlobalFooter />
       </div>
     </div>
   )
