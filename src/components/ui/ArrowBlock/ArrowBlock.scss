@@ -1,0 +1,27 @@
+@use '@/assets/styles/main' as *;
+
+.arrow-block {
+  @include block-style;
+  @include clickable;
+
+  .ab-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > * {
+      width: 100%;
+    }
+  }
+
+  .ab-arrow-container {
+    display: flex;
+    margin-left: 1rem;
+
+    .ab-arrow {
+      width: auto;
+      height: 0.8rem;
+    }
+  }
+}
