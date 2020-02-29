@@ -10,6 +10,7 @@
   .header {
     font-size: 8rem;
     padding-top: 5rem;
+    line-height: 1;
 
     .name {
       @include text-color;
@@ -31,6 +32,7 @@
   .manifesto {
     font-size: 2rem;
     font-weight: 600;
+    margin-top: s(3);
 
     @include on-mobile {
       font-size: 1.5rem;
