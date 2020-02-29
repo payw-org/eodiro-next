@@ -14,7 +14,7 @@ const getSemester = (date: Date = new Date()): Semester => {
     month === 1 ||
     (month === 2 && nowDate <= nextSemesterThresholdDate)
   ) {
-    semester = '겨울'
+    semester = '동계'
   } else if (
     (month === 2 && nowDate > nextSemesterThresholdDate) ||
     month === 3 ||
@@ -28,7 +28,7 @@ const getSemester = (date: Date = new Date()): Semester => {
     month === 7 ||
     (month === 8 && nowDate <= nextSemesterThresholdDate)
   ) {
-    semester = '여름'
+    semester = '하계'
   } else if (
     (month === 8 && nowDate > nextSemesterThresholdDate) ||
     month === 9 ||
