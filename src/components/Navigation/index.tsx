@@ -35,7 +35,7 @@ const Navigation: React.FC = () => {
         >
           <NavItem title="빈 강의실" to="/vacant" />
           <NavItem title="강의 검색" to="/" />
-          <NavItem title="학식 메뉴" to="/" />
+          <NavItem title="학식 메뉴" to="/cafeteria" />
           <NavItem title="빼빼로 광장" to="/" />
           <NavItem title="더 보기" to="/" />
         </ul>
