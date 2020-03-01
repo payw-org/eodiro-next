@@ -5,15 +5,26 @@ import './ArrowBlock.scss'
 
 interface ArrowBlockProps {
   className?: string
+  noArrow?: boolean
+  flat?: boolean
 }
 
-const ArrowBlock: React.FC<ArrowBlockProps> = ({ className, children }) => {
+const ArrowBlock: React.FC<ArrowBlockProps> = ({
+  className,
+  noArrow = false,
+  flat = false,
+  children,
+}) => {
   return (
-    <div className={mergeClassName('arrow-block', className)}>
+    <div
+      className={mergeClassName('arrow-block', className, !flat && 'unflat')}
+    >
       <div className="ab-body">{children}</div>
-      <div className="ab-arrow-container">
-        <ArrowRightColorIcon className="ab-arrow" />
-      </div>
+      {!noArrow && (
+        <div className="ab-arrow-container">
+          <ArrowRightColorIcon direction="right" className="ab-arrow" />
+        </div>
+      )}
     </div>
   )
 }

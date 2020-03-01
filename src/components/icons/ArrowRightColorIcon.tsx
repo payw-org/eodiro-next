@@ -1,10 +1,15 @@
 import React from 'react'
-import { FillableIcon } from '@/types'
+import { FillableIcon, FillableIconProps } from '@/types'
 
-const ArrowRightColorIcon: FillableIcon = ({
+interface ArrowColorIconProps extends FillableIconProps {
+  direction?: 'right' | 'down' | 'left' | 'up'
+}
+
+const ArrowRightColorIcon: React.FC<ArrowColorIconProps> = ({
   fill = '#9b9b9b',
   className,
   appearance,
+  direction = 'right',
 }) => {
   return (
     <svg
@@ -15,6 +20,16 @@ const ArrowRightColorIcon: FillableIcon = ({
       viewBox="0 0 8 11"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      style={{
+        transform:
+          direction === 'down'
+            ? 'rotate(90deg)'
+            : direction === 'left'
+            ? 'rotate(180deg)'
+            : direction === 'up'
+            ? 'rotate(270deg)'
+            : '',
+      }}
     >
       <path
         fillRule="evenodd"
