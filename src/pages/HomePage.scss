@@ -11,6 +11,7 @@
     font-size: 8rem;
     padding-top: 5rem;
     line-height: 1;
+    @include rounded-illusion-reducer;
 
     .name {
       @include text-color;
@@ -33,6 +34,7 @@
     font-size: 2rem;
     font-weight: 600;
     margin-top: s(3);
+    @include rounded-illusion-reducer;
 
     @include on-mobile {
       font-size: 1.5rem;
