@@ -2,13 +2,17 @@
 
 .arrow-block {
   @include block-style;
-  @include clickable;
+
+  &.unflat {
+    @include clickable;
+  }
 
   .ab-body {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    word-break: break-all;
 
     & > * {
       width: 100%;
