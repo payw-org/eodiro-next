@@ -1,0 +1,13 @@
+@use '@/assets/styles/utilities/mixins' as *;
+@use '@/assets/styles/utilities/functions' as *;
+
+@mixin page-app-title {
+  line-height: 1;
+  font-size: h(8);
+  padding-left: r(3) / 2;
+  margin-bottom: s(8);
+}
+
+@mixin rounded-illusion-reducer {
+  padding-left: r(4) / 2;
+}
