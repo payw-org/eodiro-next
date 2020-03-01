@@ -44,7 +44,7 @@ const Navigation: React.FC = () => {
             className="more-icon"
             appearance="light"
             fill="#000"
-            onClick={(e) => {
+            onClick={(): void => {
               setIsMobileNavMenuOpened(!isMobileNavMenuOpened)
             }}
           />
@@ -52,7 +52,7 @@ const Navigation: React.FC = () => {
             className="more-icon"
             appearance="dark"
             fill="#fff"
-            onClick={(e) => {
+            onClick={(): void => {
               setIsMobileNavMenuOpened(!isMobileNavMenuOpened)
             }}
           />
