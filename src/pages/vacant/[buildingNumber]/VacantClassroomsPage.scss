@@ -2,10 +2,7 @@
 
 #eodiro-vacant-classrooms {
   .building-number {
-    line-height: 1;
-    font-size: h(8);
-    padding-left: r(3) / 2;
-    margin-bottom: s(8);
+    @include page-app-title;
   }
 
   .classroom-info-container {
