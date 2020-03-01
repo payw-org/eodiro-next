@@ -6,11 +6,11 @@ import dayjs from 'dayjs'
 import getSemester from '@/modules/get-semester'
 import ArrowBlock from '@/components/ui/ArrowBlock'
 import Grid from '@/layouts/Grid'
-import './vacant.scss'
 import getBuildingName from '@/modules/cau/get-building-name'
 import ServerError from '@/components/ServerError'
 import { VacantBuildings } from '@/api/vacant'
 import Information from '@/components/Information'
+import './vacant.scss'
 
 interface VacantBuildingsPageProps {
   buildingsInfo: VacantBuildings
