@@ -11,7 +11,6 @@ import {
   SquareIconColor,
   OpensourceIconColor,
 } from '@/components/icons'
-
 import './HomePage.scss'
 
 type HomeFeatureBoxProps = {
