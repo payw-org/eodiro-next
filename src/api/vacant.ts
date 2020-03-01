@@ -1,4 +1,4 @@
-import getApiHost from '@/modules/get-api-host'
+import ApiHost from '@/modules/api-host'
 import { Campus, Year, Semester } from '@/types'
 import useFetch from '@/modules/use-fetch'
 import dayjs from 'dayjs'
@@ -37,7 +37,7 @@ export default class VacantApi {
     semester = semester || getSemester()
 
     const [err, data] = await useFetch(
-      getApiHost() +
+      ApiHost.getHost() +
         `/${year}/${encodeURIComponent(semester)}/${encodeURIComponent(
           campus
         )}/vacant/buildings`,
@@ -65,7 +65,7 @@ export default class VacantApi {
     semester = semester || getSemester()
 
     const [err, data] = await useFetch(
-      getApiHost() +
+      ApiHost.getHost() +
         `/${year}/${encodeURIComponent(semester)}/${encodeURIComponent(
           campus
         )}/vacant/${building}/classrooms`,

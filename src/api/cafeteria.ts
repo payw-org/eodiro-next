@@ -1,4 +1,4 @@
-import getApiHost from '@/modules/get-api-host'
+import ApiHost from '@/modules/api-host'
 import { Campus, Year, Semester } from '@/types'
 import useFetch from '@/modules/use-fetch'
 import dayjs from 'dayjs'
@@ -16,7 +16,7 @@ export default class CafeteriaApi {
   }): Promise<CafeteriaMenus> {
     const uriSafeCampus = encodeURIComponent(campus)
     const [err, data, status] = await useFetch<CafeteriaMenus>(
-      getApiHost() + `/cafeteria/${date}/${uriSafeCampus}/menus`
+      ApiHost.getHost() + `/cafeteria/${date}/${uriSafeCampus}/menus`
     )
 
     let menusData = data
