@@ -51,7 +51,7 @@ const VacantBuildingsPage: NextPage<VacantBuildingsPageProps> = ({
               )
             })}
           </Grid>
-        ) : buildingsInfo.length === 0 ? (
+        ) : buildingsInfo && buildingsInfo.length === 0 ? (
           <Information title="오늘은 강의가 없습니다." />
         ) : (
           <ServerError />
