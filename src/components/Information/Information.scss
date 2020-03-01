@@ -1,0 +1,13 @@
+@use '@/assets/styles/main' as *;
+
+.information {
+  @include elm-fill;
+  @include bordered;
+  @include rounded;
+  padding: s(6);
+
+  .information-subtitle {
+    color: $base-gray;
+    margin-top: s(3);
+  }
+}
