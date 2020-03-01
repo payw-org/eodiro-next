@@ -10,6 +10,7 @@ import './vacant.scss'
 import getBuildingName from '@/modules/cau/get-building-name'
 import ServerError from '@/components/ServerError'
 import { VacantBuildings } from '@/api/vacant'
+import Information from '@/components/Information'
 
 interface VacantBuildingsPageProps {
   buildingsInfo: VacantBuildings
@@ -22,7 +23,7 @@ const VacantBuildingsPage: NextPage<VacantBuildingsPageProps> = ({
     <BaseLayout hasTopGap>
       <div id="eodiro-vacant">
         <h1 className="title">🚪 빈 강의실</h1>
-        {buildingsInfo ? (
+        {buildingsInfo && buildingsInfo.length > 0 ? (
           <Grid className="building-container">
             {buildingsInfo.map((info, i) => {
               return (
@@ -50,6 +51,8 @@ const VacantBuildingsPage: NextPage<VacantBuildingsPageProps> = ({
               )
             })}
           </Grid>
+        ) : buildingsInfo.length === 0 ? (
+          <Information title="오늘은 강의가 없습니다." />
         ) : (
           <ServerError />
         )}
