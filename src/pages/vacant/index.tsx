@@ -65,14 +65,25 @@ VacantBuildingsPage.getInitialProps = async (): Promise<
   VacantBuildingsPageProps
 > => {
   const now = dayjs()
-  const data = await VacantApi.buildings({
-    year: now.year(),
-    semester: getSemester(),
-    campus: '서울',
+  const data = (
+    await VacantApi.buildings({
+      year: now.year(),
+      semester: getSemester(),
+      campus: '서울',
+    })
+  ).filter((item) => {
+    return item.building_number !== '810' && item.building_number !== '801'
   })
 
+  // Remove 810 and 801 buildings
+  const filteredData = data
+    ? data.filter((item) => {
+        return item.building_number !== '810' && item.building_number !== '801'
+      })
+    : data
+
   return {
-    buildingsInfo: data,
+    buildingsInfo: filteredData,
   }
 }
 
