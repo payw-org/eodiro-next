@@ -1,5 +1,5 @@
 export default class ApiHost {
-  private static HOST = ''
+  private static HOST = null
 
   public static setHost(host: string): void {
     if (host.startsWith('eodiro')) {
@@ -17,6 +17,12 @@ export default class ApiHost {
   }
 
   public static getHost(): string {
-    return this.HOST
+    const host = this.HOST
+      ? this.HOST
+      : process.env.NODE_ENV === 'development'
+      ? 'http://localhost:4020'
+      : 'https://api2.eodiro.com'
+
+    return host
   }
 }

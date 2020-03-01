@@ -24,9 +24,6 @@ export default class EodiroApp extends App {
   public render(): JSX.Element {
     const { Component, pageProps } = this.props
 
-    // Set api host on server side
-    ApiHost.setHost(pageProps.host)
-
     return (
       <>
         <Head>
