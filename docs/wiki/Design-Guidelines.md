@@ -64,7 +64,7 @@
 
 ## Layouts
 
-### [BaseLayout]()
+### [BaseLayout](docs/wiki/UI-Components.md/#baselayout)
 
 ![BaseLayout](https://user-images.githubusercontent.com/19797697/75721464-c17e4700-5d1b-11ea-8b4d-2fcff33c5cd4.png)
 

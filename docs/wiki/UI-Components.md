@@ -4,6 +4,7 @@
 
 - [Layouts](#layouts)
 
+  - [BaseLayout](#baselayout)
   - [Grid](#grid)
 
 - [Blocks](#blocks)
