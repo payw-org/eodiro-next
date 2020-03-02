@@ -70,6 +70,7 @@ const VacantClassroomsPage: NextPage<VacantClassroomsPageProps> = ({
 
               return (
                 <ArrowBlock
+                  noArrow
                   key={info.classroom_number}
                   className={mergeClassName(
                     'classroom-info-container',
