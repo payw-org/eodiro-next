@@ -37,9 +37,11 @@ const VacantBuildingsPage: NextPage<VacantBuildingsPageProps> = ({
                       <h1 className="building-number">
                         {info.building_number}
                       </h1>
-                      <h2 className="building-name">
-                        {getBuildingName(info.building_number)}
-                      </h2>
+                      {getBuildingName(info.building_number) && (
+                        <h2 className="building-name">
+                          {getBuildingName(info.building_number)}
+                        </h2>
+                      )}
                     </div>
                     <div className="building-count">
                       <span className="empty">{info.empty}</span>
