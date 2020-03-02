@@ -74,12 +74,12 @@ html {
   }
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: $width-step--1) {
   html {
     font-size: 90%;
   }
 }
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: $width-step--2) {
   html {
     font-size: 95%;
   }
@@ -112,23 +112,26 @@ body {
 
 h1,
 h2,
-h3,
-h4,
-h5,
-h6 {
+h3 {
   font-weight: 700;
 }
 
 h1 {
-  @include heading1;
+  font-size: h(12);
+  font-weight: 700;
+  line-height: 1;
 }
 
 h2 {
-  @include heading2;
+  font-size: h(6);
+  font-weight: 600;
+  line-height: 1.1;
 }
 
 h3 {
-  @include heading3;
+  font-size: h(1);
+  font-weight: 600;
+  line-height: 1.1;
 }
 
 p,
@@ -144,6 +147,14 @@ input {
   border: none;
 }
 
+p,
+a,
+textarea,
+input,
+div {
+  font-size: b(3);
+}
+
 input[type='text'],
 input[type='email'],
 input[type='password'],
@@ -154,11 +165,6 @@ textarea {
 
 [disabled] {
   opacity: 0.5;
-}
-
-p,
-a {
-  @include paragraph;
 }
 
 a {
@@ -222,43 +228,4 @@ ol {
     opacity: 0;
     transition: opacity $transition-time ease;
   }
-}
-
-// global styles
-.eodiro-btn {
-  cursor: pointer;
-  background-color: $light-blue;
-  border-radius: 50px;
-  padding: 0.6rem 1.2rem;
-  font-family: $ui-font;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #fff !important;
-  box-shadow: 0 0.5rem 1.5rem rgba($light-blue, 0.3);
-
-  @include dark-mode() {
-    background-color: $light-yellow;
-    box-shadow: 0 0.5rem 1.5rem rgba(#000, 0.3);
-  }
-}
-
-// stagger appear animation
-.stagger-appear {
-  animation: $spring-time springFadeUp linear;
-  animation-fill-mode: forwards;
-}
-
-.stagger-appear-fix {
-  opacity: 1 !important;
-}
-
-// PAYW Icon
-.payw-icon {
-  height: 1.3em;
-  width: auto;
-}
-
-.eodiro-topbar {
-  top: 50% !important;
-  transform: translateY(-50%);
 }

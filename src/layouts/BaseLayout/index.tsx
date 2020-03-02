@@ -15,7 +15,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
   children,
   appClassName,
   bodyClassName,
-  hasTopGap = false,
+  hasTopGap = true,
 }) => {
   return (
     <div id="eodiro-app-scaffold" className={appClassName}>

@@ -45,7 +45,7 @@
   }
 
   .time {
-    @include rounded-illusion-reducer;
+    @include resolve-optical-illusion($border-radius-outer);
     margin-bottom: s(3);
     font-size: h(3);
     font-weight: 600;

@@ -18,13 +18,6 @@
 
 // UI 6
 @function calculate($min, $max, $level) {
-  $interval: ($max - $min) / 5;
-  $result: $min + $interval * ($level - 1);
-
-  @return $result;
-}
-
-@function calculate12($min, $max, $level) {
   $interval: ($max - $min) / 11;
   $result: $min + $interval * ($level - 1);
 
@@ -46,7 +39,7 @@
 @function r($level) {
   $level: validate($level);
   $min: 0.2rem;
-  $max: 1rem;
+  $max: 1.5rem;
 
   @return calculate($min, $max, $level);
 }
@@ -56,13 +49,13 @@
   $min: 0.2rem;
   $max: 3rem;
 
-  @return calculate12($min, $max, $level);
+  @return calculate($min, $max, $level);
 }
 
-@function f($level) {
+@function ss($level) {
   $level: validate($level);
-  $min: 1.6rem;
-  $max: 5rem;
+  $min: 3rem;
+  $max: 6rem;
 
   @return calculate($min, $max, $level);
 }
@@ -70,7 +63,7 @@
 @function b($level) {
   $level: validate($level);
   $min: 0.9rem;
-  $max: 1.2rem;
+  $max: 1.3rem;
 
   @return calculate($min, $max, $level);
 }
@@ -78,31 +71,9 @@
 @function h($level) {
   $level: validate($level);
   $min: 1.3rem;
-  $max: 2.5rem;
+  $max: 3rem;
 
   @return calculate($min, $max, $level);
-}
-
-@function fw($level) {
-  $level: validate($level);
-  @if $level == 1 {
-    @return 200;
-  }
-  @if $level == 2 {
-    @return 300;
-  }
-  @if $level == 3 {
-    @return 400;
-  }
-  @if $level == 4 {
-    @return 500;
-  }
-  @if $level == 5 {
-    @return 600;
-  }
-  @if $level == 6 {
-    @return 700;
-  }
 }
 
 @function lh($level) {

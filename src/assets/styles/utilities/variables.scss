@@ -1,3 +1,5 @@
+@use '@/assets/styles/utilities/functions' as *;
+
 // background colors
 // #fff for over white, #000 over black
 $base-white-blue: #f5f6f8;
@@ -8,11 +10,8 @@ $base-white: #f0f0f0;
 $base-black: #222;
 $base-gray: #9b9b9b;
 
-// chromatic colors
-// each step and its number is from
-// logo's gradient level
-$c-step--3: #ff7037;
-$c-step--4: #ff3852;
+// eodiro Colors
+// Also you should update @/modules/styles/EodiroColor.ts
 $eodiro-primary-color: #ff3852;
 $eodiro-secondary-color: #ff7037;
 $eodiro-pink-1: #ff79b9;
@@ -35,13 +34,8 @@ $eodiro-yellow-1: #ffcf26;
 $eodiro-yellow-2: #ff9922;
 
 // translucent colors
-$t-white: rgba(255, 255, 255, 0.08);
-$t-black: rgba(0, 0, 0, 0.04);
-
-// high contrast colors
-// @deprecated
-$light-blue: #009eff;
-$light-yellow: #ffb109;
+$t-white: rgba($base-white-blue, 0.08);
+$t-black: rgba($base-black-soft, 0.04);
 
 // responsive width steps
 $width-step--1: 700px;
@@ -51,34 +45,16 @@ $width-step--2_: 1401px;
 
 // master content sizes
 // check default.vue
-$master-content-max-width: 65rem;
-$master-content-top-gap: 2rem;
-$master-content-bottom-gap: 9rem;
+$app-content-max-width: 65rem;
 
-// EodiroBanner.vue
-// if you modify these values
-// you should also modify HomeBgTile component
-$banner-height: 37vh;
+// Navigation
 $nav-height: 3.5rem;
 
+// Footer
 $footer-height: 7rem;
 
 // button
 $btn-height: 3rem;
-
-// border radius
-$border-radius: 0.7rem;
-
-// spacing/gaps/gutters
-$slight-gap: 0.5rem;
-$gentle-gap: 1rem;
-$posh-gap: 1.35rem;
-
-// spring animation time
-$spring-time: 1000ms;
-
-// light mode <-> dark mode transition time
-$color-scheme-transition-time: 300ms;
 
 // fonts
 $ui-font: 'PAYW Pro', 'PAYW Pro KR', -apple-system, BlinkMacSystemFont,

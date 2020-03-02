@@ -3,11 +3,7 @@
 
 @mixin page-app-title {
   line-height: 1;
-  font-size: h(8);
-  padding-left: r(3) / 2;
+  font-size: h(12);
   margin-bottom: s(8);
-}
-
-@mixin rounded-illusion-reducer {
-  padding-left: r(4) / 2;
+  @include resolve-optical-illusion(r(4));
 }

@@ -3,55 +3,31 @@
 
 // dark mode
 @mixin dark-mode {
-  .dark-mode & {
-    @content;
-  }
   @media (prefers-color-scheme: dark) {
-    // .auto-color-scheme & {
-    //   @content;
-    // }
-    & {
-      @content;
-    }
-  }
-}
-// light mode
-@mixin light-mode {
-  .light-mode & {
-    @content;
-  }
-  @media (prefers-color-scheme: light) {
-    // .auto-color-scheme & {
-    //   @content;
-    // }
     & {
       @content;
     }
   }
 }
 
-@mixin on-english {
-  [lang='en'] & {
+@mixin on-lang($lang) {
+  [lang='#{$lang}'] & {
     @content;
   }
 }
 
 // body background color
 @mixin bg {
-  background-color: #fff;
   background-color: $base-white-blue;
 
   @include dark-mode {
     background-color: #000;
-    // background-color: $base-black-soft;
   }
 }
 @mixin bg-inverted {
-  background-color: #000;
   background-color: $base-black-soft;
 
   @include dark-mode {
-    background-color: #fff;
     background-color: $base-white-blue;
   }
 }
@@ -74,14 +50,10 @@
 
 // element fill
 @mixin elm-fill {
-  background-color: $base-white-blue;
   background-color: #fff;
-  // border: 1px solid rgba($color: #000, $alpha: 0.1);
 
   @include dark-mode {
     background-color: $base-black-soft;
-    // background-color: #000;
-    // border: 1px solid rgba($color: #fff, $alpha: 0.1);
   }
 }
 @mixin elm-fill-inverted {
@@ -127,24 +99,9 @@
 
 // typography
 // headings
-@mixin heading1 {
-  font-size: 2.3rem;
-  font-weight: fw(6);
-  line-height: lh(2);
-}
-@mixin heading2 {
-  font-size: 1.7rem;
-  font-weight: fw(5);
-  line-height: lh(2);
-}
-@mixin heading3 {
-  font-size: 1.2rem;
-  font-weight: fw(5);
-  line-height: lh(2);
-}
 @mixin paragraph {
   font-size: 1rem;
-  font-weight: fw(3);
+  font-weight: 400;
   line-height: lh(3);
 }
 
@@ -162,34 +119,45 @@
   background-size: unquote($size);
 }
 
-@mixin separator($direction: '') {
-  @if $direction == '' {
-    border-color: rgba(#000, 0.1);
-    border-width: 1px;
-    @include dark-mode {
-      border-color: rgba(#fff, 0.17);
-    }
-  } @else {
-    border-#{$direction}: 1px solid rgba(#000, 0.1);
-    @include dark-mode {
-      border-color: rgba(#fff, 0.17);
-    }
-  }
-}
-
 $border-color: rgba(#000, 0.1);
 $border-color-dark: rgba(#fff, 0.17);
 
-@mixin bordered {
-  border: 1px solid rgba(#000, 0.1);
-
-  @include dark-mode {
-    border: 1px solid rgba(#fff, 0.17);
+@mixin separator($direction: '') {
+  @if $direction == '' {
+    border-color: $border-color;
+    border-width: 1px;
+    @include dark-mode {
+      border-color: $border-color-dark;
+    }
+  } @else {
+    border-#{$direction}: 1px solid $border-color;
+    @include dark-mode {
+      border-color: $border-color-dark;
+    }
   }
 }
 
+@mixin bordered {
+  border: 1px solid $border-color;
+
+  @include dark-mode {
+    border: 1px solid $border-color-dark;
+  }
+}
+
+$border-radius-outer: r(6);
+@mixin border-radius-outer {
+  border-radius: $border-radius-outer;
+}
+
+$border-radius-inner: r(4);
+@mixin border-radius-inner {
+  border-radius: $border-radius-inner;
+}
+
+// @deprecated
 @mixin rounded {
-  border-radius: r(4);
+  @include border-radius-outer;
 }
 
 @mixin clickable {
@@ -207,15 +175,11 @@ $border-color-dark: rgba(#fff, 0.17);
   }
 }
 
-// Forms
-$input-border-radius: r(4);
-
 @mixin input-style {
   @include bordered;
   @include rounded;
   @include text-color;
   @include elm-fill;
-  // background-color: transparent;
   font-size: b(2);
   padding: s(3);
   height: $btn-height !important;
@@ -228,17 +192,11 @@ $input-border-radius: r(4);
   @include input-text;
 }
 
-// Flex center center
-@mixin center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 @mixin resolve-optical-illusion($value: null) {
   @if $value {
-    margin-left: $value / 3;
+    margin-left: $value / 2;
   } @else {
-    margin-left: r(4) / 3;
+    // Default resolve to outer radius
+    margin-left: $border-radius-outer / 2;
   }
 }
