@@ -3,7 +3,7 @@
   "version": "3.0.0-alpha.0",
   "private": false,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 3020",
     "build": "next build",
     "start": "next start",
     "start-dev": "next start --port 3020",
