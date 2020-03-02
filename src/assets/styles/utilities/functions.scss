@@ -16,7 +16,6 @@
   @return $val;
 }
 
-// UI 6
 @function calculate($min, $max, $level) {
   $interval: ($max - $min) / 11;
   $result: $min + $interval * ($level - 1);
