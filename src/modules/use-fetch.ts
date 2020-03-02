@@ -7,17 +7,21 @@ async function useFetch<T = any>(
   input: RequestInfo,
   init?: RequestInit
 ): Promise<[UseFetchError, T, UseFetchStatusCode]> {
-  const res = await fetch(input, init)
   try {
+    const res = await fetch(input, init)
     try {
-      const data = (await res.json()) as T
-      return [null, data, res.status]
-    } catch (error) {
-      return [null, null, res.status]
+      try {
+        const data = (await res.json()) as T
+        return [null, data, res.status]
+      } catch (error) {
+        return [null, null, res.status]
+      }
+    } catch (err) {
+      console.error(err)
+      return [err, null, res.status]
     }
   } catch (err) {
-    console.error(err)
-    return [err, null, res.status]
+    return [err, null, null]
   }
 }
 
