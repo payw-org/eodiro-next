@@ -13,7 +13,8 @@ async function useFetch<T = any>(
       try {
         const data = (await res.json()) as T
         return [null, data, res.status]
-      } catch (error) {
+      } catch (err) {
+        console.error(err)
         return [null, null, res.status]
       }
     } catch (err) {
@@ -21,6 +22,7 @@ async function useFetch<T = any>(
       return [err, null, res.status]
     }
   } catch (err) {
+    console.error(err)
     return [err, null, null]
   }
 }
