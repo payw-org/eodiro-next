@@ -10,9 +10,14 @@ async function useFetch<T = any>(
   try {
     const res = await fetch(input, init)
     try {
-      const data = (await res.json()) as T
-      return [null, data, res.status]
+      try {
+        const data = (await res.json()) as T
+        return [null, data, res.status]
+      } catch (err) {
+        return [null, null, res.status]
+      }
     } catch (err) {
+      console.error(err)
       return [err, null, res.status]
     }
   } catch (err) {
