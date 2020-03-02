@@ -36,15 +36,8 @@
   }
 }
 
-// transitions
-@mixin ui-transition {
-  transition: border $color-scheme-transition-time ease,
-    background-color $color-scheme-transition-time ease;
-}
-
 // body background color
 @mixin bg {
-  @include ui-transition;
   background-color: #fff;
   background-color: $base-white-blue;
 
@@ -54,7 +47,6 @@
   }
 }
 @mixin bg-inverted {
-  @include ui-transition;
   background-color: #000;
   background-color: $base-black-soft;
 
@@ -66,7 +58,6 @@
 
 // text color
 @mixin text-color {
-  @include ui-transition;
   color: $base-black;
 
   @include dark-mode {
@@ -74,7 +65,6 @@
   }
 }
 @mixin text-color-inverted {
-  @include ui-transition;
   color: $base-white;
 
   @include dark-mode {
