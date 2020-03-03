@@ -8,7 +8,7 @@ import { Restaurant } from '@payw/cau-cafeteria-menus-scraper-types'
 import dayjs, { Dayjs } from 'dayjs'
 import ServerError from '@/components/ServerError'
 import Information from '@/components/Information'
-import { ArrowRightColorIcon } from '@/components/icons'
+import { ArrowIcon, CafeteriaAppIcon } from '@/components/icons'
 import './CafeteriaPage.scss'
 
 type CafeteriaPageProps = {
@@ -92,7 +92,7 @@ const CafeteriaPage: NextPage<CafeteriaPageProps> = ({ menus }) => {
                   setNow(now.subtract(1, 'd'))
                 }}
               >
-                <ArrowRightColorIcon direction="left" fill="#31a8ff" />
+                <ArrowIcon direction="left" fill="#31a8ff" />
               </button>
               <p className="date">{createDateString(now)}</p>
               <button
@@ -101,7 +101,7 @@ const CafeteriaPage: NextPage<CafeteriaPageProps> = ({ menus }) => {
                   setNow(now.add(1, 'd'))
                 }}
               >
-                <ArrowRightColorIcon fill="#31a8ff" />
+                <ArrowIcon fill="#31a8ff" />
               </button>
             </div>
 

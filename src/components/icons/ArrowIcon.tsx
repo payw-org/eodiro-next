@@ -1,11 +1,11 @@
 import React from 'react'
 import { FillableIcon, FillableIconProps } from '@/types'
 
-interface ArrowColorIconProps extends FillableIconProps {
+interface ArrowIconProps extends FillableIconProps {
   direction?: 'right' | 'down' | 'left' | 'up'
 }
 
-const ArrowRightColorIcon: React.FC<ArrowColorIconProps> = ({
+export const ArrowIcon: React.FC<ArrowIconProps> = ({
   fill = '#9b9b9b',
   className,
   appearance,
@@ -40,5 +40,3 @@ const ArrowRightColorIcon: React.FC<ArrowColorIconProps> = ({
     </svg>
   )
 }
-
-export { ArrowRightColorIcon }

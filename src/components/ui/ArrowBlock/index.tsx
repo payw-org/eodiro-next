@@ -1,6 +1,6 @@
 import React from 'react'
 import mergeClassName from '@/modules/merge-class-name'
-import { ArrowRightColorIcon } from '@/components/icons'
+import { ArrowIcon } from '@/components/icons'
 import './ArrowBlock.scss'
 
 interface ArrowBlockProps {
@@ -22,7 +22,7 @@ const ArrowBlock: React.FC<ArrowBlockProps> = ({
       <div className="ab-body">{children}</div>
       {!noArrow && (
         <div className="ab-arrow-container">
-          <ArrowRightColorIcon direction="right" className="ab-arrow" />
+          <ArrowIcon direction="right" className="ab-arrow" />
         </div>
       )}
     </div>
