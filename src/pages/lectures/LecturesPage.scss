@@ -1,0 +1,28 @@
+@use '@/assets/styles/main' as *;
+
+#eodiro-lectures {
+  .page-app-title {
+    color: $eodiro-green-1;
+  }
+
+  .search-field {
+    // position: sticky;
+    // top: $nav-height;
+    z-index: 10;
+  }
+
+  .lecture-container {
+    margin-top: s(6);
+
+    .lecture-item {
+      .li-content {
+        text-align: left;
+
+        .lecture-name {
+          font-size: b(6);
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
