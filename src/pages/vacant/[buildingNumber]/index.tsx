@@ -8,7 +8,6 @@ import ArrowBlock from '@/components/ui/ArrowBlock'
 import Grid from '@/layouts/Grid'
 import ServerError from '@/components/ServerError'
 import mergeClassName from '@/modules/merge-class-name'
-
 import './VacantClassroomsPage.scss'
 
 type VacantClassroomsPageProps = {
@@ -27,7 +26,7 @@ const VacantClassroomsPage: NextPage<VacantClassroomsPageProps> = ({
   return (
     <BaseLayout hasTopGap>
       <div id="eodiro-vacant-classrooms">
-        <h1 className="building-number">🏢 {buildingNumber}관</h1>
+        <h1 className="building-number">{buildingNumber}관</h1>
         {classroomsInfo ? (
           <Grid>
             {classroomsInfo.map((info) => {
