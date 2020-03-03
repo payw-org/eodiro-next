@@ -78,7 +78,10 @@ const CafeteriaPage: NextPage<CafeteriaPageProps> = ({ menus }) => {
   return (
     <BaseLayout hasTopGap>
       <div id="eodiro-cafeteria">
-        <h1 className="title">🍽 학식 메뉴</h1>
+        <h1 className="page-app-title">
+          <CafeteriaAppIcon className="icon" />
+          학식 메뉴
+        </h1>
 
         {todayMenus ? (
           <>

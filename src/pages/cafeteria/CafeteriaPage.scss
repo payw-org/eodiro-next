@@ -1,8 +1,7 @@
 @use '@/assets/styles/main' as *;
 
 #eodiro-cafeteria {
-  .title {
-    @include page-app-title;
+  .page-app-title {
     color: $eodiro-blue-1;
   }
 
