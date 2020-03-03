@@ -11,9 +11,7 @@ module.exports = {
   plugins: ['react', 'react-hooks'],
   rules: {
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
     '@typescript-eslint/no-empty-function': [0],
-    '@typescript-eslint/explicit-function-return-type': [0],
     '@typescript-eslint/no-var-requires': [0],
     'space-before-function-paren': [
       'error',
