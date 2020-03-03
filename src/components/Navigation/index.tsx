@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Navigation.scss'
 import EodiroLogo from '@/components/icons/EodiroLogo'
-import ThreeDotsVerticalColorIcon from '../icons/ThreeDotsVerticalColorIcon'
+import { VerticalThreeDotsIcon } from '@/components/icons'
 import mergeClassName from '@/modules/merge-class-name'
 
 type NavItemProps = {
@@ -34,13 +34,13 @@ const Navigation: React.FC = () => {
           )}
         >
           <NavItem title="빈 강의실" to="/vacant" />
-          <NavItem title="강의 검색" to="/" />
+          <NavItem title="강의 검색" to="/lectures" />
           <NavItem title="학식 메뉴" to="/cafeteria" />
           <NavItem title="빼빼로 광장" to="/" />
           <NavItem title="더 보기" to="/" />
         </ul>
         <div className="more-tappable">
-          <ThreeDotsVerticalColorIcon
+          <VerticalThreeDotsIcon
             className="more-icon"
             appearance="light"
             fill="#000"
@@ -48,7 +48,7 @@ const Navigation: React.FC = () => {
               setIsMobileNavMenuOpened(!isMobileNavMenuOpened)
             }}
           />
-          <ThreeDotsVerticalColorIcon
+          <VerticalThreeDotsIcon
             className="more-icon"
             appearance="dark"
             fill="#fff"

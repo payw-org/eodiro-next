@@ -10,7 +10,8 @@ import getBuildingName from '@/modules/cau/get-building-name'
 import ServerError from '@/components/ServerError'
 import { VacantBuildings } from '@/api/vacant'
 import Information from '@/components/Information'
-import './vacant.scss'
+import { VacantAppIcon } from '@/components/icons'
+import './VacantBuildingPage.scss'
 
 interface VacantBuildingsPageProps {
   buildingsInfo: VacantBuildings
@@ -22,7 +23,9 @@ const VacantBuildingsPage: NextPage<VacantBuildingsPageProps> = ({
   return (
     <BaseLayout hasTopGap>
       <div id="eodiro-vacant">
-        <h1 className="title">🚪 빈 강의실</h1>
+        <h1 className="page-app-title">
+          <VacantAppIcon className="icon" />빈 강의실
+        </h1>
         {buildingsInfo && buildingsInfo.length > 0 ? (
           <Grid className="building-container">
             {buildingsInfo.map((info, i) => {

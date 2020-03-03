@@ -1,6 +1,7 @@
+import React from 'react'
 import { ColorIcon } from '@/types'
 
-const SquareIconColor: ColorIcon = ({ className }) => {
+export const SquareAppIcon: ColorIcon = ({ className }) => {
   return (
     <svg
       className={className}
@@ -21,7 +22,7 @@ const SquareIconColor: ColorIcon = ({ className }) => {
           width="51.1675"
           height="15.6104"
           rx="5"
-          fill="white"
+          className="svg-bg"
         />
         <rect
           x="47.3055"
@@ -29,7 +30,7 @@ const SquareIconColor: ColorIcon = ({ className }) => {
           width="52.0348"
           height="15.6104"
           rx="5"
-          fill="white"
+          className="svg-bg"
         />
         <rect
           x="35.5976"
@@ -37,7 +38,7 @@ const SquareIconColor: ColorIcon = ({ className }) => {
           width="51.1675"
           height="15.6104"
           rx="5"
-          fill="white"
+          className="svg-bg"
         />
       </g>
       <defs>
@@ -64,5 +65,3 @@ const SquareIconColor: ColorIcon = ({ className }) => {
     </svg>
   )
 }
-
-export default SquareIconColor

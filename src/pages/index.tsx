@@ -5,11 +5,11 @@ import Head from 'next/head'
 import Grid from '@/layouts/Grid'
 import { ColorIcon } from '@/types'
 import {
-  CafeteriaIconColor,
-  VacantIconColor,
-  LecturesIconColor,
-  SquareIconColor,
-  OpensourceIconColor,
+  CafeteriaAppIcon,
+  VacantAppIcon,
+  LecturesAppIcon,
+  SquareAppIcon,
+  OpensourceAppIcon,
 } from '@/components/icons'
 import './HomePage.scss'
 
@@ -66,7 +66,7 @@ const HomePage: NextPage = () => {
       <Head>
         <title>어디로</title>
       </Head>
-      <BaseLayout>
+      <BaseLayout hasTopGap={false}>
         <div id="eodiro-home">
           <h1 className="header">
             <span className="name">어디로</span> {emojiList[emojiIndex]}
@@ -77,27 +77,23 @@ const HomePage: NextPage = () => {
               <HomeFeatureBox
                 title="빈 강의실"
                 to="/vacant"
-                Icon={VacantIconColor}
+                Icon={VacantAppIcon}
               />
               <HomeFeatureBox
                 title="강의 검색"
-                to="/"
-                Icon={LecturesIconColor}
+                to="/lectures"
+                Icon={LecturesAppIcon}
               />
               <HomeFeatureBox
                 title="학식 메뉴"
                 to="/cafeteria"
-                Icon={CafeteriaIconColor}
+                Icon={CafeteriaAppIcon}
               />
-              <HomeFeatureBox
-                title="빼빼로 광장"
-                to="/"
-                Icon={SquareIconColor}
-              />
+              <HomeFeatureBox title="빼빼로 광장" to="/" Icon={SquareAppIcon} />
               <HomeFeatureBox
                 title="오픈 소스"
                 to="/opensource"
-                Icon={OpensourceIconColor}
+                Icon={OpensourceAppIcon}
               />
             </Grid>
           </div>

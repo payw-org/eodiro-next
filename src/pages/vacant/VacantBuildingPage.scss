@@ -1,8 +1,7 @@
 @use '@/assets/styles/main' as *;
 
 #eodiro-vacant {
-  .title {
-    @include page-app-title;
+  .page-app-title {
     color: $eodiro-primary-color;
   }
 

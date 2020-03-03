@@ -1,7 +1,7 @@
 import React from 'react'
 import { FillableAndClickableIcon } from '@/types'
 
-const ThreeDotsVerticalColorIcon: FillableAndClickableIcon = ({
+const VerticalThreeDotsIcon: FillableAndClickableIcon = ({
   appearance,
   className,
   fill = '#000',
@@ -34,4 +34,4 @@ const ThreeDotsVerticalColorIcon: FillableAndClickableIcon = ({
   )
 }
 
-export default ThreeDotsVerticalColorIcon
+export { VerticalThreeDotsIcon }

@@ -1,6 +1,6 @@
 import React from 'react'
 import mergeClassName from '@/modules/merge-class-name'
-import ArrowRightColorIcon from '@/components/icons/ArrowRightColorIcon'
+import { ArrowRightColorIcon } from '@/components/icons'
 import './ArrowBlock.scss'
 
 interface ArrowBlockProps {

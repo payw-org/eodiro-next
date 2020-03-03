@@ -41,4 +41,4 @@ const ArrowRightColorIcon: React.FC<ArrowColorIconProps> = ({
   )
 }
 
-export default ArrowRightColorIcon
+export { ArrowRightColorIcon }
