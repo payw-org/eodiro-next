@@ -4,25 +4,38 @@ import EodiroColors from '@/modules/styles/EodiroColors'
 import React from 'react'
 import './LineInput.scss'
 
+export type LineInputOnChangeHook = (inputValue: string) => void
+
 type LineInputProps = {
+  value?: string
+  setValue?: React.Dispatch<React.SetStateAction<string>>
+  className?: string
   type?: 'text' | 'search' | 'email' | 'password'
   placeholder?: string
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onChangeHook?: LineInputOnChangeHook
 }
 
 export const LineInput: React.FC<LineInputProps> = ({
+  value,
+  setValue = (): void => {},
+  className,
   type = 'text',
   placeholder,
-  onChange,
+  onChangeHook = (): void => {},
 }) => {
   return (
-    <div className="eodiro-line-input">
+    <div className={mergeClassName('eodiro-line-input', className)}>
       <input
+        value={value}
         type={type === 'search' ? 'text' : type}
         spellCheck="false"
         placeholder={placeholder}
         className={mergeClassName('li-field', type === 'search' && 'search')}
-        onChange={onChange}
+        onChange={(e): void => {
+          const value = e.target.value
+          setValue(value)
+          onChangeHook(value)
+        }}
       />
       {type === 'search' && (
         <div className="magnifier-icon-wrapper">
