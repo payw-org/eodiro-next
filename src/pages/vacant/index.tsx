@@ -21,6 +21,10 @@ const VacantBuildingsPage: NextPage<VacantBuildingsPageProps> = ({
   buildingsInfo,
 }) => {
   return (
+    <>
+      <Head>
+        <title>빈 강의실 - 건물</title>
+      </Head>
     <BaseLayout hasTopGap>
       <div id="eodiro-vacant">
         <h1 className="page-app-title">

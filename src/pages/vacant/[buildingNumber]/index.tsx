@@ -24,9 +24,13 @@ const VacantClassroomsPage: NextPage<VacantClassroomsPageProps> = ({
   // const nowAccumMin = 720
 
   return (
+    <>
+      <Head>
+        <title>빈 강의실 - 강의실</title>
+      </Head>
     <BaseLayout hasTopGap>
       <div id="eodiro-vacant-classrooms">
-        <h1 className="building-number">{buildingNumber}관</h1>
+          <h1 className="page-app-title">{buildingNumber}관</h1>
         {classroomsInfo ? (
           <Grid>
             {classroomsInfo.map((info) => {
