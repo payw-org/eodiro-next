@@ -177,12 +177,12 @@ $border-radius-inner: r(4);
 
 @mixin input-style {
   @include bordered;
-  @include rounded;
+  @include border-radius-outer;
   @include text-color;
   @include elm-fill;
-  font-size: b(2);
-  padding: s(3);
-  height: $btn-height !important;
+  font-size: b(3);
+  padding: s(3) s(4);
+  height: $btn-height;
   appearance: none;
   overflow: auto;
   display: block;
