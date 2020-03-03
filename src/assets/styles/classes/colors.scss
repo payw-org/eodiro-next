@@ -1,0 +1,9 @@
+@use '@/assets/styles/main' as *;
+
+.svg-bg {
+  fill: #fff;
+
+  @include dark-mode() {
+    fill: #000;
+  }
+}

@@ -3,6 +3,8 @@
 @use '@/assets/styles/global/transition' as *;
 @use '@/assets/styles/global/input' as *;
 @use '@/assets/styles/global/select' as *;
+@use '@/assets/styles/classes/colors';
+@use '@/assets/styles/page/class.scss';
 
 html {
   -ms-text-size-adjust: 100%;
