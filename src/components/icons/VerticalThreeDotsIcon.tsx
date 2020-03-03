@@ -4,7 +4,7 @@ import { FillableAndClickableIcon } from '@/types'
 const VerticalThreeDotsIcon: FillableAndClickableIcon = ({
   appearance,
   className,
-  fill = '#000',
+  fill,
   onClick,
 }) => {
   return (
@@ -23,8 +23,9 @@ const VerticalThreeDotsIcon: FillableAndClickableIcon = ({
         strokeWidth="1"
         fill="none"
         fillRule="evenodd"
+        className=""
       >
-        <g id="Group" fill={fill}>
+        <g id="Group" fill={fill || ''} className="svg-bg-dark">
           <circle id="Oval" cx="15" cy="15" r="15"></circle>
           <circle id="Oval" cx="15" cy="81" r="15"></circle>
           <circle id="Oval" cx="15" cy="147" r="15"></circle>

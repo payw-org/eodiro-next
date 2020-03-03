@@ -42,16 +42,6 @@ const Navigation: React.FC = () => {
         <div className="more-tappable">
           <VerticalThreeDotsIcon
             className="more-icon"
-            appearance="light"
-            fill="#000"
-            onClick={(): void => {
-              setIsMobileNavMenuOpened(!isMobileNavMenuOpened)
-            }}
-          />
-          <VerticalThreeDotsIcon
-            className="more-icon"
-            appearance="dark"
-            fill="#fff"
             onClick={(): void => {
               setIsMobileNavMenuOpened(!isMobileNavMenuOpened)
             }}
