@@ -1,1 +1,3 @@
-export { default as VacantApi } from './vacant'
+export * from './cafeteria'
+export * from './lectures'
+export * from './vacant'

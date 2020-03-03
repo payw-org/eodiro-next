@@ -1,12 +1,12 @@
 import ApiHost from '@/modules/api-host'
-import { Campus, Year, Semester } from '@/types'
 import useFetch from '@/modules/use-fetch'
-import dayjs from 'dayjs'
+import { Campus } from '@/types'
 import { Day } from '@payw/cau-cafeteria-menus-scraper-types'
+import dayjs from 'dayjs'
 
 export type CafeteriaMenus = Omit<Day, 'date'>
 
-export default class CafeteriaApi {
+export class CafeteriaApi {
   static async menus({
     date = dayjs().format('YYYY-MM-DD'),
     campus = '서울',

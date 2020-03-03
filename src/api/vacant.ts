@@ -1,8 +1,8 @@
 import ApiHost from '@/modules/api-host'
-import { Campus, Year, Semester } from '@/types'
-import useFetch from '@/modules/use-fetch'
-import dayjs from 'dayjs'
 import getSemester from '@/modules/get-semester'
+import useFetch from '@/modules/use-fetch'
+import { Campus, Semester, Year } from '@/types'
+import dayjs from 'dayjs'
 
 export type VacantBuildings = {
   building_number: string
@@ -22,7 +22,7 @@ export type VacantClassrooms = {
   }[]
 }[]
 
-export default class VacantApi {
+export class VacantApi {
   static async buildings({
     year,
     semester,
