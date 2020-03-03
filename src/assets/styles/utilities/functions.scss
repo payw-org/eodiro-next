@@ -54,7 +54,7 @@
 @function ss($level) {
   $level: validate($level);
   $min: 3rem;
-  $max: 6rem;
+  $max: 10rem;
 
   @return calculate($min, $max, $level);
 }
