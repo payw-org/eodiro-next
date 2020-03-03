@@ -1,0 +1,20 @@
+@use '@/assets/styles/main' as *;
+
+#error-page {
+  min-height: calc(100vh - 20rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .status-code {
+    font-size: 7rem;
+    font-weight: 400;
+  }
+
+  .manifesto {
+    font-size: 1.2rem;
+    margin-top: s(5);
+    color: $base-gray;
+  }
+}
