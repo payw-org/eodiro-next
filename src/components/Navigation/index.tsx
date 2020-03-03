@@ -1,8 +1,8 @@
+import { VerticalThreeDotsIcon } from '@/components/icons'
+import EodiroLogo from '@/components/icons/EodiroLogo'
+import mergeClassName from '@/modules/merge-class-name'
 import React, { useState } from 'react'
 import './Navigation.scss'
-import EodiroLogo from '@/components/icons/EodiroLogo'
-import { VerticalThreeDotsIcon } from '@/components/icons'
-import mergeClassName from '@/modules/merge-class-name'
 
 type NavItemProps = {
   to: string
@@ -23,6 +23,7 @@ const Navigation: React.FC = () => {
   return (
     <nav id="eodiro-navigation">
       <div className="en-wrapper">
+        <div className="en-bar" />
         <a className="home-link" href="/">
           <EodiroLogo className="eodiro-logo" fill="#ff3852" />
           {/* <EodiroLogo className="eodiro-logo" appearance="light" fill="#000" /> */}
