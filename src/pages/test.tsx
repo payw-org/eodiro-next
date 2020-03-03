@@ -1,3 +1,4 @@
+import { LineInput } from '@/components/ui'
 import React from 'react'
 
 const TestPage: React.FC = () => {
@@ -7,6 +8,7 @@ const TestPage: React.FC = () => {
       <h2>Heading 2 Heading 2 Heading 2 Heading 2 Heading 2</h2>
       <h3>Heading 3 Heading 3 Heading 3 Heading 3 Heading 3</h3>
       <p>Body Body Body Body Body</p>
+      <LineInput />
     </>
   )
 }
