@@ -1,6 +1,6 @@
-import React from 'react'
-import mergeClassName from '@/modules/merge-class-name'
 import { ArrowIcon } from '@/components/icons'
+import mergeClassName from '@/modules/merge-class-name'
+import React from 'react'
 import './ArrowBlock.scss'
 
 interface ArrowBlockProps {
@@ -9,7 +9,7 @@ interface ArrowBlockProps {
   flat?: boolean
 }
 
-const ArrowBlock: React.FC<ArrowBlockProps> = ({
+export const ArrowBlock: React.FC<ArrowBlockProps> = ({
   className,
   noArrow = false,
   flat = false,
@@ -28,5 +28,3 @@ const ArrowBlock: React.FC<ArrowBlockProps> = ({
     </div>
   )
 }
-
-export default ArrowBlock

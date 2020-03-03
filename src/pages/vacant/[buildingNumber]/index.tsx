@@ -1,7 +1,7 @@
 import { VacantApi } from '@/api'
 import { VacantClassrooms } from '@/api/vacant'
 import ServerError from '@/components/ServerError'
-import ArrowBlock from '@/components/ui/ArrowBlock'
+import { ArrowBlock } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import Grid from '@/layouts/Grid'
 import mergeClassName from '@/modules/merge-class-name'
