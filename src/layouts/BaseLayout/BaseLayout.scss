@@ -13,7 +13,7 @@
       min-height: calc(100vh - #{$footer-height});
 
       &.top-gap {
-        padding-top: 3rem + s(12);
+        padding-top: 3rem + ss(2);
       }
     }
   }
