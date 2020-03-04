@@ -2,7 +2,6 @@ import { LecturesApi } from '@/api'
 import { ArrowBlock, LineInput, LineInputOnChangeHook } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import Grid from '@/layouts/Grid'
-import { CEM } from '@/modules/custom-event-manager'
 import { useStateRef } from '@/modules/use-state-ref'
 import { Lectures } from '@payw/cau-timetable-scraper-types'
 import { NextPage } from 'next'
@@ -92,17 +91,12 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
     }
   }, [isFetching])
 
-  // Load more lectures when scroll reaches the bottom
-  useEffect(() => {
-    CEM.addEventListener('scrollends', document.body, loadMore)
-  }, [])
-
   return (
     <>
       <Head>
         <title>강의 검색</title>
       </Head>
-      <BaseLayout enableScrollEvent pageTitle="강의 검색">
+      <BaseLayout pageTitle="강의 검색" onScrollEnds={loadMore}>
         <div id="eodiro-lectures">
           <LineInput
             value={searchQuery}

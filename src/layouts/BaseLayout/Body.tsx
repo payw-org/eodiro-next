@@ -7,30 +7,48 @@ export type BodyProps = {
   bodyClassName?: string
   hasTopGap?: boolean
   pageTitle?: string
+  onScrollEnds?: () => void
 }
 
 const Body = React.forwardRef<HTMLDivElement, BodyProps>(
-  ({ children, bodyClassName, hasTopGap, pageTitle }, ref) => {
+  (
+    { children, bodyClassName, hasTopGap, pageTitle, onScrollEnds = null },
+    ref
+  ) => {
     ref
     const titleSentinelRef = useRef<HTMLHeadingElement>(null)
+    const bodyContentBottomRef = useRef<HTMLDivElement>(null)
     const navContext = useContext(NavigationContext)
 
     useEffect(() => {
       if (pageTitle && titleSentinelRef.current) {
         navContext.setPageAppTitle(pageTitle)
         const titleSentinelElm = titleSentinelRef.current
+        const bodyContentBottomElm = bodyContentBottomRef.current
+
         const observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              // Appear
-              navContext.setIsHidden(true)
-            } else {
-              // Disappear
-              navContext.setIsHidden(false)
+            if (entry.target.isSameNode(titleSentinelElm)) {
+              if (entry.isIntersecting) {
+                // Appear
+                navContext.setIsHidden(true)
+              } else {
+                // Disappear
+                navContext.setIsHidden(false)
+              }
+            } else if (entry.target.isSameNode(bodyContentBottomElm)) {
+              if (entry.isIntersecting) {
+                // Scroll ends
+                onScrollEnds && onScrollEnds()
+              }
             }
           })
         })
+
         observer.observe(titleSentinelElm)
+        if (onScrollEnds) {
+          observer.observe(bodyContentBottomElm)
+        }
       }
     }, [])
 
@@ -51,6 +69,11 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
         )}
 
         {children}
+
+        <div
+          className="body-content-bottom-sentinel"
+          ref={bodyContentBottomRef}
+        />
       </div>
     )
   }
