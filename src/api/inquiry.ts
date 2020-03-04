@@ -11,7 +11,7 @@ export type InquiryData = {
 }
 
 export class InquiryApi {
-  static async inquirys(): Promise<InquiryData | null> {
+  static async inquirys(): Promise<InquiryData[] | null> {
     const [err, data] = await useFetch(ApiHost.getHost() + `/inquiry`, {
       method: 'get',
     })
