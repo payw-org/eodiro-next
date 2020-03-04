@@ -67,11 +67,17 @@
       display: flex;
       margin-right: 1.5rem;
 
-      .en-menu-item {
-        font-size: b(2);
-        font-weight: fw(4);
-        margin-left: s(4);
-        @include clickable;
+      .en-menu-link {
+        &.signin {
+          font-weight: 600;
+        }
+
+        .en-menu-item {
+          font-size: b(2);
+          font-weight: fw(4);
+          margin-left: s(4);
+          @include clickable;
+        }
       }
     }
 
