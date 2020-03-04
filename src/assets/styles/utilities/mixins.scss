@@ -155,7 +155,7 @@ $border-radius-outer: r(6);
   border-radius: $border-radius-outer;
 }
 
-$border-radius-inner: r(4);
+$border-radius-inner: r(3);
 @mixin border-radius-inner {
   border-radius: $border-radius-inner;
 }
