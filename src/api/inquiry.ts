@@ -8,6 +8,7 @@ export type InquiryData = {
   body: string
   answer?: string
   uploaded_at: string
+  answered_at: string
 }
 
 export class InquiryApi {

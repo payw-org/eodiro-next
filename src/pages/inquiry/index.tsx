@@ -26,7 +26,11 @@ const InquiryPage: NextPage<InquiryProps> = ({ inquirys }) => {
                     <div className="li-content">
                       <h1 className="inquiry-title">{inquiry.title}</h1>
                       <p>{inquiry.uploaded_at}</p>
-                      <p>{inquiry.answer ? '답변완료' : '답변대기 중'}</p>
+                      <p>
+                        {inquiry.answer
+                          ? '답변완료( ' + inquiry.answered_at + ' )'
+                          : '답변대기 중'}
+                      </p>
                     </div>
                   </ArrowBlock>
                 )
