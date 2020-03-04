@@ -4,6 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout'
 import Grid from '@/layouts/Grid'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import React from 'react'
 
 type InquiryProps = {
   inquirys: InquiryData[]
