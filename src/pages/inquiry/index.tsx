@@ -9,6 +9,21 @@ import React from 'react'
 type InquiryProps = {
   inquiries: InquiryData[]
 }
+function formatDate(date): string {
+  return (
+    date.getFullYear() +
+    '-' +
+    ('0' + (date.getMonth() + 1)).slice(-2) +
+    '-' +
+    ('0' + date.getDate()).slice(-2) +
+    ' ' +
+    ('0' + date.getHours()).slice(-2) +
+    ':' +
+    ('0' + date.getMinutes()).slice(-2) +
+    ':' +
+    ('0' + date.getSeconds()).slice(-2)
+  )
+}
 
 const InquiryPage: NextPage<InquiryProps> = ({ inquiries: inquiries }) => {
   return (
@@ -26,10 +41,12 @@ const InquiryPage: NextPage<InquiryProps> = ({ inquiries: inquiries }) => {
                   <ArrowBlock key={inquiry.id} className="inquiry-item">
                     <div className="li-content">
                       <h1 className="inquiry-title">{inquiry.title}</h1>
-                      <p>{inquiry.uploaded_at}</p>
+                      <p>{formatDate(new Date(inquiry.uploaded_at))}</p>
                       <p>
                         {inquiry.answer
-                          ? '답변완료( ' + inquiry.answered_at + ' )'
+                          ? '답변완료( ' +
+                            formatDate(new Date(inquiry.answered_at)) +
+                            ' )'
                           : '답변대기 중'}
                       </p>
                     </div>
