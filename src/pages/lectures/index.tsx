@@ -1,5 +1,4 @@
 import { LecturesApi } from '@/api'
-import { LecturesAppIcon } from '@/components/icons'
 import { ArrowBlock, LineInput, LineInputOnChangeHook } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import Grid from '@/layouts/Grid'
@@ -103,13 +102,8 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
       <Head>
         <title>강의 검색</title>
       </Head>
-      <BaseLayout enableScrollEvent>
+      <BaseLayout enableScrollEvent pageTitle="강의 검색">
         <div id="eodiro-lectures">
-          <h1 className="page-app-title">
-            <LecturesAppIcon className="icon" />
-            강의 검색
-          </h1>
-
           <LineInput
             value={searchQuery}
             setValue={setSearchQuery}
@@ -122,11 +116,23 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
           <Grid className="lecture-container">
             {displayLectures.map((lecture, i) => {
               return (
-                <ArrowBlock key={i} className="lecture-item">
+                <ArrowBlock noArrow flat key={i} className="lecture-item">
                   <div className="li-content">
-                    <h1 className="lecture-name">{lecture.name}</h1>
-                    <p>{lecture.professor}</p>
-                    <p>{lecture.schedule}</p>
+                    <div className="name-and-code">
+                      <h1 className="name">{lecture.name}</h1>
+                      <p className="code">{lecture.code}</p>
+                    </div>
+                    {(lecture.college || lecture.major) && (
+                      <p>
+                        {lecture.college + ' '}
+                        {lecture.major}
+                      </p>
+                    )}
+                    <p className="professor">{lecture.professor}</p>
+                    {lecture.schedule && lecture.schedule !== '/' && (
+                      <p className="schedule">{lecture.schedule}</p>
+                    )}
+                    {lecture.section}
                   </div>
                 </ArrowBlock>
               )

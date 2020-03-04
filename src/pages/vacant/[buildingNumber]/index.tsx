@@ -29,9 +29,8 @@ const VacantClassroomsPage: NextPage<VacantClassroomsPageProps> = ({
       <Head>
         <title>빈 강의실 - 강의실</title>
       </Head>
-      <BaseLayout hasTopGap>
+      <BaseLayout hasTopGap pageTitle={`${buildingNumber}관`}>
         <div id="eodiro-vacant-classrooms">
-          <h1 className="page-app-title">{buildingNumber}관</h1>
           {classroomsInfo ? (
             <Grid>
               {classroomsInfo.map((info) => {

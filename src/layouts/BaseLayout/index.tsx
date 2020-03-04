@@ -1,15 +1,16 @@
 import GlobalFooter from '@/components/GlobalFooter'
-import Navigation from '@/components/Navigation'
+import Navigation, { NavigationProvider } from '@/components/Navigation'
 import { CEM } from '@/modules/custom-event-manager'
-import mergeClassName from '@/modules/merge-class-name'
 import React, { useEffect, useRef } from 'react'
 import './BaseLayout.scss'
+import Body, { BodyProps } from './Body'
 
 type BaseLayoutProps = {
   appClassName?: string
   bodyClassName?: string
   hasTopGap?: boolean
   enableScrollEvent?: boolean
+  pageTitle?: string
 }
 
 const BaseLayout: React.FC<BaseLayoutProps> = ({
@@ -18,8 +19,14 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
   bodyClassName,
   hasTopGap = true,
   enableScrollEvent = false,
+  pageTitle,
 }) => {
   const bodyContent = useRef<HTMLDivElement>(null)
+  const bodyProps: BodyProps = {
+    bodyClassName,
+    hasTopGap,
+    pageTitle,
+  }
 
   /**
    * When the `enableScrollEvent` props is set true,
@@ -39,6 +46,12 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
     window.addEventListener(
       'scroll',
       () => {
+        if (!bodyContent.current) {
+          console.error(
+            'Lost body content reference. Refresh the page if dev mode.'
+          )
+          return
+        }
         if (
           bodyContent.current.getBoundingClientRect().bottom <=
           window.innerHeight + 50
@@ -53,22 +66,17 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
   }, [])
 
   return (
-    <div id="eodiro-app-scaffold" className={appClassName}>
-      <div id="eodiro-app">
-        <Navigation />
-        <div
-          ref={bodyContent}
-          className={mergeClassName(
-            'body-content',
-            bodyClassName,
-            hasTopGap ? 'top-gap' : ''
-          )}
-        >
-          {children}
+    <NavigationProvider>
+      <div id="eodiro-app-scaffold" className={appClassName}>
+        <div id="eodiro-app">
+          <Navigation />
+          <Body ref={bodyContent} {...bodyProps}>
+            {children}
+          </Body>
+          <GlobalFooter />
         </div>
-        <GlobalFooter />
       </div>
-    </div>
+    </NavigationProvider>
   )
 }
 

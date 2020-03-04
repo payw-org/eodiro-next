@@ -1,6 +1,5 @@
 import { VacantApi } from '@/api'
 import { VacantBuildings } from '@/api/vacant'
-import { VacantAppIcon } from '@/components/icons'
 import Information from '@/components/Information'
 import ServerError from '@/components/ServerError'
 import { ArrowBlock } from '@/components/ui'
@@ -26,11 +25,8 @@ const VacantBuildingsPage: NextPage<VacantBuildingsPageProps> = ({
       <Head>
         <title>빈 강의실 - 건물</title>
       </Head>
-      <BaseLayout hasTopGap>
+      <BaseLayout hasTopGap pageTitle="빈 강의실">
         <div id="eodiro-vacant">
-          <h1 className="page-app-title">
-            <VacantAppIcon className="icon" />빈 강의실
-          </h1>
           {buildingsInfo && buildingsInfo.length > 0 ? (
             <Grid className="building-container">
               {buildingsInfo.map((info, i) => {

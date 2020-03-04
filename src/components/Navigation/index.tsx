@@ -1,8 +1,11 @@
 import { VerticalThreeDotsIcon } from '@/components/icons'
 import EodiroLogo from '@/components/icons/EodiroLogo'
 import mergeClassName from '@/modules/merge-class-name'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './Navigation.scss'
+import { NavigationContext } from './NavigationContext'
+
+export * from './NavigationContext'
 
 type NavItemProps = {
   to: string
@@ -19,6 +22,7 @@ const NavItem: React.FC<NavItemProps> = ({ to, title }) => {
 
 const Navigation: React.FC = () => {
   const [isMobileNavMenuOpened, setIsMobileNavMenuOpened] = useState(false)
+  const navContext = useContext(NavigationContext)
 
   return (
     <nav id="eodiro-navigation">
@@ -26,8 +30,17 @@ const Navigation: React.FC = () => {
         <div className="en-bar" />
         <a className="home-link" href="/">
           <EodiroLogo className="eodiro-logo" fill="#ff3852" />
-          {/* <EodiroLogo className="eodiro-logo" appearance="light" fill="#000" /> */}
         </a>
+
+        <h1
+          className={mergeClassName(
+            'page-app-title',
+            !navContext.isHidden && 'show'
+          )}
+        >
+          {navContext.pageAppTitle}
+        </h1>
+
         <ul
           className={mergeClassName(
             'en-menus-container',
@@ -40,6 +53,7 @@ const Navigation: React.FC = () => {
           <NavItem title="빼빼로 광장" to="/" />
           <NavItem title="더 보기" to="/" />
         </ul>
+
         <div className="more-tappable">
           <VerticalThreeDotsIcon
             className="more-icon"
