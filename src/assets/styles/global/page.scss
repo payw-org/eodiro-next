@@ -1,9 +1,0 @@
-@use '@/assets/styles/utilities/mixins' as *;
-@use '@/assets/styles/utilities/functions' as *;
-
-@mixin page-app-title {
-  line-height: 1;
-  font-size: h(12);
-  margin-bottom: s(8);
-  @include resolve-optical-illusion(r(4));
-}
