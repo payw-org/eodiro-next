@@ -1,9 +1,7 @@
 import { LecturesApi } from '@/api'
-import { LecturesAppIcon } from '@/components/icons'
 import { ArrowBlock, LineInput, LineInputOnChangeHook } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import Grid from '@/layouts/Grid'
-import { CEM } from '@/modules/custom-event-manager'
 import { useStateRef } from '@/modules/use-state-ref'
 import { Lectures } from '@payw/cau-timetable-scraper-types'
 import { NextPage } from 'next'
@@ -93,23 +91,13 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
     }
   }, [isFetching])
 
-  // Load more lectures when scroll reaches the bottom
-  useEffect(() => {
-    CEM.addEventListener('scrollends', document.body, loadMore)
-  }, [])
-
   return (
     <>
       <Head>
         <title>강의 검색</title>
       </Head>
-      <BaseLayout enableScrollEvent>
+      <BaseLayout pageTitle="강의 검색" onScrollEnds={loadMore}>
         <div id="eodiro-lectures">
-          <h1 className="page-app-title">
-            <LecturesAppIcon className="icon" />
-            강의 검색
-          </h1>
-
           <LineInput
             value={searchQuery}
             setValue={setSearchQuery}
@@ -122,11 +110,39 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
           <Grid className="lecture-container">
             {displayLectures.map((lecture, i) => {
               return (
-                <ArrowBlock key={i} className="lecture-item">
+                <ArrowBlock noArrow flat key={i} className="lecture-item">
                   <div className="li-content">
-                    <h1 className="lecture-name">{lecture.name}</h1>
-                    <p>{lecture.professor}</p>
-                    <p>{lecture.schedule}</p>
+                    <div className="name-and-code">
+                      <div>
+                        <h1 className="name">{lecture.name}</h1>
+                        {lecture.professor && (
+                          <p className="professor info-item">
+                            {lecture.professor}
+                          </p>
+                        )}
+                      </div>
+                      <p className="code">{lecture.code}</p>
+                    </div>
+                    {(lecture.college || lecture.major) && (
+                      <p className="major">
+                        {lecture.college + ' '}
+                        {lecture.major}
+                      </p>
+                    )}
+                    {lecture.credit && (
+                      <p className="credit">{lecture.credit}학점</p>
+                    )}
+                    {lecture.schedule && lecture.schedule !== '/' && (
+                      <p className="schedule info-item">{lecture.schedule}</p>
+                    )}
+                    {lecture.note && (
+                      <div className="note">
+                        <div className="data">
+                          <h3>비고</h3>
+                          <p>{lecture.note}</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </ArrowBlock>
               )

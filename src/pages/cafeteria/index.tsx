@@ -1,5 +1,5 @@
 import { CafeteriaApi, CafeteriaMenus } from '@/api'
-import { ArrowIcon, CafeteriaAppIcon } from '@/components/icons'
+import { ArrowIcon } from '@/components/icons'
 import Information from '@/components/Information'
 import ServerError from '@/components/ServerError'
 import { ArrowBlock } from '@/components/ui'
@@ -76,13 +76,8 @@ const CafeteriaPage: NextPage<CafeteriaPageProps> = ({ menus }) => {
   }, [now])
 
   return (
-    <BaseLayout hasTopGap>
+    <BaseLayout hasTopGap pageTitle="학식 메뉴">
       <div id="eodiro-cafeteria">
-        <h1 className="page-app-title">
-          <CafeteriaAppIcon className="icon" />
-          학식 메뉴
-        </h1>
-
         {todayMenus ? (
           <>
             <div className="date-container">
