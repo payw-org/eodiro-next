@@ -7,10 +7,10 @@ import Head from 'next/head'
 import React from 'react'
 
 type InquiryProps = {
-  inquirys: InquiryData[]
+  inquiries: InquiryData[]
 }
 
-const InquiryPage: NextPage<InquiryProps> = ({ inquirys }) => {
+const InquiryPage: NextPage<InquiryProps> = ({ inquiries: inquiries }) => {
   return (
     <>
       <Head>
@@ -20,8 +20,8 @@ const InquiryPage: NextPage<InquiryProps> = ({ inquirys }) => {
         <div id="eodiro-inquiry">
           <h1 className="page-app-title">문의</h1>
           <Grid className="inquiry-container">
-            {inquirys && inquirys.length > 0 ? (
-              inquirys.map((inquiry, i) => {
+            {inquiries && inquiries.length > 0 ? (
+              inquiries.map((inquiry) => {
                 return (
                   <ArrowBlock key={inquiry.id} className="inquiry-item">
                     <div className="li-content">
@@ -48,7 +48,7 @@ const InquiryPage: NextPage<InquiryProps> = ({ inquirys }) => {
 InquiryPage.getInitialProps = async (): Promise<InquiryProps> => {
   const data = await InquiryApi.inquirys()
   return {
-    inquirys: data,
+    inquiries: data,
   }
 }
 export default InquiryPage
