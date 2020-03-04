@@ -96,6 +96,11 @@
     @content;
   }
 }
+@mixin no-mobile {
+  @include larger-than($width-step--1 + 1px) {
+    @content;
+  }
+}
 
 // typography
 // headings
