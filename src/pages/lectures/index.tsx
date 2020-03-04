@@ -113,20 +113,36 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
                 <ArrowBlock noArrow flat key={i} className="lecture-item">
                   <div className="li-content">
                     <div className="name-and-code">
-                      <h1 className="name">{lecture.name}</h1>
+                      <div>
+                        <h1 className="name">{lecture.name}</h1>
+                        {lecture.professor && (
+                          <p className="professor info-item">
+                            {lecture.professor}
+                          </p>
+                        )}
+                      </div>
                       <p className="code">{lecture.code}</p>
                     </div>
                     {(lecture.college || lecture.major) && (
-                      <p>
+                      <p className="major">
                         {lecture.college + ' '}
                         {lecture.major}
                       </p>
                     )}
-                    <p className="professor">{lecture.professor}</p>
-                    {lecture.schedule && lecture.schedule !== '/' && (
-                      <p className="schedule">{lecture.schedule}</p>
+                    {lecture.credit && (
+                      <p className="credit">{lecture.credit}학점</p>
                     )}
-                    {lecture.section}
+                    {lecture.schedule && lecture.schedule !== '/' && (
+                      <p className="schedule info-item">{lecture.schedule}</p>
+                    )}
+                    {lecture.note && (
+                      <div className="note">
+                        <div className="data">
+                          <h3>비고</h3>
+                          <p>{lecture.note}</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </ArrowBlock>
               )

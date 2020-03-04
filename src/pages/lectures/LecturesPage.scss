@@ -18,9 +18,58 @@
       .li-content {
         text-align: left;
 
-        .lecture-name {
-          font-size: b(6);
-          font-weight: 500;
+        .info-item {
+          margin-top: s(2);
+        }
+
+        .name-and-code {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          @include separator('bottom');
+          padding-bottom: s(3);
+
+          .name {
+            flex: 1;
+            font-size: b(6);
+            font-weight: 600;
+          }
+
+          .code {
+            margin-left: s(3);
+            color: $eodiro-green-2;
+            font-size: b(1);
+          }
+        }
+
+        .major,
+        .credit {
+          line-height: 1;
+          padding: s(2);
+          @include bg;
+          @include border-radius-inner;
+          display: inline-block;
+          margin-right: s(3);
+          margin-top: s(2);
+        }
+
+        .note {
+          @include separator('top');
+          margin-top: s(2);
+
+          .data {
+            margin-top: s(3);
+
+            h3 {
+              font-size: b(3);
+              color: $eodiro-green-2;
+              line-height: 1;
+            }
+
+            p {
+              margin-top: s(1);
+            }
+          }
         }
       }
     }
