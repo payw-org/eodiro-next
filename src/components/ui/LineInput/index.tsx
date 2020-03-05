@@ -17,6 +17,7 @@ type LineInputProps = {
   onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void
   onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>) => void
   onEnter?: () => void
+  disabled?: boolean
 }
 
 export const LineInput = React.forwardRef<HTMLInputElement, LineInputProps>(
@@ -32,6 +33,7 @@ export const LineInput = React.forwardRef<HTMLInputElement, LineInputProps>(
       onKeyPress,
       onKeyUp,
       onEnter,
+      disabled = false,
     },
     ref
   ) => {
@@ -40,6 +42,7 @@ export const LineInput = React.forwardRef<HTMLInputElement, LineInputProps>(
         <input
           ref={ref}
           value={value}
+          disabled={disabled}
           type={type === 'search' ? 'text' : type}
           spellCheck="false"
           placeholder={placeholder}
