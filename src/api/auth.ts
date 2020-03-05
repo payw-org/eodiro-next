@@ -1,13 +1,20 @@
 import ApiHost from '@/modules/api-host'
 import eodiroAxios from '@/modules/eodiro-axios'
 import EodiroHttpCookie from '@/modules/eodiro-http-cookie'
+import nodeCookie from 'cookie'
+import { IncomingMessage } from 'http'
 
 export class Tokens {
-  static async get(): Promise<{
+  static async get(
+    req?: IncomingMessage
+  ): Promise<{
     accessToken: string
     refreshToken: string
   }> {
-    const cookies = await EodiroHttpCookie.get()
+    const cookies =
+      req && req.headers?.cookie
+        ? nodeCookie.parse(req.headers?.cookie)
+        : await EodiroHttpCookie.get()
 
     return {
       accessToken: cookies.accessToken as string,
