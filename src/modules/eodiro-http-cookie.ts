@@ -8,16 +8,23 @@ export type Cookie = {
 
 export type Cookies = Cookie[]
 
-const eodiroHttpCookie = async (
-  cookieData: Cookie | Cookies
-): Promise<boolean> => {
-  const [err] = await eodiroAxios({
-    url: '/cookie',
-    method: 'POST',
-    data: Array.isArray(cookieData) ? cookieData : [cookieData],
-  })
+export default class EodiroHttpCookie {
+  static async set(cookieData: Cookie): Promise<boolean> {
+    const [err] = await eodiroAxios({
+      url: '/cookie',
+      method: 'POST',
+      data: cookieData,
+    })
 
-  return err ? false : true
+    return err ? false : true
+  }
+
+  static async get(): Promise<Record<string, string | number>> {
+    const [err, data] = await eodiroAxios({
+      url: '/cookie',
+      method: 'GET',
+    })
+
+    return err ? {} : ((data as unknown) as Record<string, string | number>)
+  }
 }
-
-export default eodiroHttpCookie

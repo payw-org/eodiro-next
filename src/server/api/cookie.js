@@ -8,22 +8,15 @@ cookieRouter.post('/cookie', async (req, res) => {
   /**
    * @type {import('../../modules/eodiro-http-cookie').Cookies}
    */
-  const cookies = req.body
+  const cookie = req.body
 
-  if (!Array.isArray(cookies)) {
-    res.sendStatus(422)
-    return
+  let cookieString = `${cookie.name}=${cookie.value};Expires=${cookie.expires};HttpOnly;`
+
+  if (req.socket.encrypted) {
+    cookieString += 'Secure;'
   }
 
-  cookies.forEach((cookie) => {
-    let cookieString = `${cookie.name}=${cookie.value};Expires=${cookie.expires};HttpOnly;`
-
-    if (req.socket.encrypted) {
-      cookieString += 'Secure;'
-    }
-
-    res.setHeader('Set-Cookie', cookieString)
-  })
+  res.setHeader('Set-Cookie', cookieString)
 
   res.sendStatus(200)
 })
