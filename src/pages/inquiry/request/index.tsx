@@ -1,8 +1,10 @@
 import { InquiryApi } from '@/api'
+import { ArrowBlock } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
+import './RequestPage.scss'
 
 const InquiryRequestPage: NextPage<void> = () => {
   const [formData, setFormData] = useState({ title: '', body: '', email: '' })
@@ -33,9 +35,8 @@ const InquiryRequestPage: NextPage<void> = () => {
   return (
     <>
       <Head>문의하기</Head>
-      <BaseLayout hasTopGap>
+      <BaseLayout hasTopGap pageTitle="문의하기">
         <div id="eodiro-inquiry-request">
-          <h1 className="page-app-title">문의하기</h1>
           <form onSubmit={handleFormSubmit}>
             <input
               name="title"
@@ -51,8 +52,22 @@ const InquiryRequestPage: NextPage<void> = () => {
               className="email-field"
               placeholder="이메일"
             />
-            <textarea name="body" value={body} onChange={onChange}></textarea>
-            <input type="submit" value="제출하기" />
+            <textarea
+              className="body-field"
+              name="body"
+              placeholder="문의내용"
+              value={body}
+              onChange={onChange}
+            ></textarea>
+            <div className="submit-input-container">
+              <ArrowBlock noArrow className="submit-input-arrow-block">
+                <input
+                  className="submit-input"
+                  type="submit"
+                  value="제출하기"
+                />
+              </ArrowBlock>
+            </div>
           </form>
         </div>
       </BaseLayout>
