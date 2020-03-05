@@ -1,4 +1,5 @@
 const express = require('express')
+const nodeCookie = require('cookie')
 
 const cookieRouter = express.Router()
 
@@ -25,6 +26,14 @@ cookieRouter.post('/cookie', async (req, res) => {
   })
 
   res.sendStatus(200)
+})
+
+cookieRouter.get('/cookie', async (req, res) => {
+  const cookies = req.headers?.cookie
+    ? nodeCookie.parse(req.headers?.cookie)
+    : {}
+
+  res.json(cookies)
 })
 
 module.exports = cookieRouter
