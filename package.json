@@ -3,9 +3,9 @@
   "version": "3.0.0-alpha.2",
   "main": "src/server/index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node src/server/index.js",
+    "dev": "cross-env NODE_ENV=development node --harmony src/server/index.js",
     "build": "next build",
-    "start": "cross-env NODE_ENV=production node src/server/index.js",
+    "start": "cross-env NODE_ENV=production node --harmony src/server/index.js",
     "pm2-start": "if pm2 show eodiro-client ; then npm run pm2-stop && npm run pm2-delete && npm run pm2-start ; else pm2 start npm --name 'eodiro-client' -- run start ; fi",
     "pm2-restart": "if pm2 show eodiro-client ; then pm2 restart eodiro-client ; else echo 'No pm2 instance for eodiro client' ; fi",
     "pm2-stop": "if pm2 show eodiro-client ; then pm2 stop eodiro-client ; else echo 'No pm2 instance for eodiro client' ; fi",
