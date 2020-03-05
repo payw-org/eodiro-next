@@ -1,0 +1,34 @@
+@use '@/assets/styles/main' as *;
+#eodiro-inquiry {
+  .inquiry-request-container {
+    display: flex;
+    justify-content: flex-end;
+    .inquiry-request {
+      .inquiry-request-link {
+      }
+    }
+  }
+
+  .inquiry-container {
+    .inquiry-content {
+      text-align: left;
+
+      .inquiry-item {
+        margin-top: s(2);
+      }
+      .inquiry-title {
+        flex: 1;
+        font-size: b(6);
+        font-weight: 600;
+      }
+      .inquiry-uploaded-at {
+        font-size: b(1);
+      }
+      .inquiry-answer {
+        font-size: b(3);
+      }
+    }
+    .no-inquiry {
+    }
+  }
+}

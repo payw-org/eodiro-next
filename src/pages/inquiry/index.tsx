@@ -6,7 +6,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import Router from 'next/router'
 import React, { useEffect, useState } from 'react'
-
+import './InquiryPage.scss'
 type InquiryProps = {
   inquiries: InquiryData[]
 }
@@ -59,24 +59,28 @@ const InquiryPage: NextPage<InquiryProps> = ({ inquiries: inquiries }) => {
       {inquiries === undefined ? null : (
         <BaseLayout hasTopGap pageTitle="문의" onScrollEnds={loadMore}>
           <div id="eodiro-inquiry">
-            <button>
-              <ArrowBlock noArrow>
-                <a href={'/inquiry/request'}>문의하기</a>
+            <div className="inquiry-request-container">
+              <ArrowBlock noArrow className="inquiry-request">
+                <a className="inquiry-request-link" href={'/inquiry/request'}>
+                  문의하기
+                </a>
               </ArrowBlock>
-            </button>
+            </div>
             <Grid className="inquiry-container">
               {items && items.length > 0 ? (
                 items.map((item) => {
                   return (
-                    <ArrowBlock key={item.id} className="inquiry-item">
-                      <div className="li-content">
+                    <ArrowBlock key={item.id}>
+                      <div className="inquiry-content">
                         <h1 className="inquiry-title">{item.title}</h1>
-                        <p>{formatDate(new Date(item.uploaded_at))}</p>
-                        <p>
+                        <p className="inquiry-uploaded-at inquiry-item">
+                          {formatDate(new Date(item.uploaded_at))}
+                        </p>
+                        <p className="inquiry-answer inquiry-item">
                           {item.answer
-                            ? '답변완료( ' +
+                            ? '답변완료(' +
                               formatDate(new Date(item.answered_at)) +
-                              ' )'
+                              ')'
                             : '답변대기 중'}
                         </p>
                       </div>
