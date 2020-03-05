@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import BaseLayout from '@/layouts/BaseLayout'
-import { NextPage } from 'next'
-import Head from 'next/head'
-import Grid from '@/layouts/Grid'
-import { ColorIcon } from '@/types'
 import {
   CafeteriaAppIcon,
-  VacantAppIcon,
   LecturesAppIcon,
-  SquareAppIcon,
   OpensourceAppIcon,
+  SquareAppIcon,
+  VacantAppIcon,
 } from '@/components/icons'
+import BaseLayout from '@/layouts/BaseLayout'
+import Grid from '@/layouts/Grid'
+import { ColorIcon } from '@/types'
+import { NextPage } from 'next'
+import Head from 'next/head'
+import React, { useEffect, useState } from 'react'
 import './HomePage.scss'
 
 type HomeFeatureBoxProps = {
