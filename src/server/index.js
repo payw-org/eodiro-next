@@ -6,10 +6,14 @@ const dev = process.env.NODE_ENV === 'development'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
+const apiRouter = require('./api')
+
 app.prepare().then(() => {
   const server = express()
 
   server.use(bodyParser.json())
+
+  server.use(apiRouter)
 
   server.get('*', (req, res) => {
     return handle(req, res)
@@ -20,6 +24,6 @@ app.prepare().then(() => {
       throw err
     }
 
-    console.log('> Listening on port 3020')
+    console.log('[\x1b[33m', 'server.js', '\x1b[0m]', 'listening on port 3020')
   })
 })
