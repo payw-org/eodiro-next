@@ -1,40 +1,72 @@
 @use '@/assets/styles/main' as *;
 
-.eodiro-btn {
+@mixin btn-style-generator($primary, $secondary) {
   background-image: linear-gradient(
     to bottom,
-    lighten($eodiro-secondary-color, 5%),
-    $eodiro-primary-color
+    lighten($primary, 5%),
+    $secondary
   );
-  color: #fff;
-  @include border-radius-outer;
-  padding: s(3) s(4);
-  font-size: b(3);
-  font-weight: 500;
-  border: 1px solid darken($eodiro-primary-color, 15%);
-
-  &.full {
-    width: 100%;
-  }
+  border: 1px solid darken($secondary, 15%);
 
   &:hover {
     background-image: linear-gradient(
       to bottom,
-      darken($eodiro-secondary-color, 0%),
-      $eodiro-primary-color
+      darken($primary, 0%),
+      $secondary
     );
-    border: 1px solid darken($eodiro-primary-color, 20%);
+    border: 1px solid darken($secondary, 20%);
   }
 
   &:active {
     background-image: linear-gradient(
       to bottom,
-      darken($eodiro-secondary-color, 15%),
-      $eodiro-primary-color
+      darken($primary, 15%),
+      $secondary
     );
   }
 
   &:focus {
-    box-shadow: 0 0 0 0.3rem rgba($eodiro-secondary-color, 0.5);
+    box-shadow: 0 0 0 0.3rem rgba($primary, 0.5);
+  }
+}
+
+.eodiro-btn {
+  @include btn-style-generator($eodiro-secondary-color, $eodiro-primary-color);
+  color: #fff;
+  @include border-radius-outer;
+  padding: s(3) s(4);
+  font-size: b(3);
+  font-weight: 500;
+
+  &.full {
+    width: 100%;
+  }
+
+  &[data-accent='pink'] {
+    @include btn-style-generator($eodiro-pink-1, $eodiro-pink-2);
+  }
+  &[data-accent='orange'] {
+    @include btn-style-generator($eodiro-orange-1, $eodiro-orange-2);
+  }
+  &[data-accent='yellow'] {
+    @include btn-style-generator($eodiro-yellow-1, $eodiro-yellow-2);
+  }
+  &[data-accent='green'] {
+    @include btn-style-generator($eodiro-green-1, $eodiro-green-2);
+  }
+  &[data-accent='grass'] {
+    @include btn-style-generator($eodiro-grass-1, $eodiro-grass-2);
+  }
+  &[data-accent='sky'] {
+    @include btn-style-generator($eodiro-sky-1, $eodiro-sky-2);
+  }
+  &[data-accent='blue'] {
+    @include btn-style-generator($eodiro-blue-1, $eodiro-blue-2);
+  }
+  &[data-accent='purple'] {
+    @include btn-style-generator($eodiro-purple-1, $eodiro-purple-2);
+  }
+  &[data-accent='violet'] {
+    @include btn-style-generator($eodiro-violet-1, $eodiro-violet-2);
   }
 }

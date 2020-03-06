@@ -8,6 +8,16 @@ type ButtonProps = {
   full?: boolean
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   disabled?: boolean
+  accent?:
+    | 'pink'
+    | 'orange'
+    | 'yellow'
+    | 'green'
+    | 'grass'
+    | 'sky'
+    | 'blue'
+    | 'purple'
+    | 'violet'
 }
 
 export const Button: React.FC<ButtonProps> = (props) => {
@@ -18,6 +28,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
         props.className,
         props.full && 'full'
       )}
+      data-accent={props.accent}
       onClick={props.onClick}
       disabled={props.disabled}
     >
