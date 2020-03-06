@@ -3,7 +3,7 @@ import ServerError from '@/components/ServerError'
 import { ArrowBlock, LineInput, LineInputOnChangeHook } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import Grid from '@/layouts/Grid'
-import { useStateRef } from '@/modules/use-state-ref'
+import getState from '@/modules/get-state'
 import { Lectures } from '@payw/cau-timetable-scraper-types'
 import { NextPage } from 'next'
 import Head from 'next/head'
@@ -15,14 +15,10 @@ type LecturesPageProps = {
 }
 
 const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
-  const [searchQuery, setSearchQuery, searchQueryRef] = useStateRef('')
-  const [defaultLectures, setDefaultLectures, defaultLecturesRef] = useStateRef(
-    lectures
-  )
-  const [displayLectures, setDisplayLectures, displayLecturesRef] = useStateRef(
-    lectures
-  )
-  const [isFetching, setIsFetching, isFetchingRef] = useStateRef(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [defaultLectures, setDefaultLectures] = useState(lectures)
+  const [displayLectures, setDisplayLectures] = useState(lectures)
+  const [, setIsFetching] = useState(false)
 
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>(null)
 
@@ -59,7 +55,12 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
       return
     }
 
-    if (isFetchingRef.current) {
+    const searchQuery = getState<string>(setSearchQuery)
+    const isFetching = getState<boolean>(setIsFetching)
+    const defaultLectures = getState<Lectures>(setDefaultLectures)
+    const displayLectures = getState<Lectures>(setDisplayLectures)
+
+    if (isFetching) {
       return
     }
 
@@ -68,21 +69,21 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
 
     let moreLectures: Lectures
 
-    if (searchQueryRef.current.length === 0) {
+    if (searchQuery.length === 0) {
       // Load more default lectures
       moreLectures = await LecturesApi.lectures({
         campus: '서울',
-        offset: defaultLecturesRef.current.length,
+        offset: defaultLectures.length,
       })
 
-      setDefaultLectures([...defaultLecturesRef.current, ...moreLectures])
+      setDefaultLectures([...defaultLectures, ...moreLectures])
     } else {
-      moreLectures = await LecturesApi.search(searchQueryRef.current, {
+      moreLectures = await LecturesApi.search(searchQuery, {
         campus: '서울',
-        offset: displayLecturesRef.current.length,
+        offset: displayLectures.length,
       })
 
-      setDisplayLectures([...displayLecturesRef.current, ...moreLectures])
+      setDisplayLectures([...displayLectures, ...moreLectures])
     }
 
     // Set isFetching flag to false
