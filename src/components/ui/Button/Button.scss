@@ -1,0 +1,40 @@
+@use '@/assets/styles/main' as *;
+
+.eodiro-btn {
+  background-image: linear-gradient(
+    to bottom,
+    lighten($eodiro-secondary-color, 5%),
+    $eodiro-primary-color
+  );
+  color: #fff;
+  @include border-radius-outer;
+  padding: s(3) s(4);
+  font-size: b(3);
+  font-weight: 500;
+  border: 1px solid darken($eodiro-primary-color, 15%);
+
+  &.full {
+    width: 100%;
+  }
+
+  &:hover {
+    background-image: linear-gradient(
+      to bottom,
+      darken($eodiro-secondary-color, 0%),
+      $eodiro-primary-color
+    );
+    border: 1px solid darken($eodiro-primary-color, 20%);
+  }
+
+  &:active {
+    background-image: linear-gradient(
+      to bottom,
+      darken($eodiro-secondary-color, 15%),
+      $eodiro-primary-color
+    );
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.3rem rgba($eodiro-secondary-color, 0.5);
+  }
+}

@@ -2,6 +2,7 @@ import { AuthApi, Tokens, TokensPack } from '@/api'
 import '@/assets/styles/global/globalstyle.scss'
 import EodiroHttpCookie from '@/modules/eodiro-http-cookie'
 import dayjs from 'dayjs'
+import { NextComponentType, NextPageContext } from 'next'
 import App, { AppContext, AppInitialProps } from 'next/app'
 import Head from 'next/head'
 import React, { createContext, useState } from 'react'
@@ -41,17 +42,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 interface EodiroAppInitialProps extends AppInitialProps {
   authProps: AuthProviderProps
 }
+
+interface EodiroPageContext extends NextPageContext {
+  isSigned: boolean
+}
+
+interface EodiroAppContext extends AppContext {
+  ctx: EodiroPageContext
+}
+
+export type EodiroPage<P = {}, IP = P> = NextComponentType<
+  EodiroPageContext,
+  IP,
+  P
+>
+
 export default class EodiroApp extends App<EodiroAppInitialProps> {
   static async getInitialProps({
     Component,
     ctx,
-  }: AppContext): Promise<EodiroAppInitialProps> {
-    let pageProps = {}
-
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
-    }
-
+  }: EodiroAppContext): Promise<EodiroAppInitialProps> {
     const { req, res } = ctx
 
     const tokens = await Tokens.get(ctx.req)
@@ -60,17 +70,21 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
       signedInit: false,
     }
 
+    ctx.isSigned = false
+
     // Verify token
     if (tokens.accessToken) {
       const isSigned = await AuthApi.isSigned(ctx.req)
 
       if (isSigned) {
         authProps.signedInit = true
+        ctx.isSigned = true
       } else {
         const newTokens = await AuthApi.refresh(ctx.req)
         if (newTokens) {
           await Tokens.set(newTokens, { req, res })
           authProps.signedInit = true
+          ctx.isSigned = true
         } else {
           // Clear tokens
           await EodiroHttpCookie.set(
@@ -97,6 +111,12 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
           )
         }
       }
+    }
+
+    let pageProps = {}
+
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx)
     }
 
     return { pageProps, authProps }

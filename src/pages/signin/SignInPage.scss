@@ -11,8 +11,19 @@
   }
 
   .signin-box {
-    .id {
-      margin-bottom: s(3);
+    .pw {
+      margin-top: s(3);
+    }
+
+    .error {
+      // @include resolve-optical-illusion;
+      text-align: center;
+      color: $eodiro-primary-color;
+      margin-top: s(3);
+    }
+
+    .btn {
+      margin-top: s(5);
     }
   }
 }

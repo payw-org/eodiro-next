@@ -1,18 +1,14 @@
 import { AuthApi, Tokens } from '@/api'
-import { LineInput } from '@/components/ui'
+import { Button, LineInput } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
-import { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect, useRef, useState } from 'react'
+import { EodiroPage } from '../_app'
 import './SignInPage.scss'
 
-type SignInPageProps = {
-  accessToken: string
-  refereshToken: string
-}
-
-const SignInPage: NextPage = () => {
+const SignInPage: EodiroPage = () => {
   const [validating, setValidating] = useState(false)
+  const [failed, setFailed] = useState(false)
 
   const [portalId, setPortalId] = useState('')
   const portalIdRef = useRef<HTMLInputElement>(null)
@@ -46,6 +42,8 @@ const SignInPage: NextPage = () => {
       window.location.href = '/'
     } else {
       // Sign in failed
+      setFailed(true)
+      setValidating(false)
     }
   }
 
@@ -77,11 +75,32 @@ const SignInPage: NextPage = () => {
               onEnter={signIn}
               disabled={validating}
             />
+            {failed && (
+              <p className="error">아이디 또는 암호가 잘못되었습니다.</p>
+            )}
+            <Button
+              label={'로그인'}
+              full
+              className="btn"
+              disabled={validating}
+              onClick={signIn}
+            />
           </div>
         </div>
       </BaseLayout>
     </>
   )
+}
+
+SignInPage.getInitialProps = ({ res, isSigned }): {} => {
+  if (isSigned) {
+    res.writeHead(302, {
+      Location: '/',
+    })
+    res.end()
+  }
+
+  return {}
 }
 
 export default SignInPage
