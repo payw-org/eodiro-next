@@ -2,10 +2,11 @@ import { InquiryApi, InquiryData } from '@/api'
 import { ArrowBlock } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import Grid from '@/layouts/Grid'
+import { useStateRef } from '@/modules/use-state-ref'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Router from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import './InquiryPage.scss'
 type InquiryProps = {
   inquiries: InquiryData[]
@@ -31,30 +32,32 @@ const InquiryPage: NextPage<InquiryProps> = ({
   inquiries: inquiries,
   isAdmin,
 }) => {
-  const [items, setItems] = useState(inquiries)
-  const [isFetching, setIsFetching] = useState(false)
-  async function loadMore(): Promise<void> {
-    if (isFetching) {
-      return
-    }
-    setIsFetching(true)
-    const moreItems = await InquiryApi.inquirys(items.length)
-    if (moreItems.inquiries && moreItems.inquiries.length > 0) {
-      setItems([...items, ...moreItems.inquiries])
-    }
-    setIsFetching(false)
-  }
+  const [items, setItems, itemsRef] = useStateRef(inquiries)
+  const [isFetching, setIsFetching, isFetchRef] = useStateRef(false)
 
   function isReachBottom(): boolean {
     return window.innerHeight < document.body.scrollHeight
   }
+
+  async function loadMore(): Promise<void> {
+    if (isFetchRef.current) {
+      return
+    }
+    setIsFetching(true)
+    const moreItems = await InquiryApi.inquirys(itemsRef.current.length)
+    if (moreItems.inquiries && moreItems.inquiries.length > 0) {
+      setItems([...itemsRef.current, ...moreItems.inquiries])
+    }
+    setIsFetching(false)
+  }
+
   useEffect(() => {
     if (inquiries === undefined) {
       Router.push('/inquiry/request')
     } else if (isFetching === false && !isReachBottom()) {
       loadMore()
     }
-  })
+  }, [itemsRef.current])
   return (
     <>
       <Head>
