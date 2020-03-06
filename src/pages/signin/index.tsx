@@ -3,6 +3,7 @@ import { Button, LineInput } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import Head from 'next/head'
 import { useEffect, useRef, useState } from 'react'
+import { EodiroPage } from '../_app'
 import './SignInPage.scss'
 
 const SignInPage: EodiroPage = () => {
@@ -89,6 +90,17 @@ const SignInPage: EodiroPage = () => {
       </BaseLayout>
     </>
   )
+}
+
+SignInPage.getInitialProps = ({ res, isSigned }): {} => {
+  if (isSigned) {
+    res.writeHead(302, {
+      Location: '/',
+    })
+    res.end()
+  }
+
+  return {}
 }
 
 export default SignInPage
