@@ -1,5 +1,5 @@
+import AuthCommon from '@/components/auth/AuthCommon'
 import Head from 'next/head'
-import { AuthCommon } from './signin/AuthCommon'
 import { EodiroPage } from './_app'
 
 const ForgotPage: EodiroPage = () => {

@@ -2,13 +2,13 @@ import { AuthApi, Tokens } from '@/api'
 import { Button, LineInput } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import React, { useEffect, useRef, useState } from 'react'
-import './SignInPage.scss'
+import './AuthCommon.scss'
 
 type AuthCommonProps = {
   mode: 'signin' | 'join' | 'forgot'
 }
 
-export const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
+const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
   const [validating, setValidating] = useState(false)
   const [signInFailed, setSignInFailed] = useState(false)
 
@@ -235,3 +235,5 @@ export const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
     </BaseLayout>
   )
 }
+
+export default AuthCommon
