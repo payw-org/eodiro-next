@@ -2,7 +2,7 @@
 
 #eodiro-signin {
   width: 100%;
-  max-width: 17rem;
+  max-width: 18rem;
 
   .signin-header {
     margin-bottom: s(6);
@@ -10,7 +10,7 @@
   }
 
   .signin-box {
-    .pw {
+    .field {
       margin-top: s(3);
     }
 
@@ -18,11 +18,31 @@
       // @include resolve-optical-illusion;
       text-align: center;
       color: $eodiro-primary-color;
-      margin-top: s(3);
+      margin-top: s(1);
     }
 
     .btn {
       margin-top: s(5);
+    }
+
+    .more {
+      margin-top: s(5);
+      padding-top: s(2);
+      @include separator('top');
+
+      p {
+        @include bordered;
+        @include border-radius-outer;
+        padding: s(3);
+        text-align: center;
+        margin-top: s(3);
+
+        a {
+          margin-left: s(1);
+          font-weight: 500;
+          color: $eodiro-primary-color;
+        }
+      }
     }
   }
 }
