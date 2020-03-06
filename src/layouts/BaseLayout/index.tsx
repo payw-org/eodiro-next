@@ -12,9 +12,10 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
   children,
   appClassName,
   bodyClassName,
-  hasTopGap = true,
+  hasTopGap,
   pageTitle,
   onScrollEnds,
+  centered,
 }) => {
   const bodyContent = useRef<HTMLDivElement>(null)
   const bodyProps: BodyProps = {
@@ -22,6 +23,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
     hasTopGap,
     pageTitle,
     onScrollEnds,
+    centered,
   }
 
   return (

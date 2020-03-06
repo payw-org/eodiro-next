@@ -8,13 +8,14 @@ import { NavigationContext } from './NavigationContext'
 export * from './NavigationContext'
 
 type NavItemProps = {
+  className?: string
   to: string
   title: string
 }
 
-const NavItem: React.FC<NavItemProps> = ({ to, title }) => {
+const NavItem: React.FC<NavItemProps> = ({ to, title, className }) => {
   return (
-    <a className="en-menu-link" href={to}>
+    <a className={mergeClassName('en-menu-link', className)} href={to}>
       <li className="en-menu-item">{title}</li>
     </a>
   )
@@ -51,7 +52,7 @@ const Navigation: React.FC = () => {
           <NavItem title="강의 검색" to="/lectures" />
           <NavItem title="학식 메뉴" to="/cafeteria" />
           <NavItem title="빼빼로 광장" to="/" />
-          <NavItem title="더 보기" to="/" />
+          <NavItem title="로그인" className="signin" to="/signin" />
         </ul>
 
         <div className="more-tappable">

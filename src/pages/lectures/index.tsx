@@ -1,4 +1,5 @@
 import { LecturesApi } from '@/api'
+import ServerError from '@/components/ServerError'
 import { ArrowBlock, LineInput, LineInputOnChangeHook } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import Grid from '@/layouts/Grid'
@@ -54,6 +55,10 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
   }
 
   async function loadMore(): Promise<void> {
+    if (!lectures) {
+      return
+    }
+
     if (isFetchingRef.current) {
       return
     }
@@ -98,56 +103,63 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
       </Head>
       <BaseLayout pageTitle="강의 검색" onScrollEnds={loadMore}>
         <div id="eodiro-lectures">
-          <LineInput
-            value={searchQuery}
-            setValue={setSearchQuery}
-            className="search-field"
-            placeholder="강의명, 학과, 교수, 강의실 등"
-            type="search"
-            onChangeHook={onChange}
-          />
-
-          <Grid className="lecture-container">
-            {displayLectures.map((lecture, i) => {
-              return (
-                <ArrowBlock noArrow flat key={i} className="lecture-item">
-                  <div className="li-content">
-                    <div className="name-and-code">
-                      <div>
-                        <h1 className="name">{lecture.name}</h1>
-                        {lecture.professor && (
-                          <p className="professor info-item">
-                            {lecture.professor}
+          {displayLectures ? (
+            <>
+              <LineInput
+                value={searchQuery}
+                setValue={setSearchQuery}
+                className="search-field"
+                placeholder="강의명, 학과, 교수, 강의실 등"
+                type="search"
+                onChangeHook={onChange}
+              />
+              <Grid className="lecture-container">
+                {displayLectures.map((lecture, i) => {
+                  return (
+                    <ArrowBlock noArrow flat key={i} className="lecture-item">
+                      <div className="li-content">
+                        <div className="name-and-code">
+                          <div>
+                            <h1 className="name">{lecture.name}</h1>
+                            {lecture.professor && (
+                              <p className="professor info-item">
+                                {lecture.professor}
+                              </p>
+                            )}
+                          </div>
+                          <p className="code">{lecture.code}</p>
+                        </div>
+                        {(lecture.college || lecture.major) && (
+                          <p className="major">
+                            {lecture.college + ' '}
+                            {lecture.major}
                           </p>
                         )}
+                        {lecture.credit && (
+                          <p className="credit">{lecture.credit}학점</p>
+                        )}
+                        {lecture.schedule && lecture.schedule !== '/' && (
+                          <p className="schedule info-item">
+                            {lecture.schedule}
+                          </p>
+                        )}
+                        {lecture.note && (
+                          <div className="note">
+                            <div className="data">
+                              <h3>비고</h3>
+                              <p>{lecture.note}</p>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                      <p className="code">{lecture.code}</p>
-                    </div>
-                    {(lecture.college || lecture.major) && (
-                      <p className="major">
-                        {lecture.college + ' '}
-                        {lecture.major}
-                      </p>
-                    )}
-                    {lecture.credit && (
-                      <p className="credit">{lecture.credit}학점</p>
-                    )}
-                    {lecture.schedule && lecture.schedule !== '/' && (
-                      <p className="schedule info-item">{lecture.schedule}</p>
-                    )}
-                    {lecture.note && (
-                      <div className="note">
-                        <div className="data">
-                          <h3>비고</h3>
-                          <p>{lecture.note}</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </ArrowBlock>
-              )
-            })}
-          </Grid>
+                    </ArrowBlock>
+                  )
+                })}
+              </Grid>
+            </>
+          ) : (
+            <ServerError />
+          )}
         </div>
       </BaseLayout>
     </>

@@ -8,11 +8,19 @@ export type BodyProps = {
   hasTopGap?: boolean
   pageTitle?: string
   onScrollEnds?: () => void
+  centered?: boolean
 }
 
 const Body = React.forwardRef<HTMLDivElement, BodyProps>(
   (
-    { children, bodyClassName, hasTopGap, pageTitle, onScrollEnds = null },
+    {
+      children,
+      bodyClassName,
+      hasTopGap = true,
+      pageTitle,
+      onScrollEnds = null,
+      centered = false,
+    },
     ref
   ) => {
     ref
@@ -58,7 +66,8 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
         className={mergeClassName(
           'body-content',
           bodyClassName,
-          hasTopGap ? 'top-gap' : ''
+          hasTopGap ? 'top-gap' : '',
+          centered ? 'centered' : ''
         )}
       >
         {pageTitle && (

@@ -199,9 +199,9 @@ $border-radius-inner: r(3);
 
 @mixin resolve-optical-illusion($value: null) {
   @if $value {
-    margin-left: $value / 2;
+    margin-left: $value / 3;
   } @else {
     // Default resolve to outer radius
-    margin-left: $border-radius-outer / 2;
+    margin-left: $border-radius-outer / 3;
   }
 }

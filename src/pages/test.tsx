@@ -1,7 +1,8 @@
 import { LineInput } from '@/components/ui'
+import { NextPage } from 'next'
 import React from 'react'
 
-const TestPage: React.FC = () => {
+const TestPage: NextPage = () => {
   return (
     <>
       <h1>Heading 1 Heading 1 Heading 1 Heading 1 Heading 1</h1>
