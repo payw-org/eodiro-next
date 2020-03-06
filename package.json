@@ -45,7 +45,8 @@
     "eslint-plugin-react-hooks": "^2.5.0",
     "node-sass": "npm:sass@^1.25.0",
     "postcss": "^7.0.27",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "webpack-filter-warnings-plugin": "^1.2.1"
   },
   "browserslist": [
     "last 2 versions",
