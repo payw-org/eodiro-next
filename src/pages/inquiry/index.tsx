@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react'
 import './InquiryPage.scss'
 type InquiryProps = {
   inquiries: InquiryData[]
+  isAdmin: boolean
 }
 
 function formatDate(date): string {
@@ -26,7 +27,10 @@ function formatDate(date): string {
     ('0' + date.getSeconds()).slice(-2)
   )
 }
-const InquiryPage: NextPage<InquiryProps> = ({ inquiries: inquiries }) => {
+const InquiryPage: NextPage<InquiryProps> = ({
+  inquiries: inquiries,
+  isAdmin,
+}) => {
   const [items, setItems] = useState(inquiries)
   const [isFetching, setIsFetching] = useState(false)
   async function loadMore(): Promise<void> {
@@ -35,8 +39,8 @@ const InquiryPage: NextPage<InquiryProps> = ({ inquiries: inquiries }) => {
     }
     setIsFetching(true)
     const moreItems = await InquiryApi.inquirys(items.length)
-    if (moreItems && moreItems.length > 0) {
-      setItems([...items, ...moreItems])
+    if (moreItems.inquiries && moreItems.inquiries.length > 0) {
+      setItems([...items, ...moreItems.inquiries])
     }
     setIsFetching(false)
   }
@@ -59,13 +63,15 @@ const InquiryPage: NextPage<InquiryProps> = ({ inquiries: inquiries }) => {
       {inquiries === undefined ? null : (
         <BaseLayout hasTopGap pageTitle="문의" onScrollEnds={loadMore}>
           <div id="eodiro-inquiry">
-            <div className="inquiry-request-container">
-              <ArrowBlock noArrow className="inquiry-request">
-                <a className="inquiry-request-link" href={'/inquiry/request'}>
-                  문의하기
-                </a>
-              </ArrowBlock>
-            </div>
+            {isAdmin ? null : (
+              <div className="inquiry-request-container">
+                <ArrowBlock noArrow className="inquiry-request">
+                  <a className="inquiry-request-link" href={'/inquiry/request'}>
+                    문의하기
+                  </a>
+                </ArrowBlock>
+              </div>
+            )}
             <Grid className="inquiry-container">
               {items && items.length > 0 ? (
                 items.map((item) => {
@@ -99,8 +105,6 @@ const InquiryPage: NextPage<InquiryProps> = ({ inquiries: inquiries }) => {
 }
 InquiryPage.getInitialProps = async (): Promise<InquiryProps> => {
   const data = await InquiryApi.inquirys(0)
-  return {
-    inquiries: data,
-  }
+  return data
 }
 export default InquiryPage

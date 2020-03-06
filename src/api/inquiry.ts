@@ -16,7 +16,10 @@ export class InquiryApi {
   static async inquirys(
     offset: number,
     amount?: number
-  ): Promise<InquiryData[] | null> {
+  ): Promise<{
+    inquiries: InquiryData[]
+    isAdmin: boolean
+  } | null> {
     const [err, data, status] = await useFetch(
       ApiHost.getHost() +
         `/inquiry?` +
