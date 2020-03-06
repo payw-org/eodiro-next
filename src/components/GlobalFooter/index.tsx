@@ -1,6 +1,5 @@
-import React from 'react'
 import dayjs from 'dayjs'
-
+import React from 'react'
 import './GlobalFooter.scss'
 
 const GlobalFooter: React.FC = () => {
@@ -17,6 +16,10 @@ const GlobalFooter: React.FC = () => {
         className="payw"
       >
         PAYW
+      </a>
+      &nbsp;|&nbsp;
+      <a href="/inquiry" className="inquiry">
+        문의하기
       </a>
     </footer>
   )
