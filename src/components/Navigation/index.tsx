@@ -1,6 +1,7 @@
 import { VerticalThreeDotsIcon } from '@/components/icons'
 import EodiroLogo from '@/components/icons/EodiroLogo'
 import mergeClassName from '@/modules/merge-class-name'
+import { AuthContext } from '@/pages/_app'
 import React, { useContext, useState } from 'react'
 import './Navigation.scss'
 import { NavigationContext } from './NavigationContext'
@@ -25,9 +26,11 @@ const Navigation: React.FC = () => {
   const [isMobileNavMenuOpened, setIsMobileNavMenuOpened] = useState(false)
   const navContext = useContext(NavigationContext)
 
+  const isSigned = useContext(AuthContext).isSigned
+
   return (
     <nav id="eodiro-navigation">
-        <div className="en-bar" />
+      <div className="en-bar" />
 
       <div className="en-wrapper">
         <a className="home-link" href="/">
@@ -53,7 +56,11 @@ const Navigation: React.FC = () => {
           <NavItem title="강의 검색" to="/lectures" />
           <NavItem title="학식 메뉴" to="/cafeteria" />
           <NavItem title="빼빼로 광장" to="/" />
-          <NavItem title="로그인" className="signin" to="/signin" />
+          <NavItem
+            title={isSigned ? '마이페이지' : '로그인'}
+            className={isSigned ? 'my' : 'signin'}
+            to={isSigned ? '/my' : '/signin'}
+          />
         </ul>
 
         <div className="more-tappable">
