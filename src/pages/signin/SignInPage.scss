@@ -5,7 +5,6 @@
   max-width: 17rem;
 
   .signin-header {
-    @include resolve-optical-illusion;
     margin-bottom: s(6);
     text-align: center;
   }
