@@ -5,17 +5,20 @@
  * @license MIT
  */
 
+import { Tokens } from '@/api'
 import axios, { AxiosRequestConfig } from 'axios'
-import EodiroHttpCookie from './eodiro-http-cookie'
+import { IncomingMessage } from 'http'
 
 const moduleConsoleTag = '[eodiro-axios]'
 
-export default async function eodiroAxios(
+export default async function eodiroAxios<T = any>(
   config: AxiosRequestConfig,
   eodiroAxiosConfig?: {
-    requireAuth?: boolean
+    access?: boolean
+    refresh?: boolean
+    req?: IncomingMessage
   }
-): Promise<[any, any, number]> {
+): Promise<[any, T, number]> {
   if (eodiroAxiosConfig && typeof eodiroAxiosConfig !== 'object') {
     console.error('eodiroAxios - Wrong type of parameter eodiroAxiosConfig')
 
@@ -23,19 +26,32 @@ export default async function eodiroAxios(
   }
 
   if (eodiroAxiosConfig) {
-    const { requireAuth } = eodiroAxiosConfig
+    const { access = false, refresh = false, req } = eodiroAxiosConfig
 
-    if (requireAuth) {
-      const cookie = await EodiroHttpCookie.get()
-      const { accessToken, refreshToken } = cookie
+    if (access || refresh) {
+      if (!req) {
+        console.error(
+          `[eodiro-axios] you are using auth without passing req argument, it may not work on server-side`
+        )
+      }
 
-      if (!accessToken) {
+      const cookies = await Tokens.get(req)
+      const { accessToken, refreshToken } = cookies
+
+      if (!config.headers) {
+        config.headers = {}
+      }
+
+      if (access && !accessToken) {
         return [true, null, 401]
       } else {
-        config.headers = {
-          accessToken,
-          refreshToken,
-        }
+        config.headers.accessToken = accessToken
+      }
+
+      if (refresh && !refreshToken) {
+        return [true, null, 401]
+      } else {
+        config.headers.refreshToken = refreshToken
       }
     }
   }
