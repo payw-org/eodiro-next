@@ -3,16 +3,30 @@ import { Button, LineInput } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './RequestPage.scss'
 
 const InquiryRequestPage: NextPage<void> = () => {
   const [title, setTitle] = useState('')
   const [email, setEmail] = useState('')
   const [body, setBody] = useState('')
-
   const [isSubmitted, setIsSbumitted] = useState(false)
 
+  const titleRef = useRef<HTMLInputElement>(null)
+  const emailRef = useRef<HTMLInputElement>(null)
+  const bodyRef = useRef<HTMLTextAreaElement>(null)
+
+  function focusTitle(): void {
+    titleRef.current.focus()
+  }
+
+  function focusEmail(): void {
+    emailRef.current.focus()
+  }
+
+  function focusBody(): void {
+    bodyRef.current.focus()
+  }
   async function submit(): Promise<void> {
     if (isSubmitted) {
       return
@@ -27,51 +41,47 @@ const InquiryRequestPage: NextPage<void> = () => {
       alert('Error')
     }
   }
+  useEffect(() => {
+    focusTitle()
+  }, [])
 
-  const handleFormSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    e.preventDefault()
-    const result = await InquiryApi.post(title, body, email)
-    if (result) {
-      alert('good')
-    } else {
-      alert('bad')
-    }
-    window.location.href = '/inquiry'
-  }
-  const onBodyChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-  ): void => {
-    setBody(e.target.value)
-  }
   return (
     <>
       <Head>문의하기</Head>
       <BaseLayout hasTopGap pageTitle="문의하기">
         <div id="eodiro-inquiry-request">
           <LineInput
+            ref={titleRef}
             className="title-field"
             placeholder="제목"
             value={title}
             setValue={setTitle}
+            onEnter={focusEmail}
             disabled={isSubmitted}
           />
           <LineInput
+            ref={emailRef}
             className="email-field"
             placeholder="email"
             value={email}
             setValue={setEmail}
+            onEnter={focusBody}
             disabled={isSubmitted}
           />
           <textarea
+            ref={bodyRef}
             className="body-field"
             name="body"
             placeholder="문의내용"
             value={body}
-            onChange={onBodyChange}
+            onChange={(e): void => {
+              setBody(e.target.value)
+            }}
+            onKeyDown={(e): void => {
+              if (e.key === 'Enter') {
+                submit()
+              }
+            }}
             disabled={isSubmitted}
           ></textarea>
           <Button
