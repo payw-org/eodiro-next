@@ -63,19 +63,21 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
       return
     }
 
-    // Set isFetching flag
+    // Set isFetching flag to true
     setIsFetching(true)
+
+    let moreLectures: Lectures
 
     if (searchQueryRef.current.length === 0) {
       // Load more default lectures
-      const moreLectures = await LecturesApi.lectures({
+      moreLectures = await LecturesApi.lectures({
         campus: '서울',
         offset: defaultLecturesRef.current.length,
       })
 
       setDefaultLectures([...defaultLecturesRef.current, ...moreLectures])
     } else {
-      const moreLectures = await LecturesApi.search(searchQueryRef.current, {
+      moreLectures = await LecturesApi.search(searchQueryRef.current, {
         campus: '서울',
         offset: displayLecturesRef.current.length,
       })
@@ -83,18 +85,19 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
       setDisplayLectures([...displayLecturesRef.current, ...moreLectures])
     }
 
-    // Set isFetching flag
-    // it
+    // Set isFetching flag to false
     setIsFetching(false)
-  }
 
-  // When fetch finishes, check whether the data reach the bottom
-  // if not, load more to make the page scrollable for further data
-  useEffect(() => {
-    if (isFetching === false && !isReachBottom()) {
+    if (moreLectures.length === 0) {
+      // If there are no more data to load
+      // stop the function
+      return
+    } else if (!isReachBottom()) {
+      // If the data don't reach to bottom
+      // load more to make the page scrollable
       loadMore()
     }
-  }, [isFetching])
+  }
 
   return (
     <>
