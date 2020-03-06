@@ -1,4 +1,4 @@
-import { LineInput } from '@/components/ui'
+import { Button, LineInput } from '@/components/ui'
 import { NextPage } from 'next'
 import React from 'react'
 
@@ -10,6 +10,7 @@ const TestPage: NextPage = () => {
       <h3>Heading 3 Heading 3 Heading 3 Heading 3 Heading 3</h3>
       <p>Body Body Body Body Body</p>
       <LineInput />
+      <Button label="Button" />
     </>
   )
 }
