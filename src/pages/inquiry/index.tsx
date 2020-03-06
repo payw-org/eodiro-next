@@ -63,16 +63,15 @@ const InquiryPage: NextPage<InquiryProps> = ({
       {inquiries === undefined ? null : (
         <BaseLayout hasTopGap pageTitle="문의" onScrollEnds={loadMore}>
           <div id="eodiro-inquiry">
-            {isAdmin ? null : (
-              <div className="inquiry-request-container">
-                <ArrowBlock noArrow className="inquiry-request">
-                  <a className="inquiry-request-link" href={'/inquiry/request'}>
-                    문의하기
+            <Grid className="inquiry-container">
+              {isAdmin ? null : (
+                <ArrowBlock noArrow className="request-btn">
+                  <a href={'/inquiry/request'}>
+                    <h1 className="request-content">+</h1>
                   </a>
                 </ArrowBlock>
-              </div>
-            )}
-            <Grid className="inquiry-container">
+              )}
+
               {items && items.length > 0 ? (
                 items.map((item) => {
                   return (

@@ -1,23 +1,25 @@
 @use '@/assets/styles/main' as *;
 #eodiro-inquiry {
-  .inquiry-request-container {
-    display: flex;
-    justify-content: flex-end;
-    .inquiry-request {
-      .inquiry-request-link {
-      }
+  .request-btn {
+    align-self: stretch;
+    .request-content {
+      text-align: center;
     }
   }
-
   .inquiry-container {
+    margin-top: s(2);
     .inquiry-content {
       text-align: left;
 
       .inquiry-item {
-        margin-top: s(2);
+        margin-top: s(5);
       }
       .inquiry-title {
-        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // white-space: nowrap;
+        word-break: break-all;
+        width: 100%;
         font-size: b(6);
         font-weight: 600;
       }
