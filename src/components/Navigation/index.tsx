@@ -27,8 +27,9 @@ const Navigation: React.FC = () => {
 
   return (
     <nav id="eodiro-navigation">
-      <div className="en-wrapper">
         <div className="en-bar" />
+
+      <div className="en-wrapper">
         <a className="home-link" href="/">
           <EodiroLogo className="eodiro-logo" fill="#ff3852" />
         </a>
