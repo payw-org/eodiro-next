@@ -1,7 +1,7 @@
 import { Magnifier } from '@/components/icons'
 import mergeClassName from '@/modules/merge-class-name'
 import EodiroColors from '@/modules/styles/EodiroColors'
-import React from 'react'
+import React, { useState } from 'react'
 import './LineInput.scss'
 
 export type LineInputOnChangeHook = (inputValue: string) => void
@@ -13,10 +13,12 @@ type LineInputProps = {
   type?: 'text' | 'search' | 'email' | 'password'
   placeholder?: string
   onChangeHook?: LineInputOnChangeHook
+  onChangeThrottle?: [LineInputOnChangeHook, number?]
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void
   onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void
   onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>) => void
   onEnter?: () => void
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void
   disabled?: boolean
 }
 
@@ -29,14 +31,18 @@ export const LineInput = React.forwardRef<HTMLInputElement, LineInputProps>(
       type = 'text',
       placeholder,
       onChangeHook = (): void => {},
+      onChangeThrottle,
       onKeyDown,
       onKeyPress,
       onKeyUp,
       onEnter,
+      onFocus,
       disabled = false,
     },
     ref
   ) => {
+    const [throttleTimeout, setThrottleTimeout] = useState<number>(null)
+
     return (
       <div className={mergeClassName('eodiro-line-input', className)}>
         <input
@@ -48,9 +54,24 @@ export const LineInput = React.forwardRef<HTMLInputElement, LineInputProps>(
           placeholder={placeholder}
           className={mergeClassName('li-field', type === 'search' && 'search')}
           onChange={(e): void => {
+            e.persist()
             const value = e.target.value
             setValue(value)
             onChangeHook(value)
+
+            if (!onChangeThrottle) return
+            const [
+              throttleHook = (): void => {},
+              throttle = 300,
+            ] = onChangeThrottle
+            if (throttleTimeout) {
+              window.clearTimeout(throttleTimeout)
+            }
+            setThrottleTimeout(
+              window.setTimeout(() => {
+                throttleHook(value)
+              }, throttle)
+            )
           }}
           onKeyDown={(e): void => {
             if (onKeyDown) {
@@ -63,6 +84,7 @@ export const LineInput = React.forwardRef<HTMLInputElement, LineInputProps>(
           }}
           onKeyPress={onKeyPress}
           onKeyUp={onKeyUp}
+          onFocus={onFocus}
         />
         {type === 'search' && (
           <div className="magnifier-icon-wrapper">
