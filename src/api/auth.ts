@@ -57,7 +57,7 @@ export class Tokens {
 }
 
 export class AuthApi {
-  static async isSigned(req: IncomingMessage): Promise<boolean> {
+  static async isSigned(req?: IncomingMessage): Promise<boolean> {
     const [err, data] = await eodiroAxios<{
       isSignedIn: boolean
     }>(
