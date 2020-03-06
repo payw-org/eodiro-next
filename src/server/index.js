@@ -12,7 +12,6 @@ app.prepare().then(() => {
   const server = express()
 
   server.use(bodyParser.json())
-
   server.use(apiRouter)
 
   server.get('*', (req, res) => {
