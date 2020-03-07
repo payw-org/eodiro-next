@@ -17,6 +17,7 @@ export default async function eodiroAxios<T = any>(
     access?: boolean
     refresh?: boolean
     req?: IncomingMessage
+    accessIfExist?: boolean
   }
 ): Promise<[any, T, number]> {
   if (eodiroAxiosConfig && typeof eodiroAxiosConfig !== 'object') {
@@ -28,13 +29,19 @@ export default async function eodiroAxios<T = any>(
   }
 
   if (eodiroAxiosConfig) {
-    const { access = false, refresh = false, req } = eodiroAxiosConfig
+    const {
+      access = false,
+      refresh = false,
+      req,
+      accessIfExist = false,
+    } = eodiroAxiosConfig
 
-    if (access || refresh) {
-      if (!req) {
+    if (access || refresh || accessIfExist) {
+      if (typeof window === 'undefined' && !req) {
         console.error(
-          `${moduleConsoleTag} you are using auth without passing req argument, it may not work on server-side`
+          `${moduleConsoleTag} you are trying to send tokens on server side without passing req argument`
         )
+        return [true, null, null]
       }
 
       const cookies = await Tokens.get(req)
@@ -47,6 +54,10 @@ export default async function eodiroAxios<T = any>(
       if (access && !accessToken) {
         return [true, null, 401]
       } else {
+        config.headers.accessToken = accessToken
+      }
+
+      if (accessIfExist && accessToken !== undefined) {
         config.headers.accessToken = accessToken
       }
 
