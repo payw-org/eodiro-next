@@ -59,7 +59,7 @@ export class InquiryApi {
         },
       },
       {
-        access: true,
+        accessIfExist: true,
       }
     )
     if (status === 201) {
