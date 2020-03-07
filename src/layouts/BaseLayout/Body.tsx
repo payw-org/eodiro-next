@@ -13,13 +13,14 @@ export type BodyProps = {
   children?: ReactNode
   bodyClassName?: string
   hasTopGap?: boolean
-  pageTitle?: string
-  onScrollEnds?: () => void
+  pageTitle: string
+  titleAlign?: 'left' | 'center'
+  titleHidden?: boolean
   centered?: boolean
   infinityScroll?: {
     loadDataStrategy: () => Promise<boolean>
     dataContainerRef: React.MutableRefObject<HTMLElement>
-}
+  }
 }
 
 const Body = React.forwardRef<HTMLDivElement, BodyProps>(
@@ -29,14 +30,15 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
       bodyClassName,
       hasTopGap = true,
       pageTitle,
-      onScrollEnds = null,
+      titleAlign = 'left',
+      titleHidden = false,
       centered = false,
       infinityScroll,
     },
     ref
   ) => {
-    ref
-    const titleSentinelRef = useRef<HTMLHeadingElement>(null)
+    const titleTextSentinelRef = useRef<HTMLDivElement>(null)
+    const titleTopSentinelRef = useRef<HTMLHeadingElement>(null)
     const bodyContentBottomRef = useRef<HTMLDivElement>(null)
     const navContext = useContext(NavigationContext)
 
@@ -63,9 +65,10 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
     }
 
     useEffect(() => {
-      if (pageTitle && titleSentinelRef.current) {
+      if (pageTitle && titleTextSentinelRef.current) {
         navContext.setPageAppTitle(pageTitle)
-        const titleSentinelElm = titleSentinelRef.current
+        const titleSentinelElm = titleTextSentinelRef.current
+        const titleTopSentinelElm = titleTopSentinelRef.current
         const bodyContentBottomElm = bodyContentBottomRef.current
 
         const observer = new IntersectionObserver((entries) => {
@@ -87,13 +90,19 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
                   processInfinityScroll()
                 }
               }
+            } else if (entry.target.isSameNode(titleTopSentinelElm)) {
+              if (entry.isIntersecting) {
+                navContext.setIsScrolled(false)
+              } else {
+                navContext.setIsScrolled(true)
               }
             }
           })
         })
 
         observer.observe(titleSentinelElm)
-        if (onScrollEnds) {
+        observer.observe(titleTopSentinelElm)
+        if (infinityScroll) {
           observer.observe(bodyContentBottomElm)
         }
       }
@@ -106,13 +115,20 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
           'body-content',
           bodyClassName,
           hasTopGap ? 'top-gap' : '',
-          centered ? 'centered' : ''
+          centered && 'centered'
         )}
       >
         {pageTitle && (
-          <h1 className="page-app-title">
+          <h1
+            className={mergeClassName(
+              'page-app-title',
+              titleAlign === 'center' && 'center',
+              titleHidden && 'hidden'
+            )}
+          >
             {pageTitle}
-            <div className="pat-sentinel" ref={titleSentinelRef} />
+            <div className="top-sentinel" ref={titleTopSentinelRef} />
+            <div className="pat-sentinel" ref={titleTextSentinelRef} />
           </h1>
         )}
 

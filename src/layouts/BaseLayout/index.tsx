@@ -8,31 +8,16 @@ interface BaseLayoutProps extends BodyProps {
   appClassName?: string
 }
 
-const BaseLayout: React.FC<BaseLayoutProps> = ({
-  children,
-  appClassName,
-  bodyClassName,
-  hasTopGap,
-  pageTitle,
-  onScrollEnds,
-  centered,
-}) => {
+const BaseLayout: React.FC<BaseLayoutProps> = (props) => {
   const bodyContent = useRef<HTMLDivElement>(null)
-  const bodyProps: BodyProps = {
-    bodyClassName,
-    hasTopGap,
-    pageTitle,
-    onScrollEnds,
-    centered,
-  }
 
   return (
     <NavigationProvider>
-      <div id="eodiro-app-scaffold" className={appClassName}>
+      <div id="eodiro-app-scaffold" className={props.appClassName}>
         <div id="eodiro-app">
           <Navigation />
-          <Body ref={bodyContent} {...bodyProps}>
-            {children}
+          <Body ref={bodyContent} {...props}>
+            {props.children}
           </Body>
           <GlobalFooter />
         </div>
