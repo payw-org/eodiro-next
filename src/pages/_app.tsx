@@ -10,28 +10,33 @@ import React, { createContext, useState } from 'react'
 type AuthContextProps = {
   tokens: TokensPack
   isSigned: boolean
+  isAdmin: boolean
 }
 export const AuthContext = createContext({} as AuthContextProps)
 
 type AuthProviderProps = {
   tokensInit: TokensPack
-  signedInit: boolean
+  isSignedInit: boolean
+  isAdminInit: boolean
 }
 export const AuthProvider: React.FC<AuthProviderProps> = ({
   children,
   tokensInit,
-  signedInit,
+  isSignedInit,
+  isAdminInit,
 }) => {
   const [tokens] = useState(
     tokensInit || { accessToken: undefined, refreshToken: undefined }
   )
-  const [isSigned] = useState(signedInit)
+  const [isSigned] = useState(isSignedInit)
+  const [isAdmin] = useState(isAdminInit)
 
   return (
     <AuthContext.Provider
       value={{
         tokens,
         isSigned,
+        isAdmin,
       }}
     >
       {children}
@@ -45,6 +50,7 @@ interface EodiroAppInitialProps extends AppInitialProps {
 
 interface EodiroPageContext extends NextPageContext {
   isSigned: boolean
+  isAdmin: boolean
 }
 
 interface EodiroAppContext extends AppContext {
@@ -67,24 +73,32 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
     const tokens = await Tokens.get(ctx.req)
     const authProps: AuthProviderProps = {
       tokensInit: tokens,
-      signedInit: false,
+      isSignedInit: false,
+      isAdminInit: false,
     }
 
     ctx.isSigned = false
+    ctx.isAdmin = false
 
     // Verify token
     if (tokens.accessToken) {
-      const isSigned = await AuthApi.isSigned(ctx.req)
+      const authCheck = await AuthApi.isSigned(ctx.req)
 
-      if (isSigned) {
-        authProps.signedInit = true
-        ctx.isSigned = true
+      if (authCheck.isSigned) {
+        authProps.isSignedInit = authCheck.isSigned
+        authProps.isAdminInit = authCheck.isAdmin
+        ctx.isSigned = authCheck.isSigned
+        ctx.isAdmin = authCheck.isAdmin
       } else {
         const newTokens = await AuthApi.refresh(ctx.req)
+
         if (newTokens) {
           await Tokens.set(newTokens, { req, res })
-          authProps.signedInit = true
-          ctx.isSigned = true
+          const authCheck = await AuthApi.isSigned(ctx.req)
+          authProps.isSignedInit = authCheck.isSigned
+          authProps.isAdminInit = authCheck.isAdmin
+          ctx.isSigned = authCheck.isSigned
+          ctx.isAdmin = authCheck.isAdmin
         } else {
           // Clear tokens
           await EodiroHttpCookie.set(

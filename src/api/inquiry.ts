@@ -18,11 +18,8 @@ export class InquiryApi {
     offset: number,
     amount?: number,
     req?: IncomingMessage
-  ): Promise<{
-    inquiries: InquiryData[]
-    isAdmin: boolean
-  } | null> {
-    const [err, data, status] = await eodiroAxios(
+  ): Promise<InquiryData[] | null> {
+    const [err, data, status] = await eodiroAxios<InquiryData[]>(
       {
         method: 'get',
         url:

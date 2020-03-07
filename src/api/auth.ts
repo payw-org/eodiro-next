@@ -57,9 +57,17 @@ export class Tokens {
 }
 
 export class AuthApi {
-  static async isSigned(req?: IncomingMessage): Promise<boolean> {
+  static async isSigned(
+    req?: IncomingMessage
+  ): Promise<{
+    isSigned: boolean
+    isAdmin?: boolean
+    userId?: number
+  }> {
     const [err, data] = await eodiroAxios<{
-      isSignedIn: boolean
+      isSigned: boolean
+      isAdmin?: boolean
+      userId?: number
     }>(
       {
         url: ApiHost.getHost() + `/auth/is-signed-in`,
@@ -71,7 +79,11 @@ export class AuthApi {
       }
     )
 
-    return err ? false : data.isSignedIn
+    return err
+      ? {
+          isSigned: false,
+        }
+      : data
   }
 
   static async signIn(
