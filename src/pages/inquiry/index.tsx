@@ -3,6 +3,7 @@ import { ArrowBlock } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import Grid from '@/layouts/Grid'
 import { useStateRef } from '@/modules/use-state-ref'
+import dayjs from 'dayjs'
 import Head from 'next/head'
 import Router from 'next/router'
 import React, { useEffect } from 'react'
@@ -13,21 +14,6 @@ type InquiryProps = {
   isAdmin: boolean
 }
 
-function formatDate(date): string {
-  return (
-    date.getFullYear() +
-    '-' +
-    ('0' + (date.getMonth() + 1)).slice(-2) +
-    '-' +
-    ('0' + date.getDate()).slice(-2) +
-    ' ' +
-    ('0' + date.getHours()).slice(-2) +
-    ':' +
-    ('0' + date.getMinutes()).slice(-2) +
-    ':' +
-    ('0' + date.getSeconds()).slice(-2)
-  )
-}
 const InquiryPage: EodiroPage<InquiryProps> = ({
   inquiries: inquiries,
   isAdmin,
@@ -82,12 +68,16 @@ const InquiryPage: EodiroPage<InquiryProps> = ({
                       <div className="inquiry-content">
                         <h1 className="inquiry-title">{item.title}</h1>
                         <p className="inquiry-uploaded-at inquiry-item">
-                          {formatDate(new Date(item.uploaded_at))}
+                          {dayjs(item.uploaded_at).format(
+                            'YYYY-MM-DD HH:MM:ss'
+                          )}
                         </p>
                         <p className="inquiry-answer inquiry-item">
                           {item.answer
                             ? '답변완료(' +
-                              formatDate(new Date(item.answered_at)) +
+                              dayjs(item.answered_at).format(
+                                'YYYY-MM-DD HH:MM:ss'
+                              ) +
                               ')'
                             : '답변대기 중'}
                         </p>
