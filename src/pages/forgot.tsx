@@ -1,20 +1,19 @@
 import AuthCommon from '@/components/auth/AuthCommon'
 import Head from 'next/head'
-import { EodiroPage } from '../_app'
+import { EodiroPage } from './_app'
 
-const SignInPage: EodiroPage = () => {
+const ForgotPage: EodiroPage = () => {
   return (
     <>
       <Head>
-        <title>로그인</title>
+        <title>암호 재발급</title>
       </Head>
-
-      <AuthCommon mode="signin" />
+      <AuthCommon mode="forgot" />
     </>
   )
 }
 
-SignInPage.getInitialProps = ({ res, isSigned }): {} => {
+ForgotPage.getInitialProps = ({ res, isSigned }): {} => {
   if (isSigned) {
     res.writeHead(302, {
       Location: '/',
@@ -25,4 +24,4 @@ SignInPage.getInitialProps = ({ res, isSigned }): {} => {
   return {}
 }
 
-export default SignInPage
+export default ForgotPage

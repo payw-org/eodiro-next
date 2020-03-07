@@ -18,11 +18,17 @@ app.prepare().then(() => {
     return handle(req, res)
   })
 
-  server.listen(dev ? 3020 : 3000, (err) => {
+  const port = dev ? 3020 : 3000
+
+  server.listen(port, (err) => {
     if (err) {
       throw err
     }
 
-    console.log('[\x1b[33m', 'server.js', '\x1b[0m]', 'listening on port 3020')
+    console.log(
+      '[\x1b[33m',
+      'server.js',
+      `\x1b[0m]', 'listening on port ${port}`
+    )
   })
 })
