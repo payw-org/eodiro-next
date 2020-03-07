@@ -37,10 +37,11 @@ export default async function eodiroAxios<T = any>(
     } = eodiroAxiosConfig
 
     if (access || refresh || accessIfExist) {
-      if (!req) {
+      if (typeof window === 'undefined' && !req) {
         console.error(
-          `${moduleConsoleTag} you are using auth without passing req argument, it may not work on server-side`
+          `${moduleConsoleTag} you are trying to send tokens on server side without passing req argument`
         )
+        return [true, null, null]
       }
 
       const cookies = await Tokens.get(req)
