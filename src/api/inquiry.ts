@@ -13,7 +13,7 @@ export type InquiryData = {
 }
 
 export class InquiryApi {
-  static async inquirys(
+  static async inquiries(
     offset: number,
     amount?: number
   ): Promise<{

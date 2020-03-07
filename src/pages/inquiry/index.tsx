@@ -44,7 +44,7 @@ const InquiryPage: NextPage<InquiryProps> = ({
       return
     }
     setIsFetching(true)
-    const moreItems = await InquiryApi.inquirys(itemsRef.current.length)
+    const moreItems = await InquiryApi.inquiries(itemsRef.current.length)
     if (moreItems.inquiries && moreItems.inquiries.length > 0) {
       setItems([...itemsRef.current, ...moreItems.inquiries])
     }
@@ -96,7 +96,7 @@ const InquiryPage: NextPage<InquiryProps> = ({
                   )
                 })
               ) : (
-                <p className="no-inquirys">문의 내역이 없습니다.</p>
+                <p className="no-inquiries">문의 내역이 없습니다.</p>
               )}
             </Grid>
           </div>
@@ -106,7 +106,7 @@ const InquiryPage: NextPage<InquiryProps> = ({
   )
 }
 InquiryPage.getInitialProps = async (): Promise<InquiryProps> => {
-  const data = await InquiryApi.inquirys(0)
+  const data = await InquiryApi.inquiries(0)
   return data
 }
 export default InquiryPage
