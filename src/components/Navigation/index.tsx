@@ -30,7 +30,12 @@ const Navigation: React.FC = () => {
 
   return (
     <nav id="eodiro-navigation">
-      <div className="en-bar" />
+      <div
+        className={mergeClassName(
+          'en-bar',
+          (navContext.isScrolled || isMobileNavMenuOpened) && 'scrolled'
+        )}
+      />
 
       <div className="en-wrapper">
         <a className="home-link" href="/">

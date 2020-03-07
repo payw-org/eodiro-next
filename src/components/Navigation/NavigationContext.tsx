@@ -7,6 +7,8 @@ interface NavigationContextProps {
   setPageAppTitle: Setter<string>
   isHidden: boolean
   setIsHidden: Setter<boolean>
+  isScrolled: boolean
+  setIsScrolled: Setter<boolean>
 }
 
 export const NavigationContext = createContext({} as NavigationContextProps)
@@ -14,6 +16,7 @@ export const NavigationContext = createContext({} as NavigationContextProps)
 export const NavigationProvider: React.FC = ({ children }) => {
   const [pageAppTitle, setPageAppTitle] = useState('')
   const [isHidden, setIsHidden] = useState(true)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   return (
     <NavigationContext.Provider
@@ -22,6 +25,8 @@ export const NavigationProvider: React.FC = ({ children }) => {
         setPageAppTitle,
         isHidden,
         setIsHidden,
+        isScrolled,
+        setIsScrolled,
       }}
     >
       {children}
