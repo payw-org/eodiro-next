@@ -1,5 +1,9 @@
 @use '@/assets/styles/main' as *;
 
+.eodiro-inquiry-request-body {
+  max-width: 35rem !important;
+}
+
 #eodiro-inquiry-request {
   .title-field {
   }

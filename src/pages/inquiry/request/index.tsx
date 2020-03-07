@@ -53,18 +53,21 @@ const InquiryRequestPage: EodiroPage<void> = () => {
     }
     setIsSbumitted(true)
     if (!isValidTitle(title)) {
-      alert('invalid title')
+      alert('제목을 입력해주세요.')
+      titleRef.current.focus()
     } else if (!isValidEmail(email)) {
-      alert('invalid email')
+      alert('이메일을 형식을 확인해주세요.')
+      emailRef.current.focus()
     } else if (!isValidBody(body)) {
-      alert('invalid body')
+      alert('문의 내용을 적어주세요.')
+      bodyRef.current.focus()
     } else {
       const result = await InquiryApi.post(title, body, email)
       if (result) {
+        alert('정상적으로 처리되었습니다.')
         window.location.href = '/inquiry'
-        alert('Submitted')
       } else {
-        alert('Error')
+        alert('서버에 문제가 발생했습니다.')
       }
     }
     setIsSbumitted(false)
@@ -78,7 +81,11 @@ const InquiryRequestPage: EodiroPage<void> = () => {
       <Head>
         <title>문의하기</title>
       </Head>
-      <BaseLayout hasTopGap pageTitle="문의하기">
+      <BaseLayout
+        hasTopGap
+        pageTitle="문의하기"
+        bodyClassName="eodiro-inquiry-request-body"
+      >
         <div id="eodiro-inquiry-request">
           <LineInput
             ref={titleRef}
