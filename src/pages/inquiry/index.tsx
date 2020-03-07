@@ -3,10 +3,10 @@ import { ArrowBlock } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import Grid from '@/layouts/Grid'
 import { useStateRef } from '@/modules/use-state-ref'
-import { NextPage } from 'next'
 import Head from 'next/head'
 import Router from 'next/router'
 import React, { useEffect } from 'react'
+import { EodiroPage } from '../_app'
 import './InquiryPage.scss'
 type InquiryProps = {
   inquiries: InquiryData[]
@@ -28,7 +28,7 @@ function formatDate(date): string {
     ('0' + date.getSeconds()).slice(-2)
   )
 }
-const InquiryPage: NextPage<InquiryProps> = ({
+const InquiryPage: EodiroPage<InquiryProps> = ({
   inquiries: inquiries,
   isAdmin,
 }) => {
@@ -105,8 +105,8 @@ const InquiryPage: NextPage<InquiryProps> = ({
     </>
   )
 }
-InquiryPage.getInitialProps = async (): Promise<InquiryProps> => {
-  const data = await InquiryApi.inquiries(0)
+InquiryPage.getInitialProps = async (ctx): Promise<InquiryProps> => {
+  const data = await InquiryApi.inquiries(0, null, ctx.req)
   return data
 }
 export default InquiryPage

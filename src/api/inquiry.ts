@@ -1,5 +1,6 @@
 import ApiHost from '@/modules/api-host'
-import useFetch from '@/modules/use-fetch'
+import eodiroAxios from '@/modules/eodiro-axios'
+import { IncomingMessage } from 'http'
 import queryString from 'query-string'
 
 export type InquiryData = {
@@ -15,17 +16,23 @@ export type InquiryData = {
 export class InquiryApi {
   static async inquiries(
     offset: number,
-    amount?: number
+    amount?: number,
+    req?: IncomingMessage
   ): Promise<{
     inquiries: InquiryData[]
     isAdmin: boolean
   } | null> {
-    const [err, data, status] = await useFetch(
-      ApiHost.getHost() +
-        `/inquiry?` +
-        queryString.stringify({ amount, offset }),
+    const [err, data, status] = await eodiroAxios(
       {
         method: 'get',
+        url:
+          ApiHost.getHost() +
+          `/inquiry?` +
+          queryString.stringify({ amount, offset }),
+      },
+      {
+        access: true,
+        req,
       }
     )
     return err
@@ -41,13 +48,20 @@ export class InquiryApi {
     body: string,
     email: string
   ): Promise<boolean> {
-    const [err, data, status] = await useFetch(ApiHost.getHost() + `/inquiry`, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+    const [err, data, status] = await eodiroAxios(
+      {
+        method: 'post',
+        url: ApiHost.getHost() + `/inquiry`,
+        data: {
+          title,
+          body,
+          email,
+        },
       },
-      body: `title=${title}&body=${body}&email=${email}`,
-    })
+      {
+        access: true,
+      }
+    )
     if (status === 201) {
       return true
     }
