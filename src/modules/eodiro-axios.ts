@@ -17,6 +17,7 @@ export default async function eodiroAxios<T = any>(
     access?: boolean
     refresh?: boolean
     req?: IncomingMessage
+    accessIfExist?: boolean
   }
 ): Promise<[any, T, number]> {
   if (eodiroAxiosConfig && typeof eodiroAxiosConfig !== 'object') {
@@ -28,9 +29,14 @@ export default async function eodiroAxios<T = any>(
   }
 
   if (eodiroAxiosConfig) {
-    const { access = false, refresh = false, req } = eodiroAxiosConfig
+    const {
+      access = false,
+      refresh = false,
+      req,
+      accessIfExist = false,
+    } = eodiroAxiosConfig
 
-    if (access || refresh) {
+    if (access || refresh || accessIfExist) {
       if (!req) {
         console.error(
           `${moduleConsoleTag} you are using auth without passing req argument, it may not work on server-side`
@@ -47,6 +53,10 @@ export default async function eodiroAxios<T = any>(
       if (access && !accessToken) {
         return [true, null, 401]
       } else {
+        config.headers.accessToken = accessToken
+      }
+
+      if (accessIfExist && accessToken != null) {
         config.headers.accessToken = accessToken
       }
 
