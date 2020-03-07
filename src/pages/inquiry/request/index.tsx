@@ -47,7 +47,9 @@ const InquiryRequestPage: NextPage<void> = () => {
 
   return (
     <>
-      <Head>문의하기</Head>
+      <Head>
+        <title>문의하기</title>
+      </Head>
       <BaseLayout hasTopGap pageTitle="문의하기">
         <div id="eodiro-inquiry-request">
           <LineInput
