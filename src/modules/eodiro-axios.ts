@@ -20,7 +20,9 @@ export default async function eodiroAxios<T = any>(
   }
 ): Promise<[any, T, number]> {
   if (eodiroAxiosConfig && typeof eodiroAxiosConfig !== 'object') {
-    console.error('eodiroAxios - Wrong type of parameter eodiroAxiosConfig')
+    console.error(
+      `${moduleConsoleTag} Wrong type of parameter eodiroAxiosConfig`
+    )
 
     return [true, null, null]
   }
@@ -31,7 +33,7 @@ export default async function eodiroAxios<T = any>(
     if (access || refresh) {
       if (!req) {
         console.error(
-          `[eodiro-axios] you are using auth without passing req argument, it may not work on server-side`
+          `${moduleConsoleTag} you are using auth without passing req argument, it may not work on server-side`
         )
       }
 
