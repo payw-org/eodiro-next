@@ -7,7 +7,7 @@ import getState from '@/modules/get-state'
 import { Lectures } from '@payw/cau-timetable-scraper-types'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './LecturesPage.scss'
 
 type LecturesPageProps = {
@@ -46,8 +46,11 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
     setSearchTimeout(timeout)
   }
 
+  const containerRef = useRef<HTMLDivElement>(null)
   function isReachBottom(): boolean {
-    return window.innerHeight < document.body.scrollHeight
+    return (
+      window.innerHeight < containerRef.current.getBoundingClientRect().bottom
+    )
   }
 
   async function loadMore(): Promise<void> {
@@ -117,49 +120,51 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
                 type="search"
                 onChangeHook={onChange}
               />
-              <Grid className="lecture-container">
-                {displayLectures.map((lecture, i) => {
-                  return (
-                    <ArrowBlock noArrow flat key={i} className="lecture-item">
-                      <div className="li-content">
-                        <div className="name-and-code">
-                          <div>
-                            <h1 className="name">{lecture.name}</h1>
-                            {lecture.professor && (
-                              <p className="professor info-item">
-                                {lecture.professor}
-                              </p>
-                            )}
-                          </div>
-                          <p className="code">{lecture.code}</p>
-                        </div>
-                        {(lecture.college || lecture.major) && (
-                          <p className="major">
-                            {lecture.college + ' '}
-                            {lecture.major}
-                          </p>
-                        )}
-                        {lecture.credit && (
-                          <p className="credit">{lecture.credit}학점</p>
-                        )}
-                        {lecture.schedule && lecture.schedule !== '/' && (
-                          <p className="schedule info-item">
-                            {lecture.schedule}
-                          </p>
-                        )}
-                        {lecture.note && (
-                          <div className="note">
-                            <div className="data">
-                              <h3>비고</h3>
-                              <p>{lecture.note}</p>
+              <div ref={containerRef}>
+                <Grid className="lecture-container">
+                  {displayLectures.map((lecture, i) => {
+                    return (
+                      <ArrowBlock noArrow flat key={i} className="lecture-item">
+                        <div className="li-content">
+                          <div className="name-and-code">
+                            <div>
+                              <h1 className="name">{lecture.name}</h1>
+                              {lecture.professor && (
+                                <p className="professor info-item">
+                                  {lecture.professor}
+                                </p>
+                              )}
                             </div>
+                            <p className="code">{lecture.code}</p>
                           </div>
-                        )}
-                      </div>
-                    </ArrowBlock>
-                  )
-                })}
-              </Grid>
+                          {(lecture.college || lecture.major) && (
+                            <p className="major">
+                              {lecture.college + ' '}
+                              {lecture.major}
+                            </p>
+                          )}
+                          {lecture.credit && (
+                            <p className="credit">{lecture.credit}학점</p>
+                          )}
+                          {lecture.schedule && lecture.schedule !== '/' && (
+                            <p className="schedule info-item">
+                              {lecture.schedule}
+                            </p>
+                          )}
+                          {lecture.note && (
+                            <div className="note">
+                              <div className="data">
+                                <h3>비고</h3>
+                                <p>{lecture.note}</p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </ArrowBlock>
+                    )
+                  })}
+                </Grid>
+              </div>
             </>
           ) : (
             <ServerError />
