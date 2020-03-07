@@ -56,7 +56,7 @@ export default async function eodiroAxios<T = any>(
         config.headers.accessToken = accessToken
       }
 
-      if (accessIfExist && accessToken != null) {
+      if (accessIfExist && accessToken !== undefined) {
         config.headers.accessToken = accessToken
       }
 
