@@ -79,11 +79,6 @@ const InquiryRequestPage: NextPage<void> = () => {
             onChange={(e): void => {
               setBody(e.target.value)
             }}
-            onKeyDown={(e): void => {
-              if (e.key === 'Enter') {
-                submit()
-              }
-            }}
             disabled={isSubmitted}
           ></textarea>
           <Button
