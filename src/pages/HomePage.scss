@@ -1,15 +1,13 @@
 @use '@/assets/styles/main' as *;
 
 #eodiro-home {
-  margin: auto;
-  min-height: calc(100vh - 20rem);
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 
   .header {
     font-size: 8rem;
-    padding-top: 5rem;
     line-height: 1;
     @include resolve-optical-illusion($border-radius-outer);
 

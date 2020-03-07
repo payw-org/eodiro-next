@@ -66,7 +66,7 @@ const HomePage: NextPage = () => {
       <Head>
         <title>어디로</title>
       </Head>
-      <BaseLayout hasTopGap={false}>
+      <BaseLayout pageTitle="어디로" titleHidden centered>
         <div id="eodiro-home">
           <h1 className="header">
             <span className="name">어디로</span> {emojiList[emojiIndex]}
