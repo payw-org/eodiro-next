@@ -20,6 +20,7 @@ type LineInputProps = {
   onEnter?: () => void
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void
   disabled?: boolean
+  autoComplete?: string
 }
 
 export const LineInput = React.forwardRef<HTMLInputElement, LineInputProps>(
@@ -38,6 +39,7 @@ export const LineInput = React.forwardRef<HTMLInputElement, LineInputProps>(
       onEnter,
       onFocus,
       disabled = false,
+      autoComplete,
     },
     ref
   ) => {
@@ -85,6 +87,7 @@ export const LineInput = React.forwardRef<HTMLInputElement, LineInputProps>(
           onKeyPress={onKeyPress}
           onKeyUp={onKeyUp}
           onFocus={onFocus}
+          autoComplete={autoComplete}
         />
         {type === 'search' && (
           <div className="magnifier-icon-wrapper">
