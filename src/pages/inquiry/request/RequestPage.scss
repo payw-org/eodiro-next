@@ -1,0 +1,17 @@
+@use '@/assets/styles/main' as *;
+
+#eodiro-inquiry-request {
+  .title-field {
+  }
+  .email-field {
+    margin-top: s(3);
+  }
+  .body-field {
+    @include input-style;
+    margin-top: s(3);
+    height: 15rem;
+  }
+  .submit-button {
+    margin-top: s(5);
+  }
+}
