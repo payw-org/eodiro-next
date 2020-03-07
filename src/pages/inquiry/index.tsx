@@ -5,7 +5,6 @@ import Grid from '@/layouts/Grid'
 import { useStateRef } from '@/modules/use-state-ref'
 import dayjs from 'dayjs'
 import Head from 'next/head'
-import Router from 'next/router'
 import React, { useEffect } from 'react'
 import { EodiroPage } from '../_app'
 import './InquiryPage.scss'
@@ -26,6 +25,9 @@ const InquiryPage: EodiroPage<InquiryProps> = ({
   }
 
   async function loadMore(): Promise<void> {
+    if (!itemsRef.current) {
+      return
+    }
     if (isFetchRef.current) {
       return
     }
@@ -38,9 +40,7 @@ const InquiryPage: EodiroPage<InquiryProps> = ({
   }
 
   useEffect(() => {
-    if (inquiries === undefined) {
-      Router.push('/inquiry/request')
-    } else if (isFetching === false && !isReachBottom()) {
+    if (isFetching === false && !isReachBottom()) {
       loadMore()
     }
   }, [itemsRef.current])
@@ -95,8 +95,19 @@ const InquiryPage: EodiroPage<InquiryProps> = ({
     </>
   )
 }
-InquiryPage.getInitialProps = async (ctx): Promise<InquiryProps> => {
-  const data = await InquiryApi.inquiries(0, null, ctx.req)
+InquiryPage.getInitialProps = async ({
+  req,
+  res,
+  isSigned,
+}): Promise<InquiryProps> => {
+  if (!isSigned) {
+    res.writeHead(302, {
+      Location: '/inquiry/request',
+    })
+    res.end()
+    return
+  }
+  const data = await InquiryApi.inquiries(0, null, req)
   return data
 }
 export default InquiryPage
