@@ -1,13 +1,11 @@
 @use '@/assets/styles/main' as *;
 
+.eodiro-auth-common {
+  max-width: 18rem !important;
+}
+
 #eodiro-signin {
   width: 100%;
-  max-width: 18rem;
-
-  .signin-header {
-    margin-bottom: s(6);
-    text-align: center;
-  }
 
   .signin-box {
     .field {

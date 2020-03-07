@@ -51,7 +51,9 @@ const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
       // and fetch tokens, store it to cookie
       await Tokens.set(tokens)
 
-      window.location.href = '/'
+      // TODO: alert a greeting message before redirection
+
+      location.href = '/'
     } else {
       // Sign in failed
       setSignInFailed(true)
@@ -82,17 +84,21 @@ const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
   }
 
   return (
-    <BaseLayout centered>
+    <BaseLayout
+      bodyClassName="eodiro-auth-common"
+      centered
+      pageTitle={
+        mode === 'signin'
+          ? '로그인'
+          : mode === 'join'
+          ? '회원가입'
+          : mode === 'forgot'
+          ? '암호 재발급'
+          : ''
+      }
+      titleAlign="center"
+    >
       <div id="eodiro-signin">
-        <h1 className="signin-header">
-          {mode === 'signin'
-            ? '로그인'
-            : mode === 'join'
-            ? '회원가입'
-            : mode === 'forgot'
-            ? '암호 재발급'
-            : ''}
-        </h1>
         <div className="signin-box">
           <LineInput
             ref={portalIdRef}
@@ -138,6 +144,7 @@ const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
                 },
               ]}
               onEnter={focusPassword}
+              autoComplete="off"
             />
           )}
 
@@ -145,38 +152,40 @@ const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
             <p className="error">사용할 수 없습니다.</p>
           )}
 
-          <LineInput
-            ref={passwordRef}
-            className="field pw"
-            type="password"
-            placeholder="암호"
-            value={password}
-            setValue={setPassword}
-            onEnter={(): void => {
-              if (mode === 'signin') {
-                signIn()
-              } else if (mode === 'join') {
-                join()
-              }
-            }}
-            disabled={validating}
-            onChangeHook={(password): void => {
-              if (password.match(/[ㄱ-힣]/)) {
-                setPassword('')
-                alert('암호에 한글을 사용할 수 없습니다.')
-              }
-            }}
-            onChangeThrottle={[
-              async (password): Promise<void> => {
-                if (mode === 'join') {
-                  setValidPassword(await AuthApi.validatePassword(password))
+          {mode !== 'forgot' && (
+            <LineInput
+              ref={passwordRef}
+              className="field pw"
+              type="password"
+              placeholder="암호"
+              value={password}
+              setValue={setPassword}
+              onEnter={(): void => {
+                if (mode === 'signin') {
+                  signIn()
+                } else if (mode === 'join') {
+                  join()
                 }
-              },
-            ]}
-            onFocus={(): void => {
-              setSignInFailed(false)
-            }}
-          />
+              }}
+              disabled={validating}
+              onChangeHook={(password): void => {
+                if (password.match(/[ㄱ-힣]/)) {
+                  setPassword('')
+                  alert('암호에 한글을 사용할 수 없습니다.')
+                }
+              }}
+              onChangeThrottle={[
+                async (password): Promise<void> => {
+                  if (mode === 'join') {
+                    setValidPassword(await AuthApi.validatePassword(password))
+                  }
+                },
+              ]}
+              onFocus={(): void => {
+                setSignInFailed(false)
+              }}
+            />
+          )}
 
           {mode === 'join' && !validPassword && (
             <p className="error">암호는 8자 이상입니다.</p>
