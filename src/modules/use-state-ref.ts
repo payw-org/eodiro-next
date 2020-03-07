@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 
+/**
+ * @deprecated
+ */
 export function useStateRef<T = any>(
   initialState: T
 ): [T, React.Dispatch<T>, React.MutableRefObject<T>] {
