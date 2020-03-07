@@ -52,7 +52,7 @@
       line-height: 1;
       opacity: 0;
       transform: translate3d(0, 25%, 0);
-      transition: opacity 300ms ease, transform 300ms ease;
+      transition: opacity 200ms ease, transform 200ms ease;
 
       @include no-mobile {
         position: absolute;
