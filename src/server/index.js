@@ -28,7 +28,8 @@ app.prepare().then(() => {
     console.log(
       '[\x1b[33m',
       'server.js',
-      `\x1b[0m]', 'listening on port ${port}`
+      `\x1b[0m]`,
+      `listening on port ${port}`
     )
   })
 })
