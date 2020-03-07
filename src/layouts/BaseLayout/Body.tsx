@@ -1,6 +1,13 @@
 import { NavigationContext } from '@/components/Navigation'
+import getState from '@/modules/get-state'
 import mergeClassName from '@/modules/merge-class-name'
-import React, { ReactNode, useContext, useEffect, useRef } from 'react'
+import React, {
+  ReactNode,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 
 export type BodyProps = {
   children?: ReactNode
@@ -9,6 +16,10 @@ export type BodyProps = {
   pageTitle?: string
   onScrollEnds?: () => void
   centered?: boolean
+  infinityScroll?: {
+    loadDataStrategy: () => Promise<boolean>
+    dataContainerRef: React.MutableRefObject<HTMLElement>
+}
 }
 
 const Body = React.forwardRef<HTMLDivElement, BodyProps>(
@@ -20,6 +31,7 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
       pageTitle,
       onScrollEnds = null,
       centered = false,
+      infinityScroll,
     },
     ref
   ) => {
@@ -27,6 +39,28 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
     const titleSentinelRef = useRef<HTMLHeadingElement>(null)
     const bodyContentBottomRef = useRef<HTMLDivElement>(null)
     const navContext = useContext(NavigationContext)
+
+    const [, setIsFetchingData] = useState(false)
+
+    function isReachBottom(ref: React.MutableRefObject<HTMLElement>): boolean {
+      return window.innerHeight < ref.current.getBoundingClientRect().bottom
+    }
+
+    function processInfinityScroll(): void {
+      const isFetchingData = getState<boolean>(setIsFetchingData)
+
+      if (isFetchingData) return
+
+      setIsFetchingData(true)
+
+      infinityScroll.loadDataStrategy().then((oneMore) => {
+        setIsFetchingData(false)
+        if (!oneMore) return
+        if (!isReachBottom(infinityScroll.dataContainerRef)) {
+          processInfinityScroll()
+        }
+      })
+    }
 
     useEffect(() => {
       if (pageTitle && titleSentinelRef.current) {
@@ -47,7 +81,12 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
             } else if (entry.target.isSameNode(bodyContentBottomElm)) {
               if (entry.isIntersecting) {
                 // Scroll ends
-                onScrollEnds && onScrollEnds()
+                // onScrollEnds && onScrollEnds()
+
+                if (infinityScroll) {
+                  processInfinityScroll()
+                }
+              }
               }
             }
           })

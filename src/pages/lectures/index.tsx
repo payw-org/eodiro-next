@@ -18,7 +18,6 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [defaultLectures, setDefaultLectures] = useState(lectures)
   const [displayLectures, setDisplayLectures] = useState(lectures)
-  const [, setIsFetching] = useState(false)
 
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>(null)
 
@@ -47,28 +46,15 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
   }
 
   const containerRef = useRef<HTMLDivElement>(null)
-  function isReachBottom(): boolean {
-    return (
-      window.innerHeight < containerRef.current.getBoundingClientRect().bottom
-    )
-  }
 
-  async function loadMore(): Promise<void> {
+  async function loadMore(): Promise<boolean> {
     if (!lectures) {
-      return
+      return false
     }
 
     const searchQuery = getState<string>(setSearchQuery)
-    const isFetching = getState<boolean>(setIsFetching)
     const defaultLectures = getState<Lectures>(setDefaultLectures)
     const displayLectures = getState<Lectures>(setDisplayLectures)
-
-    if (isFetching) {
-      return
-    }
-
-    // Set isFetching flag to true
-    setIsFetching(true)
 
     let moreLectures: Lectures
 
@@ -89,18 +75,11 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
       setDisplayLectures([...displayLectures, ...moreLectures])
     }
 
-    // Set isFetching flag to false
-    setIsFetching(false)
-
     if (moreLectures.length === 0) {
-      // If there are no more data to load
-      // stop the function
-      return
-    } else if (!isReachBottom()) {
-      // If the data don't reach to bottom
-      // load more to make the page scrollable
-      loadMore()
+      return false
     }
+
+    return true
   }
 
   return (
@@ -108,7 +87,13 @@ const LecturesPage: NextPage<LecturesPageProps> = ({ lectures }) => {
       <Head>
         <title>강의 검색</title>
       </Head>
-      <BaseLayout pageTitle="강의 검색" onScrollEnds={loadMore}>
+      <BaseLayout
+        pageTitle="강의 검색"
+        infinityScroll={{
+          loadDataStrategy: loadMore,
+          dataContainerRef: containerRef,
+        }}
+      >
         <div id="eodiro-lectures">
           {displayLectures ? (
             <>
