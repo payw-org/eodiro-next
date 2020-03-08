@@ -6,7 +6,7 @@
     lighten($primary, 5%),
     $secondary
   );
-  border: 1px solid darken($secondary, 15%);
+  border: 1px solid darken($secondary, 10%);
 
   &:hover {
     background-image: linear-gradient(
@@ -14,7 +14,7 @@
       darken($primary, 0%),
       $secondary
     );
-    border: 1px solid darken($secondary, 20%);
+    border: 1px solid darken($secondary, 15%);
   }
 
   &:active {
