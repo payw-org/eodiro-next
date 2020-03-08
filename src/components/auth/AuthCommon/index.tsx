@@ -93,7 +93,7 @@ const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
           : mode === 'join'
           ? '회원가입'
           : mode === 'forgot'
-          ? '암호 재발급'
+          ? '암호 변경'
           : ''
       }
       titleAlign="center"
@@ -202,7 +202,7 @@ const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
                 : mode === 'join'
                 ? '회원가입'
                 : mode === 'forgot'
-                ? '새로 발급 받기'
+                ? '변경 이메일 발송'
                 : ''
             }
             full
@@ -233,7 +233,7 @@ const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
                 <p className="forgot">
                   암호를 잊었나요?{' '}
                   <a href="/forgot" className="join">
-                    암호 재발급 →
+                    암호 변경 →
                   </a>
                 </p>
               </>
