@@ -5,6 +5,7 @@ import ServerError from '@/components/ServerError'
 import { ArrowBlock } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import Grid from '@/layouts/Grid'
+import Time from '@/modules/time'
 import { Restaurant } from '@payw/cau-cafeteria-menus-scraper-types'
 import dayjs, { Dayjs } from 'dayjs'
 import { NextPage } from 'next'
@@ -89,7 +90,9 @@ const CafeteriaPage: NextPage<CafeteriaPageProps> = ({ menus }) => {
               >
                 <ArrowIcon direction="left" fill="#31a8ff" />
               </button>
-              <p className="date">{createDateString(now)}</p>
+              <p className="date">
+                {createDateString(now)} ({Time.day(now.day())})
+              </p>
               <button
                 className="date-change-btn next"
                 onClick={(): void => {
