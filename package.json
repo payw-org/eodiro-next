@@ -1,6 +1,6 @@
 {
   "name": "eodiro-next",
-  "version": "3.0.0-alpha.3",
+  "version": "3.0.0-alpha.4",
   "main": "src/server/index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development node --harmony src/server/index.js",
