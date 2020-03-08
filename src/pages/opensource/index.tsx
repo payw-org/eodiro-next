@@ -5,9 +5,7 @@ import React from 'react'
 const OpenSourcePage: NextPage = () => {
   return (
     <BaseLayout hasTopGap pageTitle="오픈소스">
-      <div id="eodiro-opensource">
-        <h1>Open Source</h1>
-      </div>
+      <div id="eodiro-opensource"></div>
     </BaseLayout>
   )
 }
