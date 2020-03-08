@@ -56,7 +56,7 @@ const InquiryRequestPage: EodiroPage<void> = () => {
       alert('제목을 입력해주세요.')
       titleRef.current.focus()
     } else if (!isValidEmail(email)) {
-      alert('이메일을 형식을 확인해주세요.')
+      alert('이메일을 확인해주세요.')
       emailRef.current.focus()
     } else if (!isValidBody(body)) {
       alert('문의 내용을 적어주세요.')
@@ -85,6 +85,7 @@ const InquiryRequestPage: EodiroPage<void> = () => {
         hasTopGap
         pageTitle="문의하기"
         bodyClassName="eodiro-inquiry-request-body"
+        centered
       >
         <div id="eodiro-inquiry-request">
           <LineInput
@@ -122,6 +123,7 @@ const InquiryRequestPage: EodiroPage<void> = () => {
             className="submit-button"
             onClick={submit}
             disabled={isSubmitted}
+            accent="yellow"
           />
         </div>
       </BaseLayout>

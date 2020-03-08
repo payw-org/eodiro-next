@@ -3,6 +3,7 @@ import { ArrowBlock } from '@/components/ui'
 import BaseLayout from '@/layouts/BaseLayout'
 import Grid from '@/layouts/Grid'
 import getState from '@/modules/get-state'
+import Time from '@/modules/time'
 import dayjs from 'dayjs'
 import Head from 'next/head'
 import React, { useContext, useRef, useState } from 'react'
@@ -50,9 +51,8 @@ const InquiryPage: EodiroPage<InquiryProps> = ({ inquiries }) => {
               <Grid className="inquiry-container">
                 {authContext.isAdmin ? null : (
                   <ArrowBlock noArrow className="request-btn">
-                    <a href={'/inquiry/request'}>
-                      <h1 className="request-content">+</h1>
-                    </a>
+                    <a href={'/inquiry/request'} className="absolute-link" />
+                    <h1 className="request-content">+</h1>
                   </ArrowBlock>
                 )}
 
@@ -63,9 +63,7 @@ const InquiryPage: EodiroPage<InquiryProps> = ({ inquiries }) => {
                         <div className="inquiry-content">
                           <h1 className="inquiry-title">{item.title}</h1>
                           <p className="inquiry-uploaded-at inquiry-item">
-                            {dayjs(item.uploaded_at).format(
-                              'YYYY-MM-DD HH:MM:ss'
-                            )}
+                            {Time.friendly(item.uploaded_at)}
                           </p>
                           <p className="inquiry-answer inquiry-item">
                             {item.answer
