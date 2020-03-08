@@ -9,7 +9,7 @@ type ErrorPageProps = {
 
 const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode }) => {
   return (
-    <BaseLayout>
+    <BaseLayout pageTitle={statusCode.toString()} titleHidden centered>
       <div id="error-page">
         <h1 className="status-code">{statusCode}</h1>
         <p className="manifesto">페이지를 찾을 수 없습니다.</p>
