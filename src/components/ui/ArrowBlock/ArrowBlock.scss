@@ -7,6 +7,10 @@
     @include clickable;
   }
 
+  &.custom-padding {
+    padding: 0;
+  }
+
   .ab-body {
     flex: 1;
     display: flex;

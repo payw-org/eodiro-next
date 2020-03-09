@@ -7,6 +7,7 @@ interface ArrowBlockProps {
   className?: string
   noArrow?: boolean
   flat?: boolean
+  customPadding?: boolean
 }
 
 export const ArrowBlock: React.FC<ArrowBlockProps> = ({
@@ -14,10 +15,16 @@ export const ArrowBlock: React.FC<ArrowBlockProps> = ({
   noArrow = false,
   flat = false,
   children,
+  customPadding = false,
 }) => {
   return (
     <div
-      className={mergeClassName('arrow-block', className, !flat && 'unflat')}
+      className={mergeClassName(
+        'arrow-block',
+        className,
+        !flat && 'unflat',
+        customPadding && 'custom-padding'
+      )}
     >
       <div className="ab-body">{children}</div>
       {!noArrow && (
