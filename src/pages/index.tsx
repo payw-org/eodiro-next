@@ -31,7 +31,7 @@ const HomeFeatureBox: React.FC<HomeFeatureBoxProps> = ({ title, to, Icon }) => {
   )
 }
 
-const HomePage: NextPage = () => {
+const Emoji: React.FC = () => {
   const emojiList = [
     '😎',
     '🧐',
@@ -61,6 +61,10 @@ const HomePage: NextPage = () => {
     }
   }, [])
 
+  return <span className="emoji">{emojiList[emojiIndex]}</span>
+}
+
+const HomePage: NextPage = () => {
   return (
     <>
       <Head>
@@ -69,9 +73,13 @@ const HomePage: NextPage = () => {
       <BaseLayout pageTitle="어디로" titleHidden centered>
         <div id="eodiro-home">
           <h1 className="header">
-            <span className="name">어디로</span> {emojiList[emojiIndex]}
+            <div className="text-wrapper">
+              <span className="name">어디로</span> <Emoji />
+            </div>
           </h1>
-          <p className="manifesto">중앙대 학생들만을 위한 특별한 서비스</p>
+          <p className="manifesto">
+            <span className="text">중앙대 학생들만을 위한 특별한 서비스</span>
+          </p>
           <div className="features">
             <Grid>
               <HomeFeatureBox
