@@ -150,12 +150,12 @@ $border-color-dark: rgba(#fff, 0.17);
   }
 }
 
-$border-radius-outer: r(6);
+$border-radius-outer: r(5);
 @mixin border-radius-outer {
   border-radius: $border-radius-outer;
 }
 
-$border-radius-inner: r(3);
+$border-radius-inner: r(2);
 @mixin border-radius-inner {
   border-radius: $border-radius-inner;
 }
@@ -204,9 +204,9 @@ $border-radius-inner: r(3);
 
 @mixin resolve-optical-illusion($value: null) {
   @if $value {
-    margin-left: $value / 3;
+    padding-left: $value / 3;
   } @else {
     // Default resolve to outer radius
-    margin-left: $border-radius-outer / 3;
+    padding-left: $border-radius-outer / 3;
   }
 }
