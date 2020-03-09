@@ -7,9 +7,14 @@
 
   .li-field {
     @include input-style;
+    width: 100%;
 
     &.search {
       padding-left: $btn-height;
+    }
+
+    &.center {
+      text-align: center;
     }
   }
 

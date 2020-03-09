@@ -21,6 +21,7 @@ type LineInputProps = {
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void
   disabled?: boolean
   autoComplete?: string
+  alignCenter?: boolean
 }
 
 export const LineInput = React.forwardRef<HTMLInputElement, LineInputProps>(
@@ -40,6 +41,7 @@ export const LineInput = React.forwardRef<HTMLInputElement, LineInputProps>(
       onFocus,
       disabled = false,
       autoComplete,
+      alignCenter,
     },
     ref
   ) => {
@@ -54,12 +56,24 @@ export const LineInput = React.forwardRef<HTMLInputElement, LineInputProps>(
           type={type === 'search' ? 'text' : type}
           spellCheck="false"
           placeholder={placeholder}
-          className={mergeClassName('li-field', type === 'search' && 'search')}
+          className={mergeClassName(
+            'li-field',
+            type === 'search' && 'search',
+            alignCenter && 'center'
+          )}
           onChange={(e): void => {
             e.persist()
             const value = e.target.value
             setValue(value)
             onChangeHook(value)
+
+            // No Hangul in password field
+            if (type === 'password') {
+              if (value.match(/[ㄱ-힣]/)) {
+                alert('암호에 한글을 사용할 수 없습니다.')
+                setValue('')
+              }
+            }
 
             if (!onChangeThrottle) return
             const [
