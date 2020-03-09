@@ -1,7 +1,15 @@
 import ApiHost from '@/modules/api-host'
 import eodiroAxios from '@/modules/eodiro-axios'
 import { IncomingMessage } from 'http'
-import { TokensPack } from './tokens'
+import { Tokens, TokensPack } from './tokens'
+
+export type UserInfo = {
+  id: number
+  portal_id: string
+  registered_at: string
+  nickname: string
+  random_nickname: string
+}
 
 export class AuthApi {
   static async isSigned(
@@ -47,6 +55,24 @@ export class AuthApi {
     })
 
     return err ? false : data
+  }
+
+  static async signOutFromAll(): Promise<boolean> {
+    const [err] = await eodiroAxios(
+      {
+        method: 'DELETE',
+        url: ApiHost.getHost() + `/auth/refresh-token`,
+      },
+      {
+        access: true,
+      }
+    )
+
+    if (err) return false
+
+    const tokensCleared = await Tokens.clear()
+
+    return tokensCleared
   }
 
   static async signUp(
@@ -152,6 +178,21 @@ export class AuthApi {
         password,
       },
     })
+
+    return err ? false : data
+  }
+
+  static async info(req?: IncomingMessage): Promise<UserInfo | false> {
+    const [err, data] = await eodiroAxios<UserInfo>(
+      {
+        method: 'GET',
+        url: ApiHost.getHost() + `/auth/information`,
+      },
+      {
+        access: true,
+        req,
+      }
+    )
 
     return err ? false : data
   }
