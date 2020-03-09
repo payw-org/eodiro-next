@@ -32,11 +32,11 @@ function buildCookieString(cookie, req) {
   return cookieString
 }
 
+const cookieApiPath = '/cookie'
+
 // Set cookie
-cookieRouter.post('/cookie', async (req, res) => {
-  /**
-   * @type {Cookie | Cookies}
-   */
+cookieRouter.post(cookieApiPath, async (req, res) => {
+  /** @type {Cookie | Cookies} */
   const cookieData = req.body
 
   /** @type {string[]} */
@@ -55,7 +55,7 @@ cookieRouter.post('/cookie', async (req, res) => {
   res.sendStatus(200)
 })
 
-cookieRouter.get('/cookie', async (req, res) => {
+cookieRouter.get(cookieApiPath, async (req, res) => {
   const cookies = req.headers?.cookie
     ? nodeCookie.parse(req.headers?.cookie)
     : {}
