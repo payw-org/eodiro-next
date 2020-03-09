@@ -83,6 +83,13 @@ export default async function eodiroAxios<T = any>(
         alert('서버에 연결할 수 없습니다.')
       }
       return [err, null, null]
+    } else if (
+      Math.floor(err?.response?.status / 100) === 5 &&
+      typeof window !== 'undefined'
+    ) {
+      alert(
+        '서버에 문제가 발생했습니다. 문제가 지속될 시 contact@payw.org로 문의바랍니다.'
+      )
     }
 
     return [err, null, err.response.status]
