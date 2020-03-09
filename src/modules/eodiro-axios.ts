@@ -79,6 +79,9 @@ export default async function eodiroAxios<T = any>(
     // Perhaps our server is closed
     if (!err.response) {
       console.error(`${moduleConsoleTag} network error`)
+      if (typeof window !== 'undefined') {
+        alert('서버에 연결할 수 없습니다.')
+      }
       return [err, null, null]
     }
 
