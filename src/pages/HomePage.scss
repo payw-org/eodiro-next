@@ -7,9 +7,41 @@
   justify-content: center;
 
   .header {
-    font-size: 8rem;
     line-height: 1;
     @include resolve-optical-illusion($border-radius-outer);
+    overflow-y: hidden;
+
+    .text-wrapper {
+      transform: translate3d(0, 200%, 0);
+
+      @keyframes float {
+        0% {
+          transform: translate3d(0, 200%, 0);
+        }
+        100% {
+          transform: translate3d(0, 0%, 0);
+        }
+      }
+
+      animation-name: float;
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease;
+    }
+
+    .name,
+    .emoji {
+      font-size: 7rem;
+
+      @include on-mobile {
+        font-size: 5rem;
+      }
+    }
+
+    .emoji {
+      display: inline-block;
+      margin-left: s(3);
+    }
 
     .name {
       @include text-color;
@@ -22,20 +54,37 @@
       background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-
-    @include on-mobile {
-      font-size: 5rem;
-    }
   }
 
   .manifesto {
-    font-size: 2rem;
-    font-weight: 600;
     margin-top: s(3);
     @include resolve-optical-illusion($border-radius-outer);
+    overflow-y: hidden;
 
     @include on-mobile {
       font-size: 1.5rem;
+    }
+
+    .text {
+      font-size: 2rem;
+      font-weight: 600;
+      transform: translate3d(0, 100%, 0);
+      display: inline-block;
+
+      @keyframes float {
+        0% {
+          transform: translate3d(0, 200%, 0);
+        }
+        100% {
+          transform: translate3d(0, 0%, 0);
+        }
+      }
+
+      animation-name: float;
+      animation-duration: 1s;
+      animation-delay: 0.3s;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease;
     }
   }
 
