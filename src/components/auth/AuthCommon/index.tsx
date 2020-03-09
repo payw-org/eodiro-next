@@ -26,10 +26,6 @@ const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
   const [nickname, setNickname] = useState('')
   const [validNickname, setValidNickname] = useState(true)
   const nicknameRef = useRef<HTMLInputElement>(null)
-  function focusNickname(): void {
-    if (portalIdRef.current) return
-    portalIdRef.current.focus()
-  }
 
   const [password, setPassword] = useState('')
   const [validPassword, setValidPassword] = useState(true)
@@ -83,6 +79,24 @@ const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
     }
   }
 
+  async function forgot(): Promise<void> {
+    setValidating(true)
+
+    const available = await AuthApi.validatePortalId(portalId, true)
+    if (!available) {
+      alert('등록되지 않은 포탈 아이디입니다.')
+      setValidating(false)
+      focusPortalId()
+    } else {
+      const changed = await AuthApi.requestPasswordChange(portalId)
+      if (changed) {
+        alert('암호 변경 이메일을 발송했습니다.')
+        setPortalId('')
+      }
+      setValidating(false)
+    }
+  }
+
   return (
     <BaseLayout
       bodyClassName="eodiro-auth-common"
@@ -111,6 +125,8 @@ const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
                 nicknameRef.current.focus()
               } else if (passwordRef.current) {
                 passwordRef.current.focus()
+              } else if (mode === 'forgot') {
+                forgot()
               }
             }}
             disabled={validating}
@@ -168,12 +184,6 @@ const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
                 }
               }}
               disabled={validating}
-              onChangeHook={(password): void => {
-                if (password.match(/[ㄱ-힣]/)) {
-                  setPassword('')
-                  alert('암호에 한글을 사용할 수 없습니다.')
-                }
-              }}
               onChangeThrottle={[
                 async (password): Promise<void> => {
                   if (mode === 'join') {
@@ -213,6 +223,8 @@ const AuthCommon: React.FC<AuthCommonProps> = ({ mode }) => {
                 signIn()
               } else if (mode === 'join') {
                 join()
+              } else if (mode === 'forgot') {
+                forgot()
               }
             }}
           />

@@ -142,16 +142,16 @@ export class AuthApi {
    * Pass with/without email host
    * @param portalId
    */
-  static async validatePortalId(portalId: string): Promise<boolean> {
-    if (!portalId.includes('@')) {
-      portalId = portalId + '@cau.ac.kr'
-    }
-
+  static async validatePortalId(
+    portalId: string,
+    existence = false
+  ): Promise<boolean> {
     const [err, data] = await eodiroAxios<boolean>({
       method: 'POST',
       url: ApiHost.getHost() + `/auth/validate/portal-id`,
       data: {
         portalId,
+        existence,
       },
     })
 
@@ -193,6 +193,52 @@ export class AuthApi {
         req,
       }
     )
+
+    return err ? false : data
+  }
+
+  /**
+   * Request password change.
+   *
+   * @param portalId
+   * @returns `false`: server error
+   */
+  static async requestPasswordChange(portalId: string): Promise<boolean> {
+    const [err] = await eodiroAxios({
+      method: 'POST',
+      url: ApiHost.getHost() + `/auth/change-password`,
+      data: {
+        portalId,
+      },
+    })
+
+    return err ? false : true
+  }
+
+  static async checkPasswordChange(token: string): Promise<boolean> {
+    const [err, data] = await eodiroAxios<boolean>({
+      method: 'GET',
+      url: ApiHost.getHost() + `/auth/change-password`,
+      data: {
+        token,
+      },
+    })
+
+    return err ? false : data
+  }
+
+  static async changePassword(
+    token: string,
+    newPassword: string
+  ): Promise<boolean> {
+    const [err, data] = await eodiroAxios<boolean>({
+      method: 'PATCH',
+      url: ApiHost.getHost() + `/auth/change-password`,
+      data: {
+        token,
+        newPassword,
+      },
+    })
 
     return err ? false : data
   }
