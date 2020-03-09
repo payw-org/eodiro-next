@@ -6,8 +6,14 @@ const nodeCookie = require('cookie')
 const cookieRouter = express.Router()
 
 /**
- * @param {import('../../modules/eodiro-http-cookie').Cookie} cookie
- * @param {import('http').IncomingMessage} req
+ * @typedef {import('../../modules/eodiro-http-cookie').Cookie} Cookie
+ * @typedef {import('../../modules/eodiro-http-cookie').Cookies} Cookies
+ * @typedef {import('http').IncomingMessage} IncomingMessage
+ */
+
+/**
+ * @param {Cookie} cookie
+ * @param {IncomingMessage} req
  * @returns {string}
  */
 function buildCookieString(cookie, req) {
@@ -28,9 +34,8 @@ function buildCookieString(cookie, req) {
 
 // Set cookie
 cookieRouter.post('/cookie', async (req, res) => {
-  console.log('[server.js] set cookie')
   /**
-   * @type {import('../../modules/eodiro-http-cookie').Cookie | import('../../modules/eodiro-http-cookie').Cookies}
+   * @type {Cookie | Cookies}
    */
   const cookieData = req.body
 
