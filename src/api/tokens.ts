@@ -52,4 +52,25 @@ export class Tokens {
 
     return true
   }
+
+  static async clear(): Promise<boolean> {
+    const succeeded = await EodiroHttpCookie.set([
+      {
+        name: 'accessToken',
+        value: '',
+        expires: dayjs('1970-01-01')
+          .toDate()
+          .toUTCString(),
+      },
+      {
+        name: 'refreshToken',
+        value: '',
+        expires: dayjs('1970-01-01')
+          .toDate()
+          .toUTCString(),
+      },
+    ])
+
+    return succeeded
+  }
 }
