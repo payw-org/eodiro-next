@@ -1,6 +1,6 @@
 import { InquiryApi, InquiryData } from '@/api'
 import { ArrowBlock } from '@/components/ui'
-import BaseLayout from '@/layouts/BaseLayout'
+import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
 import getState from '@/modules/get-state'
 import Time from '@/modules/time'
@@ -38,14 +38,7 @@ const InquiryPage: EodiroPage<InquiryProps> = ({ inquiries }) => {
         <title>문의</title>
       </Head>
       {inquiries === undefined ? null : (
-        <BaseLayout
-          hasTopGap
-          pageTitle="문의"
-          infinityScroll={{
-            loadDataStrategy: loadMore,
-            dataContainerRef: inquiriesContainerRef,
-          }}
-        >
+        <Body hasTopGap pageTitle="문의">
           <div id="eodiro-inquiry">
             <div ref={inquiriesContainerRef}>
               <Grid className="inquiry-container">
@@ -84,7 +77,7 @@ const InquiryPage: EodiroPage<InquiryProps> = ({ inquiries }) => {
               </Grid>
             </div>
           </div>
-        </BaseLayout>
+        </Body>
       )}
     </>
   )

@@ -5,7 +5,7 @@ import {
   SquareAppIcon,
   VacantAppIcon,
 } from '@/components/icons'
-import BaseLayout from '@/layouts/BaseLayout'
+import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
 import { ColorIcon } from '@/types'
 import { NextPage } from 'next'
@@ -70,7 +70,7 @@ const HomePage: NextPage = () => {
       <Head>
         <title>어디로</title>
       </Head>
-      <BaseLayout pageTitle="어디로" titleHidden centered>
+      <Body pageTitle="어디로" titleHidden centered>
         <div id="eodiro-home">
           <h1 className="header">
             <div className="text-wrapper">
@@ -106,7 +106,7 @@ const HomePage: NextPage = () => {
             </Grid>
           </div>
         </div>
-      </BaseLayout>
+      </Body>
     </>
   )
 }

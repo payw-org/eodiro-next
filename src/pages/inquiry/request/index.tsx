@@ -1,6 +1,6 @@
 import { InquiryApi } from '@/api'
 import { Button, LineInput } from '@/components/ui'
-import BaseLayout from '@/layouts/BaseLayout'
+import Body from '@/layouts/BaseLayout/Body'
 import { EodiroPage } from '@/pages/_app'
 import Head from 'next/head'
 import { useEffect, useRef, useState } from 'react'
@@ -81,7 +81,7 @@ const InquiryRequestPage: EodiroPage<void> = () => {
       <Head>
         <title>문의하기</title>
       </Head>
-      <BaseLayout
+      <Body
         hasTopGap
         pageTitle="문의하기"
         bodyClassName="eodiro-inquiry-request-body"
@@ -126,7 +126,7 @@ const InquiryRequestPage: EodiroPage<void> = () => {
             accent="yellow"
           />
         </div>
-      </BaseLayout>
+      </Body>
     </>
   )
 }

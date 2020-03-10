@@ -3,7 +3,7 @@ import { ArrowIcon } from '@/components/icons'
 import Information from '@/components/Information'
 import ServerError from '@/components/ServerError'
 import { ArrowBlock } from '@/components/ui'
-import BaseLayout from '@/layouts/BaseLayout'
+import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
 import Time from '@/modules/time'
 import { Restaurant } from '@payw/cau-cafeteria-menus-scraper-types'
@@ -116,11 +116,11 @@ const EodiroCafeteria: React.FC<{ menus: CafeteriaMenus }> = ({ menus }) => {
   )
 }
 
-const CafeteriaPage: NextPage<CafeteriaPageProps> = ({ menus }) => {
+const CafeteriaPage: NextPage<CafeteriaPageProps> = (props) => {
   return (
-    <BaseLayout hasTopGap pageTitle="학식 메뉴">
-      <EodiroCafeteria menus={menus} />
-    </BaseLayout>
+    <Body pageTitle="학식 메뉴">
+      <EodiroCafeteria {...props} />
+    </Body>
   )
 }
 

@@ -2,7 +2,7 @@ import { VacantApi } from '@/api'
 import { VacantClassrooms } from '@/api/vacant'
 import ServerError from '@/components/ServerError'
 import { ArrowBlock } from '@/components/ui'
-import BaseLayout from '@/layouts/BaseLayout'
+import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
 import mergeClassName from '@/modules/merge-class-name'
 import dayjs from 'dayjs'
@@ -29,7 +29,7 @@ const VacantClassroomsPage: NextPage<VacantClassroomsPageProps> = ({
       <Head>
         <title>빈 강의실 - 강의실</title>
       </Head>
-      <BaseLayout hasTopGap pageTitle={`${buildingNumber}관`}>
+      <Body pageTitle={buildingNumber}>
         <div id="eodiro-vacant-classrooms">
           {classroomsInfo ? (
             <Grid>
@@ -117,7 +117,7 @@ const VacantClassroomsPage: NextPage<VacantClassroomsPageProps> = ({
             <ServerError />
           )}
         </div>
-      </BaseLayout>
+      </Body>
     </>
   )
 }

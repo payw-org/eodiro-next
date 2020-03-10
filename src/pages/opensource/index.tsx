@@ -1,12 +1,12 @@
-import BaseLayout from '@/layouts/BaseLayout'
+import Body from '@/layouts/BaseLayout/Body'
 import { NextPage } from 'next'
 import React from 'react'
 
 const OpenSourcePage: NextPage = () => {
   return (
-    <BaseLayout hasTopGap pageTitle="오픈소스">
+    <Body hasTopGap pageTitle="오픈소스">
       <div id="eodiro-opensource"></div>
-    </BaseLayout>
+    </Body>
   )
 }
 

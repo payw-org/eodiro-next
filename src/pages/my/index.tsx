@@ -1,6 +1,6 @@
 import { AuthApi, Tokens, UserInfo } from '@/api'
 import { Button, FlatBlock } from '@/components/ui'
-import BaseLayout from '@/layouts/BaseLayout'
+import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
 import { redirect } from '@/modules/server/redirect'
 import dayjs from 'dayjs'
@@ -13,7 +13,7 @@ type MyPageProps = {
 
 const MyPage: EodiroPage<MyPageProps> = ({ userInfo }) => {
   return (
-    <BaseLayout pageTitle={userInfo.nickname} appClassName="eodiro-my">
+    <Body pageTitle={userInfo.nickname} bodyClassName="eodiro-my">
       <section className="info-section">
         <h1 className="section-header">기본 정보</h1>
         <Grid proportion="large" className="section-body">
@@ -65,7 +65,7 @@ const MyPage: EodiroPage<MyPageProps> = ({ userInfo }) => {
           }}
         />
       </section>
-    </BaseLayout>
+    </Body>
   )
 }
 

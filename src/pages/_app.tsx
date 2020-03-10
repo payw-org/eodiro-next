@@ -1,5 +1,6 @@
 import { AuthApi, Tokens, TokensPack } from '@/api'
 import '@/assets/styles/global/globalstyle.scss'
+import BaseLayout from '@/layouts/BaseLayout'
 import EodiroHttpCookie from '@/modules/eodiro-http-cookie'
 import dayjs from 'dayjs'
 import { NextComponentType, NextPageContext } from 'next'
@@ -152,7 +153,9 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
           />
         </Head>
         <AuthProvider {...authProps}>
-          <Component {...pageProps} />
+          <BaseLayout>
+            <Component {...pageProps} />
+          </BaseLayout>
         </AuthProvider>
       </>
     )

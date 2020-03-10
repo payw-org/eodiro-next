@@ -1,4 +1,4 @@
-import BaseLayout from '@/layouts/BaseLayout'
+import Body from '@/layouts/BaseLayout/Body'
 import { NextPage } from 'next'
 import React from 'react'
 import './ErrorPage.scss'
@@ -9,12 +9,12 @@ type ErrorPageProps = {
 
 const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode }) => {
   return (
-    <BaseLayout pageTitle={statusCode.toString()} titleHidden centered>
+    <Body pageTitle={statusCode.toString()} titleHidden centered>
       <div id="error-page">
         <h1 className="status-code">{statusCode}</h1>
         <p className="manifesto">페이지를 찾을 수 없습니다.</p>
       </div>
-    </BaseLayout>
+    </Body>
   )
 }
 

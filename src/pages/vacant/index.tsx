@@ -3,7 +3,7 @@ import { VacantBuildings } from '@/api/vacant'
 import Information from '@/components/Information'
 import ServerError from '@/components/ServerError'
 import { ArrowBlock } from '@/components/ui'
-import BaseLayout from '@/layouts/BaseLayout'
+import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
 import getBuildingName from '@/modules/cau/get-building-name'
 import getSemester from '@/modules/get-semester'
@@ -25,7 +25,7 @@ const VacantBuildingsPage: NextPage<VacantBuildingsPageProps> = ({
       <Head>
         <title>빈 강의실 - 건물</title>
       </Head>
-      <BaseLayout hasTopGap pageTitle="빈 강의실">
+      <Body pageTitle="빈 강의실">
         <div id="eodiro-vacant">
           {buildingsInfo && buildingsInfo.length > 0 ? (
             <Grid className="building-container">
@@ -63,7 +63,7 @@ const VacantBuildingsPage: NextPage<VacantBuildingsPageProps> = ({
             <ServerError />
           )}
         </div>
-      </BaseLayout>
+      </Body>
     </>
   )
 }
