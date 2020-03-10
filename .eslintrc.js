@@ -10,6 +10,7 @@ module.exports = {
   ],
   plugins: ['react', 'react-hooks'],
   rules: {
+    'react/display-name': 'off',
     'react/react-in-jsx-scope': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react/prop-types': [0],
