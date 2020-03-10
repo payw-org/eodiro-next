@@ -61,12 +61,11 @@
     @include resolve-optical-illusion($border-radius-outer);
     overflow-y: hidden;
 
-    @include on-mobile {
-      font-size: 1.5rem;
-    }
-
     .text {
       font-size: 2rem;
+      @include on-mobile {
+        font-size: 1.5rem;
+      }
       font-weight: 600;
       transform: translate3d(0, 100%, 0);
       display: inline-block;
