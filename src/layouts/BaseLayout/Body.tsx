@@ -1,4 +1,8 @@
-import { NavigationContext } from '@/components/Navigation'
+import {
+  NavHiddenDispatchContext,
+  NavScrollDispatchContext,
+  NavTitleDispatchContext,
+} from '@/components/Navigation'
 import getState from '@/modules/get-state'
 import mergeClassName from '@/modules/merge-class-name'
 import React, {
@@ -40,7 +44,10 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
     const titleTextSentinelRef = useRef<HTMLDivElement>(null)
     const titleTopSentinelRef = useRef<HTMLHeadingElement>(null)
     const bodyContentBottomRef = useRef<HTMLDivElement>(null)
-    const navContext = useContext(NavigationContext)
+
+    const setNavTitle = useContext(NavTitleDispatchContext)
+    const setNavHidden = useContext(NavHiddenDispatchContext)
+    const setNavScrolled = useContext(NavScrollDispatchContext)
 
     const [, setIsFetchingData] = useState(false)
 
@@ -66,7 +73,7 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
 
     useEffect(() => {
       if (pageTitle && titleTextSentinelRef.current) {
-        navContext.setPageAppTitle(pageTitle)
+        setNavTitle(pageTitle)
         const titleSentinelElm = titleTextSentinelRef.current
         const titleTopSentinelElm = titleTopSentinelRef.current
         const bodyContentBottomElm = bodyContentBottomRef.current
@@ -76,25 +83,22 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
             if (entry.target.isSameNode(titleSentinelElm)) {
               if (entry.isIntersecting) {
                 // Appear
-                navContext.setIsHidden(true)
+                setNavHidden(true)
               } else {
                 // Disappear
-                navContext.setIsHidden(false)
+                setNavHidden(false)
               }
             } else if (entry.target.isSameNode(bodyContentBottomElm)) {
               if (entry.isIntersecting) {
-                // Scroll ends
-                // onScrollEnds && onScrollEnds()
-
                 if (infinityScroll) {
                   processInfinityScroll()
                 }
               }
             } else if (entry.target.isSameNode(titleTopSentinelElm)) {
               if (entry.isIntersecting) {
-                navContext.setIsScrolled(false)
+                setNavScrolled(false)
               } else {
-                navContext.setIsScrolled(true)
+                setNavScrolled(true)
               }
             }
           })

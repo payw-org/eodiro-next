@@ -2,9 +2,15 @@ import { VerticalThreeDotsIcon } from '@/components/icons'
 import EodiroLogo from '@/components/icons/EodiroLogo'
 import mergeClassName from '@/modules/merge-class-name'
 import { AuthContext } from '@/pages/_app'
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import './Navigation.scss'
-import { NavigationContext } from './NavigationContext'
+import {
+  NavHiddenStateContext,
+  NavMenuOpenDispatchContext,
+  NavMenuOpenStateContext,
+  NavScrollStateContext,
+  NavTitleStateContext,
+} from './NavigationContext'
 
 export * from './NavigationContext'
 
@@ -22,57 +28,78 @@ const NavItem: React.FC<NavItemProps> = ({ to, title, className }) => {
   )
 }
 
-const Navigation: React.FC = () => {
-  const [isMobileNavMenuOpened, setIsMobileNavMenuOpened] = useState(false)
-  const navContext = useContext(NavigationContext)
+const BgBar: React.FC = () => {
+  const isScrolled = useContext(NavScrollStateContext)
+  const menuOpened = useContext(NavMenuOpenStateContext)
 
+  return (
+    <div
+      className={mergeClassName(
+        'en-bar',
+        (isScrolled || menuOpened) && 'scrolled'
+      )}
+    />
+  )
+}
+
+const PageAppTitle: React.FC = () => {
+  const hidden = useContext(NavHiddenStateContext)
+  const title = useContext(NavTitleStateContext)
+
+  return (
+    <h1 className={mergeClassName('page-app-title', !hidden && 'show')}>
+      {title}
+    </h1>
+  )
+}
+
+const NavMenus: React.FC = () => {
   const isSigned = useContext(AuthContext).isSigned
+  const menuOpened = useContext(NavMenuOpenStateContext)
+
+  return (
+    <ul
+      className={mergeClassName(
+        'en-menus-container',
+        menuOpened ? 'opened' : ''
+      )}
+    >
+      <NavItem title="빈 강의실" to="/vacant" />
+      <NavItem title="강의 검색" to="/lectures" />
+      <NavItem title="학식 메뉴" to="/cafeteria" />
+      <NavItem title="빼빼로 광장" to="/" />
+      <NavItem
+        title={isSigned ? '마이페이지' : '로그인'}
+        className={isSigned ? 'my' : 'signin'}
+        to={isSigned ? '/my' : '/signin'}
+      />
+    </ul>
+  )
+}
+
+const Navigation: React.FC = () => {
+  const setMenuOpen = useContext(NavMenuOpenDispatchContext)
 
   return (
     <nav id="eodiro-navigation">
-      <div
-        className={mergeClassName(
-          'en-bar',
-          (navContext.isScrolled || isMobileNavMenuOpened) && 'scrolled'
-        )}
-      />
+      <BgBar />
 
       <div className="en-wrapper">
         <a className="home-link" href="/">
           <EodiroLogo className="eodiro-logo" fill="#ff3852" />
         </a>
 
-        <h1
-          className={mergeClassName(
-            'page-app-title',
-            !navContext.isHidden && 'show'
-          )}
-        >
-          {navContext.pageAppTitle}
-        </h1>
+        <PageAppTitle />
 
-        <ul
-          className={mergeClassName(
-            'en-menus-container',
-            isMobileNavMenuOpened ? 'opened' : ''
-          )}
-        >
-          <NavItem title="빈 강의실" to="/vacant" />
-          <NavItem title="강의 검색" to="/lectures" />
-          <NavItem title="학식 메뉴" to="/cafeteria" />
-          <NavItem title="빼빼로 광장" to="/" />
-          <NavItem
-            title={isSigned ? '마이페이지' : '로그인'}
-            className={isSigned ? 'my' : 'signin'}
-            to={isSigned ? '/my' : '/signin'}
-          />
-        </ul>
+        <NavMenus />
 
         <div className="more-tappable">
           <VerticalThreeDotsIcon
             className="more-icon"
             onClick={(): void => {
-              setIsMobileNavMenuOpened(!isMobileNavMenuOpened)
+              setMenuOpen((open) => {
+                return !open
+              })
             }}
           />
         </div>
