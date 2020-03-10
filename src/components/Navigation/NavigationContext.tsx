@@ -1,6 +1,5 @@
+import { Dispatcher } from '@/types/react-helper'
 import React, { createContext, useState } from 'react'
-
-type Dispatcher<T> = React.Dispatch<React.SetStateAction<T>>
 
 // Nav hidden context
 export const NavHiddenStateContext = createContext<boolean>(undefined)
