@@ -25,4 +25,4 @@ const GlobalFooter: React.FC = () => {
   )
 }
 
-export default GlobalFooter
+export default React.memo(GlobalFooter)
