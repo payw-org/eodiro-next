@@ -93,18 +93,6 @@ export class AuthApi {
     }
     nickname = nickname.trim().replace(' ', '')
 
-    if (
-      portalId.length === 0 ||
-      nickname.length === 0 ||
-      password.length === 0
-    ) {
-      return {
-        portalId: false,
-        nickname: false,
-        password: false,
-      }
-    }
-
     const [err, data] = await eodiroAxios<{
       portalId: boolean
       nickname: boolean
