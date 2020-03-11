@@ -64,7 +64,7 @@ const ChangePasswordRequestPage: EodiroPage<ChangePasswordRequestPageProps> = ({
           />
         </>
       )}
-      {!valid && <p>암호 변경 요청이 만료되었습니다.</p>}
+      {!valid && <p>암호 변경 요청이 만료되었거나 유효하지 않습니다.</p>}
     </Body>
   )
 }
