@@ -70,6 +70,7 @@ const AuthCommonContent: React.FC<AuthCommonProps> = ({ mode }) => {
         )
         location.href = '/signin'
       } else {
+        console.log(result)
         setValidPortalId(result.portalId)
         setValidNickname(result.nickname)
         setValidPassword(result.password)
