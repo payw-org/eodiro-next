@@ -110,6 +110,18 @@ export class AuthApi {
     return err ? false : data
   }
 
+  static async verify(token: string): Promise<boolean> {
+    const [err] = await eodiroAxios({
+      method: 'POST',
+      url: ApiHost.getHost() + `/auth/verify`,
+      data: {
+        token,
+      },
+    })
+
+    return !err
+  }
+
   // TODO: move to Tokens class
   static async refresh(req?: IncomingMessage): Promise<false | TokensPack> {
     const [err, data] = await eodiroAxios<TokensPack>(
