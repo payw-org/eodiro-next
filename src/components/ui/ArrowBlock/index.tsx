@@ -3,7 +3,7 @@ import mergeClassName from '@/modules/merge-class-name'
 import React from 'react'
 import './ArrowBlock.scss'
 
-interface ArrowBlockProps {
+export interface ArrowBlockProps {
   className?: string
   noArrow?: boolean
   flat?: boolean
