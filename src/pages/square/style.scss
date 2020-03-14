@@ -1,0 +1,15 @@
+@use '@/assets/styles/main' as *;
+
+.eodiro-square-main {
+  .board {
+    .board-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: $eodiro-pink-2;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
