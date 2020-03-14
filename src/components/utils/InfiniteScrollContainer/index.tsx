@@ -1,5 +1,5 @@
-import getState from '@/modules/get-state'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
+import './style.scss'
 
 type InfiniteScrollContainerProps = {
   strategy: () => Promise<boolean>
@@ -9,27 +9,36 @@ export const InfiniteScrollContainer: React.FC<InfiniteScrollContainerProps> = (
   props
 ) => {
   const bodyContentBottomRef = useRef<HTMLDivElement>(null)
-  const [, setIsLoading] = useState(false)
+  let isLoading = false
+  let noMore = false
 
   function isReachBottom(ref: React.MutableRefObject<HTMLElement>): boolean {
     return window.innerHeight < ref.current.getBoundingClientRect().bottom
   }
 
   async function processStrategy(): Promise<void> {
-    const isLoading = getState(setIsLoading)
-
+    if (noMore) return
     if (isLoading) return
 
-    setIsLoading(true)
+    console.log('load more')
+
+    isLoading = true
+    document.querySelector('.loading-indicator').classList.add('processing')
 
     const shouldProcessAgain = await props.strategy()
 
-    if (typeof shouldProcessAgain !== 'boolean') {
-      console.error('[InfiniteScrollContainer] strategy should return boolean')
+    isLoading = false
+
+    setTimeout(() => {
+      document
+        .querySelector('.loading-indicator')
+        .classList.remove('processing')
+    }, 700)
+
+    if (shouldProcessAgain === false) {
+      noMore = true
       return
     }
-
-    setIsLoading(false)
 
     if (!isReachBottom(bodyContentBottomRef)) {
       processStrategy()
@@ -58,6 +67,9 @@ export const InfiniteScrollContainer: React.FC<InfiniteScrollContainerProps> = (
         className="infinite-scroll-bottom-sentinel"
         ref={bodyContentBottomRef}
       />
+      <div className="loading-indicator">
+        <p>🚀 로딩 중...</p>
+      </div>
     </div>
   )
 }
