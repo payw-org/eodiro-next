@@ -6,31 +6,26 @@ import dayjs from 'dayjs'
 import { NextComponentType, NextPageContext } from 'next'
 import App, { AppContext, AppInitialProps } from 'next/app'
 import Head from 'next/head'
-import React, { createContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
-type AuthContextProps = {
+type AuthProps = {
   tokens: TokensPack
   isSigned: boolean
   isAdmin: boolean
 }
-export const AuthContext = createContext({} as AuthContextProps)
+export const AuthContext = createContext({} as AuthProps)
 
-type AuthProviderProps = {
-  tokensInit: TokensPack
-  isSignedInit: boolean
-  isAdminInit: boolean
+export const useAuth = (): AuthProps => {
+  const authContext = useContext(AuthContext)
+  return authContext
 }
-export const AuthProvider: React.FC<AuthProviderProps> = ({
-  children,
-  tokensInit,
-  isSignedInit,
-  isAdminInit,
-}) => {
+
+export const AuthProvider: React.FC<AuthProps> = (props) => {
   const [tokens] = useState(
-    tokensInit || { accessToken: undefined, refreshToken: undefined }
+    props.tokens || { accessToken: undefined, refreshToken: undefined }
   )
-  const [isSigned] = useState(isSignedInit)
-  const [isAdmin] = useState(isAdminInit)
+  const [isSigned] = useState(props.isSigned)
+  const [isAdmin] = useState(props.isAdmin)
 
   return (
     <AuthContext.Provider
@@ -40,13 +35,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         isAdmin,
       }}
     >
-      {children}
+      {props.children}
     </AuthContext.Provider>
   )
 }
 
 interface EodiroAppInitialProps extends AppInitialProps {
-  authProps: AuthProviderProps
+  authProps: AuthProps
 }
 
 interface EodiroPageContext extends NextPageContext {
@@ -61,7 +56,7 @@ interface EodiroAppContext extends AppContext {
 export type EodiroPage<P = {}, IP = P> = NextComponentType<
   EodiroPageContext,
   IP,
-  P
+  P & AuthProps
 >
 
 export default class EodiroApp extends App<EodiroAppInitialProps> {
@@ -72,10 +67,10 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
     const { req, res } = ctx
 
     const tokens = await Tokens.get(ctx.req)
-    const authProps: AuthProviderProps = {
-      tokensInit: tokens,
-      isSignedInit: false,
-      isAdminInit: false,
+    const authProps: AuthProps = {
+      tokens,
+      isSigned: false,
+      isAdmin: false,
     }
 
     ctx.isSigned = false
@@ -86,8 +81,8 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
       const authCheck = await AuthApi.isSigned(ctx.req)
 
       if (authCheck.isSigned) {
-        authProps.isSignedInit = authCheck.isSigned
-        authProps.isAdminInit = authCheck.isAdmin
+        authProps.isSigned = authCheck.isSigned
+        authProps.isAdmin = authCheck.isAdmin
         ctx.isSigned = authCheck.isSigned
         ctx.isAdmin = authCheck.isAdmin
       } else {
@@ -96,8 +91,8 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
         if (newTokens) {
           await Tokens.set(newTokens, { req, res })
           const authCheck = await AuthApi.isSigned(ctx.req)
-          authProps.isSignedInit = authCheck.isSigned
-          authProps.isAdminInit = authCheck.isAdmin
+          authProps.isSigned = authCheck.isSigned
+          authProps.isAdmin = authCheck.isAdmin
           ctx.isSigned = authCheck.isSigned
           ctx.isAdmin = authCheck.isAdmin
         } else {
@@ -154,7 +149,7 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
         </Head>
         <AuthProvider {...authProps}>
           <BaseLayout>
-            <Component {...pageProps} />
+            <Component {...pageProps} {...authProps} />
           </BaseLayout>
         </AuthProvider>
       </>
