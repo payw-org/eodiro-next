@@ -1,4 +1,5 @@
 import mergeClassName from '@/modules/merge-class-name'
+import Head from 'next/head'
 import React, { FC } from 'react'
 import Header, { HeaderProps } from './Header'
 
@@ -12,17 +13,22 @@ const Body: FC<BodyProps> = (props) => {
   const { children, bodyClassName, hasTopGap = true, centered = false } = props
 
   return (
-    <div
-      className={mergeClassName(
-        'body-content',
-        bodyClassName,
-        hasTopGap ? 'top-gap' : '',
-        centered && 'centered'
-      )}
-    >
-      <Header {...props} />
-      {children}
-    </div>
+    <>
+      <Head>
+        <title>{props.pageTitle}</title>
+      </Head>
+      <div
+        className={mergeClassName(
+          'body-content',
+          bodyClassName,
+          hasTopGap ? 'top-gap' : '',
+          centered && 'centered'
+        )}
+      >
+        <Header {...props} />
+        {children}
+      </div>
+    </>
   )
 }
 
