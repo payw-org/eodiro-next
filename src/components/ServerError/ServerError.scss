@@ -6,6 +6,12 @@
   @include rounded;
   padding: s(6);
 
+  &.raw {
+    padding: 0;
+    background: none;
+    border: none;
+  }
+
   .header {
     margin-bottom: s(3);
   }
