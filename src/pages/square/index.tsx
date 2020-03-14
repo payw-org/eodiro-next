@@ -14,7 +14,7 @@ const SquareMainPage: EodiroPage<SquareMainPageProps> = (props) => {
     <>
       <Body pageTitle="빼빼로 광장" bodyClassName="eodiro-square-main">
         <FlatBlock className="board">
-          <a href="/square/global">
+          <a href="/square/자유 게시판">
             <h1 className="board-name">자유 게시판</h1>
           </a>
           {props.globalPosts &&

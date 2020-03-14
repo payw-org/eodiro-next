@@ -1,0 +1,94 @@
+@use '@/assets/styles/main' as *;
+
+.eodiro-board-page {
+  // max-width: 50rem !important;
+
+  .page-container {
+    display: flex;
+
+    .side {
+      margin-right: 2rem;
+      flex: 2;
+      position: sticky;
+      top: $nav-height + 1.5rem;
+      min-width: 250px;
+      align-self: flex-start;
+    }
+
+    .content {
+      flex: 5;
+    }
+
+    @include on-mobile {
+      display: block;
+
+      .side {
+        margin-right: 0;
+        margin-bottom: 1rem;
+        position: relative;
+        top: 0;
+      }
+    }
+  }
+
+  .new-btn-wrapper {
+    margin-bottom: 1rem;
+  }
+
+  .posts-container {
+    .post {
+      padding: 0.4rem 0.5rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1rem;
+      @include border-radius-inner;
+
+      &:hover {
+        background-color: rgba($eodiro-secondary-color, 0.1);
+
+        .title {
+          color: $eodiro-primary-color;
+        }
+      }
+
+      .title {
+        font-size: 1rem;
+      }
+
+      .right {
+        text-align: right;
+      }
+
+      .nick,
+      .time {
+        color: $base-gray;
+        font-size: 0.9rem;
+      }
+      .nick {
+        margin-bottom: 0.1rem;
+      }
+      .time {
+        font-size: 0.8rem;
+      }
+    }
+
+    &.mobile {
+      .post {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .right {
+        margin-top: 0.2rem;
+        display: flex;
+        align-items: center;
+        text-align: left;
+
+        .time {
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+}

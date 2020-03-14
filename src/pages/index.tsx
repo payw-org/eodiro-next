@@ -97,7 +97,11 @@ const HomePage: NextPage = () => {
                 to="/cafeteria"
                 Icon={CafeteriaAppIcon}
               />
-              <HomeFeatureBox title="빼빼로 광장" to="/" Icon={SquareAppIcon} />
+              <HomeFeatureBox
+                title="빼빼로 광장"
+                to="/square"
+                Icon={SquareAppIcon}
+              />
               <HomeFeatureBox
                 title="오픈 소스"
                 to="/opensource"
