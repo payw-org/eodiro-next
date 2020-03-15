@@ -35,8 +35,27 @@ export default class Time {
     return postedAt
   }
 
-  static day(dayIndex: number): string {
+  static yyyymmdd(date: string, pretty?: boolean): string {
+    if (pretty) {
+      return dayjs(date).format('YYYY년 M월 D일')
+    } else {
+      return dayjs(date).format('YYYY-MM-DD')
+    }
+  }
+
+  static day(indexOrTime: string): string
+  static day(indexOrTime: number): string
+  static day(indexOrTime: number | string): string {
     const daysKr = ['일', '월', '화', '수', '목', '금', '토']
-    return daysKr[dayIndex]
+
+    let index = 0
+
+    if (typeof indexOrTime === 'number') {
+      index = indexOrTime
+    } else if (typeof indexOrTime === 'string') {
+      index = dayjs(indexOrTime).day()
+    }
+
+    return daysKr[index]
   }
 }
