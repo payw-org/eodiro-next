@@ -20,8 +20,6 @@ export const InfiniteScrollContainer: React.FC<InfiniteScrollContainerProps> = (
     if (noMore) return
     if (isLoading) return
 
-    console.log('load more')
-
     isLoading = true
     document.querySelector('.loading-indicator').classList.add('processing')
 
@@ -67,8 +65,10 @@ export const InfiniteScrollContainer: React.FC<InfiniteScrollContainerProps> = (
         className="infinite-scroll-bottom-sentinel"
         ref={bodyContentBottomRef}
       />
-      <div className="loading-indicator">
-        <p>🚀 로딩 중...</p>
+      <div className="loading-indicator-wrapper">
+        <div className="loading-indicator">
+          <p>🚀 로딩 중...</p>
+        </div>
       </div>
     </div>
   )
