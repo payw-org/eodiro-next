@@ -44,6 +44,7 @@
     .home-link {
       display: flex;
       @include clickable;
+      margin-right: 0.5rem;
 
       .eodiro-logo {
         width: 2.5rem;
@@ -60,10 +61,13 @@
       opacity: 0;
       transform: translate3d(0, 25%, 0);
       transition: opacity 200ms ease, transform 200ms ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
 
-      @include no-mobile {
-        position: absolute;
-        left: 4rem;
+      @include on-mobile {
+        text-align: center;
       }
 
       &.show {
@@ -75,6 +79,7 @@
     .en-menus-container {
       display: flex;
       margin-right: 1.5rem;
+      flex: none;
 
       .en-menu-link {
         &.signin,
@@ -98,6 +103,8 @@
       width: 3rem;
       @include clickable;
       margin-right: 0.5rem;
+      margin-left: 0.5rem;
+      flex: none;
     }
   }
 
