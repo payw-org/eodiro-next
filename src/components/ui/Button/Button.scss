@@ -34,9 +34,10 @@
   @include btn-style-generator($eodiro-secondary-color, $eodiro-primary-color);
   color: #fff;
   @include border-radius-outer;
-  padding: s(3) s(4);
+  padding: 0.8rem s(4);
   font-size: b(3);
   font-weight: 500;
+  line-height: 1;
 
   &.full {
     width: 100%;
