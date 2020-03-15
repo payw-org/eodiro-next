@@ -52,6 +52,12 @@ export default class EodiroHttpCookie {
       return true
     }
 
+    if (typeof window === 'undefined') {
+      throw new Error(
+        `Don't use eodiro http cookie on server without passing http object`
+      )
+    }
+
     const [err] = await eodiroAxios({
       url: '/cookie',
       method: 'POST',
@@ -69,6 +75,12 @@ export default class EodiroHttpCookie {
         req && req.headers?.cookie && nodeCookie.parse(req.headers?.cookie)
 
       return cookies
+    }
+
+    if (typeof window === 'undefined') {
+      throw new Error(
+        `Don't use eodiro http cookie on server without passing request`
+      )
     }
 
     const [err, data] = await eodiroAxios({
