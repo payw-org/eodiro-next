@@ -10,9 +10,15 @@ export type HeaderProps = {
   titleAlign?: 'left' | 'center'
   titleHidden?: boolean
   pageTitle: string
+  textMargin?: string // CSS value
 }
 
-const Header: FC<HeaderProps> = ({ pageTitle, titleAlign, titleHidden }) => {
+const Header: FC<HeaderProps> = ({
+  pageTitle,
+  titleAlign,
+  titleHidden,
+  textMargin,
+}) => {
   const titleTopSentinelRef = useRef<HTMLDivElement>(null)
   const titleTextSentinelRef = useRef<HTMLDivElement>(null)
 
@@ -61,7 +67,13 @@ const Header: FC<HeaderProps> = ({ pageTitle, titleAlign, titleHidden }) => {
     >
       {pageTitle}
       <div className="top-sentinel" ref={titleTopSentinelRef} />
-      <div className="pat-sentinel" ref={titleTextSentinelRef} />
+      <div
+        className="pat-sentinel"
+        ref={titleTextSentinelRef}
+        style={{
+          top: textMargin,
+        }}
+      />
     </h1>
   )
 }
