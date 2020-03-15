@@ -8,11 +8,16 @@ type ErrorPageProps = {
 }
 
 const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode }) => {
+  const msg =
+    statusCode === 500
+      ? '서버에 연결할 수 없습니다.'
+      : '페이지를 찾을 수 없습니다.'
+
   return (
     <Body pageTitle={statusCode.toString()} titleHidden centered>
       <div id="error-page">
         <h1 className="status-code">{statusCode}</h1>
-        <p className="manifesto">페이지를 찾을 수 없습니다.</p>
+        <p className="manifesto">{msg}</p>
       </div>
     </Body>
   )
