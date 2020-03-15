@@ -1,0 +1,42 @@
+@use '@/assets/styles/main' as *;
+
+.eodiro-post-view {
+  max-width: 50rem !important;
+
+  .post {
+    @include elm-fill;
+    @include border-radius-outer;
+    @include bordered;
+    padding: 1rem 1rem;
+
+    .time {
+      display: inline-block;
+      color: $base-gray;
+      font-size: 0.9rem;
+      margin-left: 1rem;
+    }
+
+    .author {
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .title {
+      font-size: 2rem;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+      margin-top: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.4;
+
+      & + p {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}

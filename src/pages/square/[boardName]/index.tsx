@@ -1,4 +1,3 @@
-import ServerError from '@/components/ServerError'
 import { Button, FlatBlock } from '@/components/ui'
 import { InfiniteScrollContainer } from '@/components/utils'
 import Body from '@/layouts/BaseLayout/Body'
@@ -8,17 +7,41 @@ import mergeClassName from '@/modules/merge-class-name'
 import Time from '@/modules/time'
 import { EodiroPage, useAuth } from '@/pages/_app'
 import { oneAPIClient } from '@payw/eodiro-one-api/client'
+import { Posts } from '@payw/eodiro-one-api/db-schema/generated'
 import { FetchPostsOfBoard } from '@payw/eodiro-one-api/scheme'
 import { ResizeSensor } from 'css-element-queries'
 import _ from 'lodash'
-import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import './style.scss'
 
-const PostContainer: React.FC<{
-  initialPosts: FetchPostsOfBoard['payload']
-}> = ({ initialPosts }) => {
-  const [posts, setPosts] = useState(initialPosts)
+const SideContainer: React.FC<{ isSigned: boolean; boardName: string }> = ({
+  isSigned,
+  boardName,
+}) => {
+  return (
+    <div className="side">
+      {isSigned && (
+        <a href={`/square/${boardName}/new`}>
+          <div className="new-btn-wrapper">
+            <Button full label="새 포스트 작성" className="new-btn" />
+          </div>
+        </a>
+        // </Link>
+      )}
+      <div className="more">
+        <FlatBlock>
+          <h3>다른 게시판</h3>
+        </FlatBlock>
+      </div>
+    </div>
+  )
+}
+
+const PostContainer: React.FC = () => {
+  const router = useRouter()
+  const boardName = router.query.boardName as string
+  const [posts, setPosts] = useState<Posts>([])
   const [isMobile, setIsMobile] = useState(false)
   const postContainerRef = useRef<HTMLDivElement>(null)
 
@@ -38,13 +61,25 @@ const PostContainer: React.FC<{
     })
   }, [])
 
+  useEffect(() => {
+    const cached = JSON.parse(sessionStorage.getItem('sbpd'))
+    const scrollY = Number(sessionStorage.getItem('sbsp'))
+    if (cached) {
+      setPosts(cached)
+      setTimeout(() => {
+        window.scrollTo(0, scrollY)
+      }, 0)
+    }
+  }, [])
+
   async function loadMore(): Promise<boolean> {
+    console.log('load more')
     const posts = getState(setPosts)
     const newPosts = await oneAPIClient<FetchPostsOfBoard>(ApiHost.getHost(), {
       action: 'fetchPostsOfBoard',
       data: {
         boardID: 1,
-        lastPostID: _.last(posts).id,
+        lastPostID: _.last(posts)?.id,
       },
     })
 
@@ -52,7 +87,10 @@ const PostContainer: React.FC<{
       return false
     }
 
-    setPosts([...posts, ...newPosts])
+    const updatedPosts = [...posts, ...newPosts]
+
+    setPosts(updatedPosts)
+    sessionStorage.setItem('sbpd', JSON.stringify(updatedPosts))
   }
 
   return (
@@ -64,7 +102,14 @@ const PostContainer: React.FC<{
         {posts.map((post) => {
           return (
             <div className="post" key={post.id}>
-              <a href="" className="absolute-link" />
+              <a
+                href={`/square/${boardName}/${post.id}`}
+                className="absolute-link"
+                onClick={() => {
+                  console.log('click the link')
+                  sessionStorage.setItem('sbsp', window.scrollY.toString())
+                }}
+              />
               <div>
                 <p className="title">{post.title}</p>
               </div>
@@ -80,30 +125,17 @@ const PostContainer: React.FC<{
   )
 }
 
-type BoardPageProps = {
-  boardName: string
-  posts: FetchPostsOfBoard['payload']
-}
-
-const BoardPage: EodiroPage<BoardPageProps> = (props) => {
-  const { posts } = props
+const BoardPage: EodiroPage = () => {
   const { isSigned } = useAuth()
+  const router = useRouter()
+  const boardName = router.query.boardName as string
 
   return (
-    <Body pageTitle={props.boardName} bodyClassName="eodiro-board-page">
+    <Body pageTitle={boardName} bodyClassName="eodiro-board-page">
       <div className="page-container">
-        <div className="side">
-          {isSigned && (
-            <div className="new-btn-wrapper">
-              <Button full label="포스트 작성" className="new-btn" />
-            </div>
-          )}
-          <FlatBlock>
-            <h3>다른 게시판</h3>
-          </FlatBlock>
-        </div>
+        <SideContainer isSigned={isSigned} boardName={boardName} />
         <FlatBlock className="content">
-          {posts ? <PostContainer initialPosts={posts} /> : <ServerError raw />}
+          <PostContainer />
         </FlatBlock>
       </div>
     </Body>
@@ -111,21 +143,3 @@ const BoardPage: EodiroPage<BoardPageProps> = (props) => {
 }
 
 export default BoardPage
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { boardName } = params
-  const posts = await oneAPIClient(ApiHost.getHost(), {
-    action: 'fetchPostsOfBoard',
-    data: {
-      boardID: 0,
-      amount: 20,
-    },
-  })
-
-  return {
-    props: {
-      boardName,
-      posts,
-    },
-  }
-}
