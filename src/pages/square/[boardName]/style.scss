@@ -58,6 +58,19 @@
         }
       }
 
+      &.new {
+        @keyframes yellowish {
+          0% {
+            background-color: $eodiro-yellow-1;
+          }
+          100% {
+            background-color: transparent;
+          }
+        }
+        animation-name: yellowish;
+        animation-duration: 2s;
+      }
+
       .title {
         font-size: 1rem;
         transition: color 200ms ease;

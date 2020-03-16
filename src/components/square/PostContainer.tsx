@@ -5,7 +5,10 @@ import mergeClassName from '@/modules/merge-class-name'
 import Time from '@/modules/time'
 import { oneAPIClient } from '@payw/eodiro-one-api/client'
 import { Posts } from '@payw/eodiro-one-api/db-schema/generated'
-import { FetchPostsOfBoard } from '@payw/eodiro-one-api/scheme'
+import {
+  FetchPostsOfBoard,
+  FetchRecentPostsOfBoard,
+} from '@payw/eodiro-one-api/scheme'
 import { ResizeSensor } from 'css-element-queries'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
@@ -13,10 +16,12 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { InfiniteScrollContainer } from '../utils'
 
 const PostContainer: React.FC = () => {
-  function isFromPost(): boolean {
+  function isFromPostOrNew(): boolean {
     const lastpage = sessionStorage.getItem('lastpage')
     return (
-      lastpage !== null && lastpage.match(/\/square\/.*\/[0-9]*/g)?.length > 0
+      (lastpage !== null &&
+        lastpage.match(/\/square\/.*\/[0-9]*/g)?.length > 0) ||
+      lastpage.match(/\/square\/.*\/new/g)?.length > 0
     )
   }
 
@@ -30,7 +35,9 @@ const PostContainer: React.FC = () => {
 
   const router = useRouter()
   const boardName = router.query.boardName as string
-  const [posts, setPosts] = useState<Posts>((isFromPost() && getCached()) || [])
+
+  // Posts init value with cached ones
+  const [posts, setPosts] = useState<Posts>(getCached() || [])
   const [isMobile, setIsMobile] = useState(false)
   const postContainerRef = useRef<HTMLDivElement>(null)
 
@@ -52,7 +59,7 @@ const PostContainer: React.FC = () => {
 
   // Resotre cached scroll
   useLayoutEffect(() => {
-    if (isFromPost()) {
+    if (isFromPostOrNew()) {
       window.scrollTo(0, getScrollPos())
     }
     // Make body visible after scroll restoration
@@ -74,9 +81,46 @@ const PostContainer: React.FC = () => {
     }
 
     const updatedPosts = [...posts, ...newPosts]
+    sessionStorage.setItem('sbpd', JSON.stringify(updatedPosts))
 
     setPosts(updatedPosts)
   }
+
+  async function loadNew(): Promise<void> {
+    const posts = getState(setPosts)
+    if (posts.length > 0) {
+      const payload = await oneAPIClient<FetchRecentPostsOfBoard>(
+        ApiHost.getHost(),
+        {
+          action: 'fetchRecentPostsOfBoard',
+          data: {
+            boardID: 1,
+            mostRecentPostID: posts[0].id,
+          },
+        }
+      )
+      if (payload && payload.length > 0) {
+        sessionStorage.setItem('sbpd', JSON.stringify([...payload, ...posts]))
+        const newLabeled = payload.map((post) => {
+          post['new'] = true
+          return post
+        })
+        const updatedPosts = [...newLabeled, ...posts]
+        setPosts(updatedPosts)
+      }
+    }
+
+    setTimeout(() => {
+      loadNew()
+    }, 3000)
+  }
+  useEffect(() => {
+    loadNew()
+
+    window.addEventListener('scroll', () => {
+      sessionStorage.setItem('sbsp', window.scrollY.toString())
+    })
+  }, [])
 
   return (
     <div
@@ -86,23 +130,17 @@ const PostContainer: React.FC = () => {
       <InfiniteScrollContainer strategy={loadMore}>
         {posts.map((post) => {
           return (
-            <div className="post" key={post.id}>
-              <a
-                href={`/square/${boardName}/${post.id}`}
-                className="absolute-link"
-                onClick={(): void => {
-                  sessionStorage.setItem('sbpd', JSON.stringify(posts))
-                  sessionStorage.setItem('sbsp', window.scrollY.toString())
-                }}
-              />
-              <div>
-                <p className="title">{post.title}</p>
+            <a key={post.id} href={`/square/${boardName}/${post.id}`}>
+              <div className={mergeClassName('post', post['new'] && 'new')}>
+                <div>
+                  <p className="title">{post.title}</p>
+                </div>
+                <div className="right">
+                  <p className="nick">{post.random_nickname}</p>
+                  <p className="time">{Time.friendly(post.uploaded_at)}</p>
+                </div>
               </div>
-              <div className="right">
-                <p className="nick">{post.random_nickname}</p>
-                <p className="time">{Time.friendly(post.uploaded_at)}</p>
-              </div>
-            </div>
+            </a>
           )
         })}
       </InfiniteScrollContainer>
