@@ -1,8 +1,8 @@
 @use '@/assets/styles/main' as *;
 
 #global-footer {
-  @include elm-fill;
-  @include separator('top');
+  // @include elm-fill;
+  // @include separator('top');
   height: $footer-height;
   display: flex;
   align-items: center;
