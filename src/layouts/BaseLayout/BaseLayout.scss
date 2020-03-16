@@ -23,6 +23,10 @@
         justify-content: center;
       }
 
+      &.hidden {
+        opacity: 0;
+      }
+
       .page-app-title {
         position: relative;
         line-height: 1;

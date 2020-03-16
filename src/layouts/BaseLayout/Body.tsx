@@ -7,10 +7,17 @@ export type BodyProps = HeaderProps & {
   bodyClassName?: string
   hasTopGap?: boolean
   centered?: boolean
+  hideOnLoad?: boolean
 }
 
 const Body: FC<BodyProps> = (props) => {
-  const { children, bodyClassName, hasTopGap = true, centered = false } = props
+  const {
+    children,
+    bodyClassName,
+    hasTopGap = true,
+    centered = false,
+    hideOnLoad = false,
+  } = props
 
   return (
     <>
@@ -21,8 +28,9 @@ const Body: FC<BodyProps> = (props) => {
         className={mergeClassName(
           'body-content',
           bodyClassName,
-          hasTopGap ? 'top-gap' : '',
-          centered && 'centered'
+          hasTopGap && 'top-gap',
+          centered && 'centered',
+          hideOnLoad && 'hidden'
         )}
       >
         <Header {...props} />
@@ -33,3 +41,9 @@ const Body: FC<BodyProps> = (props) => {
 }
 
 export default Body
+
+export function visualizeBody(): void {
+  ;(document.querySelector('.body-content') as HTMLElement).classList.remove(
+    'hidden'
+  )
+}
