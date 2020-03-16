@@ -4,7 +4,7 @@ import getState from '@/modules/get-state'
 import mergeClassName from '@/modules/merge-class-name'
 import Time from '@/modules/time'
 import { oneAPIClient } from '@payw/eodiro-one-api/client'
-import { Posts } from '@payw/eodiro-one-api/db-schema/generated'
+import { Post, Posts } from '@payw/eodiro-one-api/db-schema/generated'
 import {
   FetchPostsOfBoard,
   FetchRecentPostsOfBoard,
@@ -12,8 +12,27 @@ import {
 import { ResizeSensor } from 'css-element-queries'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { InfiniteScrollContainer } from '../utils'
+
+const PostItem: React.FC<{
+  boardName: string
+  post: Post
+}> = React.memo(({ boardName, post }) => {
+  return (
+    <a key={post.id} href={`/square/${boardName}/${post.id}`}>
+      <div className={mergeClassName('post')}>
+        <div>
+          <p className="title">{post.title}</p>
+        </div>
+        <div className="right">
+          <p className="nick">{post.random_nickname}</p>
+          <p className="time">{Time.friendly(post.uploaded_at)}</p>
+        </div>
+      </div>
+    </a>
+  )
+})
 
 const PostContainer: React.FC = () => {
   function isFromPostOrNew(): boolean {
@@ -101,11 +120,7 @@ const PostContainer: React.FC = () => {
       )
       if (payload && payload.length > 0) {
         sessionStorage.setItem('sbpd', JSON.stringify([...payload, ...posts]))
-        const newLabeled = payload.map((post) => {
-          post['new'] = true
-          return post
-        })
-        const updatedPosts = [...newLabeled, ...posts]
+        const updatedPosts = [...payload, ...posts]
         setPosts(updatedPosts)
       }
     }
@@ -129,19 +144,7 @@ const PostContainer: React.FC = () => {
     >
       <InfiniteScrollContainer strategy={loadMore}>
         {posts.map((post) => {
-          return (
-            <a key={post.id} href={`/square/${boardName}/${post.id}`}>
-              <div className={mergeClassName('post', post['new'] && 'new')}>
-                <div>
-                  <p className="title">{post.title}</p>
-                </div>
-                <div className="right">
-                  <p className="nick">{post.random_nickname}</p>
-                  <p className="time">{Time.friendly(post.uploaded_at)}</p>
-                </div>
-              </div>
-            </a>
-          )
+          return <PostItem key={post.id} boardName={boardName} post={post} />
         })}
       </InfiniteScrollContainer>
     </div>
