@@ -12,7 +12,7 @@ import {
 import { ResizeSensor } from 'css-element-queries'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { InfiniteScrollContainer } from '../utils'
 
 const PostItem: React.FC<{
@@ -56,9 +56,7 @@ const PostContainer: React.FC = () => {
   const boardName = router.query.boardName as string
 
   // Posts init value with cached ones
-  const [posts, setPosts] = useState<Posts>(
-    (isFromPostOrNew() && getCached()) || []
-  )
+  const [posts, setPosts] = useState<Posts>([])
   const [isMobile, setIsMobile] = useState(false)
   const postContainerRef = useRef<HTMLDivElement>(null)
 
@@ -79,8 +77,12 @@ const PostContainer: React.FC = () => {
   }, [])
 
   // Resotre cached scroll
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (isFromPostOrNew()) {
+      const cached = getCached()
+      if (cached !== null) {
+        setPosts(cached)
+      }
       window.scrollTo(0, getScrollPos())
     }
     // Make body visible after scroll restoration
@@ -100,6 +102,10 @@ const PostContainer: React.FC = () => {
     if (newPosts.length === 0) {
       return false
     }
+
+    // TODO: remove these codes after completely debugged
+    console.log('load more')
+    console.log(newPosts)
 
     const updatedPosts = [...posts, ...newPosts]
     sessionStorage.setItem('sbpd', JSON.stringify(updatedPosts))
