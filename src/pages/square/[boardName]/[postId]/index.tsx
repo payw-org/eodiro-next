@@ -1,6 +1,7 @@
 import { Tokens } from '@/api'
 import Information from '@/components/Information'
 import RequireAuth from '@/components/RequireAuth'
+import WhiteBody from '@/components/utils/WhiteBody'
 import Body from '@/layouts/BaseLayout/Body'
 import ApiHost from '@/modules/api-host'
 import Time from '@/modules/time'
@@ -17,9 +18,12 @@ type ContentProps = {
 const Content: React.FC<ContentProps> = ({ post }) => {
   return (
     <div>
+      <WhiteBody />
       <article className="post">
         <span className="author">{post.random_nickname}</span>
-        <span className="time">{Time.yyyymmdd(post.uploaded_at, true)}</span>
+        <span className="time">
+          {Time.yyyymmddhhmmss(post.uploaded_at, true)}
+        </span>
         <h1 className="title">{post.title}</h1>
         {post.body.split('\n').map((line, i) => {
           return line.length === 0 ? (
