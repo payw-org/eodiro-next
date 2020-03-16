@@ -132,6 +132,15 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
     return { pageProps, authProps }
   }
 
+  componentDidMount(): void {
+    window.addEventListener('load', () => {
+      // Record lastly visited page
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('lastpage', location.pathname)
+      }
+    })
+  }
+
   public render(): JSX.Element {
     const { Component, pageProps, authProps } = this.props
 
