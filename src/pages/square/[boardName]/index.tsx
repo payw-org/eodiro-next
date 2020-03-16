@@ -61,19 +61,28 @@ const PostContainer: React.FC = () => {
     })
   }, [])
 
-  useEffect(() => {
-    const cached = JSON.parse(sessionStorage.getItem('sbpd'))
-    const scrollY = Number(sessionStorage.getItem('sbsp'))
-    if (cached) {
-      setPosts(cached)
-      setTimeout(() => {
-        window.scrollTo(0, scrollY)
-      }, 0)
-    }
-  }, [])
+  // Go back from post view page
+  // useEffect(() => {
+  //   const lastpage = sessionStorage.getItem('lastpage')
+
+  //   if (!lastpage) return
+  //   if (!lastpage.match(/\/square\/.*\/[0-9]*/g)) return
+
+  //   console.log('came from post view page')
+  //   alert('came from post view page')
+
+  //   const cached = JSON.parse(sessionStorage.getItem('sbpd'))
+  //   const scrollY = Number(sessionStorage.getItem('sbsp'))
+
+  //   if (cached) {
+  //     setPosts(cached)
+  //     setTimeout(() => {
+  //       window.scrollTo(0, scrollY)
+  //     }, 1000)
+  //   }
+  // }, [])
 
   async function loadMore(): Promise<boolean> {
-    console.log('load more')
     const posts = getState(setPosts)
     const newPosts = await oneAPIClient<FetchPostsOfBoard>(ApiHost.getHost(), {
       action: 'fetchPostsOfBoard',
