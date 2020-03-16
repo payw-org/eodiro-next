@@ -88,7 +88,7 @@ const PostContainer: React.FC = () => {
 
   async function loadNew(): Promise<void> {
     const posts = getState(setPosts)
-    if (posts.length > 0) {
+    if (posts && posts.length > 0) {
       const payload = await oneAPIClient<FetchRecentPostsOfBoard>(
         ApiHost.getHost(),
         {
