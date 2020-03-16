@@ -101,7 +101,7 @@ const NewPostPage: EodiroPage = () => {
 
             if (!err) {
               alert('업로드되었습니다.')
-              location.href = `/square/${router.query.boardName}/${data}`
+              location.replace(`/square/${router.query.boardName}/${data}`)
               return
             }
 
