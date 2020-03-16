@@ -133,12 +133,11 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
   }
 
   componentDidMount(): void {
-    window.addEventListener('load', () => {
-      // Record lastly visited page
-      if (typeof window !== 'undefined') {
-        sessionStorage.setItem('lastpage', location.pathname)
-      }
-    })
+    const currentpage = sessionStorage.getItem('currentpage')
+    if (currentpage) {
+      sessionStorage.setItem('lastpage', currentpage)
+    }
+    sessionStorage.setItem('currentpage', location.pathname)
   }
 
   public render(): JSX.Element {
