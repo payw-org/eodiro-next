@@ -12,7 +12,7 @@ import { FetchPostsOfBoard } from '@payw/eodiro-one-api/scheme'
 import { ResizeSensor } from 'css-element-queries'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import './style.scss'
 
 const SideContainer: React.FC<{ isSigned: boolean; boardName: string }> = ({
@@ -62,25 +62,28 @@ const PostContainer: React.FC = () => {
   }, [])
 
   // Go back from post view page
-  // useEffect(() => {
-  //   const lastpage = sessionStorage.getItem('lastpage')
+  useEffect(() => {
+    const lastpage = sessionStorage.getItem('lastpage')
 
-  //   if (!lastpage) return
-  //   if (!lastpage.match(/\/square\/.*\/[0-9]*/g)) return
+    if (!lastpage) return
+    if (!lastpage.match(/\/square\/.*\/[0-9]*/g)) return
 
-  //   console.log('came from post view page')
-  //   alert('came from post view page')
+    console.log('came from post view page')
 
-  //   const cached = JSON.parse(sessionStorage.getItem('sbpd'))
-  //   const scrollY = Number(sessionStorage.getItem('sbsp'))
+    const cached = JSON.parse(sessionStorage.getItem('sbpd'))
+    const scrollY = Number(sessionStorage.getItem('sbsp'))
 
-  //   if (cached) {
-  //     setPosts(cached)
-  //     setTimeout(() => {
-  //       window.scrollTo(0, scrollY)
-  //     }, 1000)
-  //   }
-  // }, [])
+    if (cached) {
+      setPosts(cached)
+      setTimeout(() => {
+        window.scrollTo(0, scrollY)
+      }, 0)
+    }
+  }, [])
+
+  useLayoutEffect(() => {
+    console.log('layout effect')
+  })
 
   async function loadMore(): Promise<boolean> {
     const posts = getState(setPosts)
