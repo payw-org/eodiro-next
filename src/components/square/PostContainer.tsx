@@ -56,7 +56,9 @@ const PostContainer: React.FC = () => {
   const boardName = router.query.boardName as string
 
   // Posts init value with cached ones
-  const [posts, setPosts] = useState<Posts>(getCached() || [])
+  const [posts, setPosts] = useState<Posts>(
+    (isFromPostOrNew() && getCached()) || []
+  )
   const [isMobile, setIsMobile] = useState(false)
   const postContainerRef = useRef<HTMLDivElement>(null)
 
