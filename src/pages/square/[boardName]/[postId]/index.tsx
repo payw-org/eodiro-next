@@ -88,6 +88,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     action: 'getComments',
     data: {
       postId: Number(query.postId),
+      accessToken: (await Tokens.get(req)).accessToken,
     },
   })
 
