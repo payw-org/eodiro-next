@@ -14,7 +14,7 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode }) => {
       : '페이지를 찾을 수 없습니다.'
 
   return (
-    <Body pageTitle={statusCode.toString()} titleHidden centered>
+    <Body pageTitle={statusCode?.toString()} titleHidden centered>
       <div id="error-page">
         <h1 className="status-code">{statusCode}</h1>
         <p className="manifesto">{msg}</p>
