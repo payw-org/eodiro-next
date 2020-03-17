@@ -81,7 +81,7 @@ VacantBuildingsPage.getInitialProps = async (): Promise<
   // Remove 810 and 801 buildings
   const filteredData = data
     ? data.filter((item) => {
-        return item.building_number !== '810' && item.building_number !== '801'
+        return item.building_number !== 810 && item.building_number !== 801
       })
     : data
 

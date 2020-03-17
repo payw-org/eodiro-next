@@ -5,7 +5,7 @@ import { Campus, Semester, Year } from '@/types'
 import dayjs from 'dayjs'
 
 export type VacantBuildings = {
-  building_number: string
+  building_number: number
   total: number
   empty: number
 }[]
