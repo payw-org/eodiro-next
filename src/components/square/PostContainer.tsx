@@ -141,7 +141,7 @@ const PostContainer: React.FC = () => {
     loadNew()
 
     window.addEventListener('scroll', () => {
-      sessionStorage.setItem('sbsp', window.scrollY.toString())
+      sessionStorage.setItem('sbsp', window.scrollY?.toString())
     })
   }, [])
 
