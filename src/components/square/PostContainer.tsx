@@ -103,10 +103,6 @@ const PostContainer: React.FC = () => {
       return false
     }
 
-    // TODO: remove these codes after completely debugged
-    console.log('load more')
-    console.log(newPosts)
-
     const updatedPosts = [...posts, ...newPosts]
     sessionStorage.setItem('sbpd', JSON.stringify(updatedPosts))
 
