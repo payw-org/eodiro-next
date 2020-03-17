@@ -1,3 +1,4 @@
+import InfiniteScrollContainer from '@/components/utils/InfiniteScrollContainer'
 import { visualizeBody } from '@/layouts/BaseLayout/Body'
 import ApiHost from '@/modules/api-host'
 import getState from '@/modules/get-state'
@@ -13,14 +14,19 @@ import { ResizeSensor } from 'css-element-queries'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
-import { InfiniteScrollContainer } from '../utils'
 
 const PostItem: React.FC<{
   boardName: string
   post: Post
 }> = React.memo(({ boardName, post }) => {
   return (
-    <a key={post.id} href={`/square/${boardName}/${post.id}`}>
+    <a
+      key={post.id}
+      href={`/square/${boardName}/${post.id}`}
+      onClick={(): void => {
+        sessionStorage.setItem('sbsp', window.scrollY?.toString())
+      }}
+    >
       <div className={mergeClassName('post')}>
         <div>
           <p className="title">{post.title}</p>
@@ -87,7 +93,6 @@ const PostContainer: React.FC = () => {
         window.scrollTo(0, getScrollPos())
         visualizeBody()
       }, 0)
-      console.log('restore scroll', getScrollPos())
     } else {
       visualizeBody()
     }
@@ -137,12 +142,9 @@ const PostContainer: React.FC = () => {
       loadNew()
     }, 3000)
   }
+
   useEffect(() => {
     loadNew()
-
-    window.addEventListener('scroll', () => {
-      sessionStorage.setItem('sbsp', window.scrollY?.toString())
-    })
   }, [])
 
   return (
