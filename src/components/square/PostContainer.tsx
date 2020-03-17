@@ -37,9 +37,9 @@ const PostItem: React.FC<{
 const PostContainer: React.FC = () => {
   function isFromPostOrNew(): boolean {
     const lastpage = sessionStorage.getItem('lastpage')
+    if (!lastpage) return false
     return (
-      (lastpage !== null &&
-        lastpage.match(/\/square\/.*\/[0-9]*/g)?.length > 0) ||
+      lastpage.match(/\/square\/.*\/[0-9]*/g)?.length > 0 ||
       lastpage.match(/\/square\/.*\/new/g)?.length > 0
     )
   }
