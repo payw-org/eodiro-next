@@ -1,7 +1,7 @@
 import { LecturesApi } from '@/api'
 import ServerError from '@/components/ServerError'
 import { ArrowBlock, LineInput, LineInputOnChangeHook } from '@/components/ui'
-import { InfiniteScrollContainer } from '@/components/utils'
+import InfiniteScrollContainer from '@/components/utils/InfiniteScrollContainer'
 import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
 import getState from '@/modules/get-state'

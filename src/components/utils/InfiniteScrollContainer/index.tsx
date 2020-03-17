@@ -5,7 +5,7 @@ type InfiniteScrollContainerProps = {
   strategy: () => Promise<boolean>
 }
 
-export const InfiniteScrollContainer: React.FC<InfiniteScrollContainerProps> = (
+const InfiniteScrollContainer: React.FC<InfiniteScrollContainerProps> = (
   props
 ) => {
   const bodyContentBottomRef = useRef<HTMLDivElement>(null)
@@ -73,3 +73,5 @@ export const InfiniteScrollContainer: React.FC<InfiniteScrollContainerProps> = (
     </div>
   )
 }
+
+export default InfiniteScrollContainer
