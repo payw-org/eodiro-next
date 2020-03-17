@@ -1,0 +1,42 @@
+@use '@/assets/styles/main' as *;
+
+.eodiro-square-post-comments {
+  @include bg;
+  @include border-radius-outer;
+  padding: 1rem;
+  margin-top: 4rem;
+
+  .no-comments-yet {
+    text-align: center;
+    margin: 1rem 0 2rem;
+  }
+
+  .comment-item {
+    padding: 0.6rem 0;
+    @include separator('bottom');
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .nick-and-time {
+      font-size: 0.9rem;
+
+      .nick {
+        font-weight: 500;
+      }
+      .time {
+        color: $base-gray;
+        margin-left: 0.5rem;
+      }
+    }
+    .body {
+      font-size: 1rem;
+      margin-top: 0.3rem;
+    }
+  }
+
+  .new-comment {
+    margin-top: 1rem;
+  }
+}

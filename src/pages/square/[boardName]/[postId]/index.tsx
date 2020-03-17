@@ -1,21 +1,24 @@
 import { Tokens } from '@/api'
 import Information from '@/components/Information'
 import RequireAuth from '@/components/RequireAuth'
+import Comments from '@/components/square/Comments'
 import WhiteBody from '@/components/utils/WhiteBody'
 import Body from '@/layouts/BaseLayout/Body'
 import ApiHost from '@/modules/api-host'
 import Time from '@/modules/time'
 import { EodiroPage } from '@/pages/_app'
 import { oneAPIClient } from '@payw/eodiro-one-api/client'
-import { GetCommentsOfPost, GetPostById } from '@payw/eodiro-one-api/scheme'
+import { DBSchema } from '@payw/eodiro-one-api/db-schema'
+import { GetComments, GetPostById } from '@payw/eodiro-one-api/scheme'
 import { GetServerSideProps } from 'next'
 import './style.scss'
 
 type ContentProps = {
   post: GetPostById['payload']['data']
+  comments: DBSchema.Comments
 }
 
-const Content: React.FC<ContentProps> = ({ post }) => {
+const Content: React.FC<ContentProps> = ({ post, comments }) => {
   return (
     <div>
       <WhiteBody />
@@ -35,16 +38,22 @@ const Content: React.FC<ContentProps> = ({ post }) => {
           )
         })}
       </article>
+      <Comments comments={comments} />
     </div>
   )
 }
 
 type PostPageProps = {
   post: GetPostById['payload']['data']
-  err: GetPostById['payload']['err']
+  comments: GetComments['payload']['data']
+  postErr: GetPostById['payload']['err']
 }
 
-const PostPage: EodiroPage<PostPageProps> = ({ post, err }) => {
+const PostPage: EodiroPage<PostPageProps> = ({
+  post,
+  comments,
+  postErr: err,
+}) => {
   return (
     <Body
       pageTitle={post?.title || '포스트'}
@@ -52,7 +61,7 @@ const PostPage: EodiroPage<PostPageProps> = ({ post, err }) => {
       textMargin="1rem"
       bodyClassName="eodiro-post-view"
     >
-      {post && <Content post={post} />}
+      {post && <Content post={post} comments={comments} />}
       {err === 'Unauthorized' && <RequireAuth />}
       {err === 'No Content' && (
         <Information title="존재하지 않는 포스트입니다." />
@@ -67,7 +76,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   query,
   req,
 }) => {
-  const { data, err } = await oneAPIClient<GetPostById>(ApiHost.getHost(), {
+  const postPayload = await oneAPIClient<GetPostById>(ApiHost.getHost(), {
     action: 'getPostById',
     data: {
       postID: Number(query.postId),
@@ -75,22 +84,18 @@ export const getServerSideProps: GetServerSideProps = async ({
     },
   })
 
-  const commentsPayload = await oneAPIClient<GetCommentsOfPost>(
-    ApiHost.getHost(),
-    {
-      action: 'getCommentsOfPost',
-      data: {
-        postId: Number(query.posdId),
-      },
-    }
-  )
-
-  console.log(commentsPayload.data)
+  const commentsPayload = await oneAPIClient<GetComments>(ApiHost.getHost(), {
+    action: 'getComments',
+    data: {
+      postId: Number(query.postId),
+    },
+  })
 
   return {
     props: {
-      post: data,
-      err,
+      post: postPayload.data,
+      comments: commentsPayload.data,
+      postErr: postPayload.err,
     },
   }
 }

@@ -210,3 +210,14 @@ $border-radius-inner: r(2);
     padding-left: $border-radius-outer / 3;
   }
 }
+
+@mixin resolve-optical-illusion-both($value: null) {
+  @if $value {
+    padding-left: $value / 3;
+    padding-right: $value / 3;
+  } @else {
+    // Default resolve to outer radius
+    padding-left: $border-radius-outer / 3;
+    padding-right: $border-radius-outer / 3;
+  }
+}

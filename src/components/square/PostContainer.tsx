@@ -83,10 +83,14 @@ const PostContainer: React.FC = () => {
       if (cached !== null) {
         setPosts(cached)
       }
-      window.scrollTo(0, getScrollPos())
+      setTimeout(() => {
+        window.scrollTo(0, getScrollPos())
+        visualizeBody()
+      }, 0)
+      console.log('restore scroll', getScrollPos())
+    } else {
+      visualizeBody()
     }
-    // Make body visible after scroll restoration
-    visualizeBody()
   }, [])
 
   async function loadMore(): Promise<boolean> {
