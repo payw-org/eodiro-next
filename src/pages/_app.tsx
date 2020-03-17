@@ -1,8 +1,7 @@
-import { AuthApi, Tokens, TokensPack } from '@/api'
+import { Tokens, TokensPack } from '@/api'
 import '@/assets/styles/global/globalstyle.scss'
 import BaseLayout from '@/layouts/BaseLayout'
-import EodiroHttpCookie from '@/modules/eodiro-http-cookie'
-import dayjs from 'dayjs'
+import { getAuthState } from '@/modules/server/get-auth-state'
 import { NextComponentType, NextPageContext } from 'next'
 import App, { AppContext, AppInitialProps } from 'next/app'
 import Head from 'next/head'
@@ -12,6 +11,7 @@ type AuthProps = {
   tokens: TokensPack
   isSigned: boolean
   isAdmin: boolean
+  userId: number
 }
 export const AuthContext = createContext({} as AuthProps)
 
@@ -26,6 +26,7 @@ export const AuthProvider: React.FC<AuthProps> = (props) => {
   )
   const [isSigned] = useState(props.isSigned)
   const [isAdmin] = useState(props.isAdmin)
+  const [userId] = useState(props.userId)
 
   return (
     <AuthContext.Provider
@@ -33,6 +34,7 @@ export const AuthProvider: React.FC<AuthProps> = (props) => {
         tokens,
         isSigned,
         isAdmin,
+        userId,
       }}
     >
       {props.children}
@@ -71,57 +73,13 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
       tokens,
       isSigned: false,
       isAdmin: false,
+      userId: null,
     }
 
-    ctx.isSigned = false
-    ctx.isAdmin = false
-
-    // Verify token
-    if (tokens.accessToken) {
-      const authCheck = await AuthApi.isSigned(ctx.req)
-
-      if (authCheck.isSigned) {
-        authProps.isSigned = authCheck.isSigned
-        authProps.isAdmin = authCheck.isAdmin
-        ctx.isSigned = authCheck.isSigned
-        ctx.isAdmin = authCheck.isAdmin
-      } else {
-        const newTokens = await AuthApi.refresh(ctx.req)
-
-        if (newTokens) {
-          await Tokens.set(newTokens, { req, res })
-          const authCheck = await AuthApi.isSigned(ctx.req)
-          authProps.isSigned = authCheck.isSigned
-          authProps.isAdmin = authCheck.isAdmin
-          ctx.isSigned = authCheck.isSigned
-          ctx.isAdmin = authCheck.isAdmin
-        } else {
-          // Clear tokens
-          await EodiroHttpCookie.set(
-            [
-              {
-                expires: dayjs('1970-01-01')
-                  .toDate()
-                  .toUTCString(),
-                name: 'accessToken',
-                value: '',
-              },
-              {
-                expires: dayjs('1970-01-01')
-                  .toDate()
-                  .toUTCString(),
-                name: 'refreshToken',
-                value: '',
-              },
-            ],
-            {
-              req,
-              res,
-            }
-          )
-        }
-      }
-    }
+    const authState = await getAuthState({ req, res })
+    authProps.isSigned = authState.isSigned
+    authProps.isAdmin = authState.isAdmin
+    authProps.userId = authState.userId
 
     let pageProps = {}
 
@@ -157,7 +115,7 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
         </Head>
         <AuthProvider {...authProps}>
           <BaseLayout>
-            <Component {...pageProps} {...authProps} />
+            <Component {...pageProps} />
           </BaseLayout>
         </AuthProvider>
       </>

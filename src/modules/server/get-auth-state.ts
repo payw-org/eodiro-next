@@ -6,8 +6,13 @@ import EodiroHttpCookie from '../eodiro-http-cookie'
 type AuthState = {
   isSigned: boolean
   isAdmin: boolean
+  userId: number
 }
 
+/**
+ * Return auth information using AuthApi internally.
+ * Also automatically refresh the tokens if needed.
+ */
 export async function getAuthState(
   ctx: {
     req: IncomingMessage
@@ -19,16 +24,17 @@ export async function getAuthState(
   const authState: AuthState = {
     isSigned: false,
     isAdmin: false,
+    userId: null,
   }
 
   // Verify token
   if (tokens.accessToken) {
     const authCheck = await AuthApi.isSigned(req)
-    delete authCheck.userId
 
     if (authCheck.isSigned) {
       authState.isSigned = authCheck.isSigned
       authState.isAdmin = authCheck.isAdmin
+      authState.userId = authCheck.userId
     } else {
       const newTokens = await AuthApi.refresh(req)
 
@@ -37,6 +43,7 @@ export async function getAuthState(
         const authCheck = await AuthApi.isSigned(req)
         authState.isSigned = authCheck.isSigned
         authState.isAdmin = authCheck.isAdmin
+        authState.userId = authCheck.userId
       } else {
         // Clear tokens
         await EodiroHttpCookie.set(
