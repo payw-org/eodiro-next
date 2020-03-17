@@ -7,7 +7,7 @@ import ApiHost from '@/modules/api-host'
 import Time from '@/modules/time'
 import { EodiroPage } from '@/pages/_app'
 import { oneAPIClient } from '@payw/eodiro-one-api/client'
-import { GetPostById } from '@payw/eodiro-one-api/scheme'
+import { GetCommentsOfPost, GetPostById } from '@payw/eodiro-one-api/scheme'
 import { GetServerSideProps } from 'next'
 import './style.scss'
 
@@ -74,6 +74,18 @@ export const getServerSideProps: GetServerSideProps = async ({
       accessToken: (await Tokens.get(req)).accessToken,
     },
   })
+
+  const commentsPayload = await oneAPIClient<GetCommentsOfPost>(
+    ApiHost.getHost(),
+    {
+      action: 'getCommentsOfPost',
+      data: {
+        postId: Number(query.posdId),
+      },
+    }
+  )
+
+  console.log(commentsPayload.data)
 
   return {
     props: {

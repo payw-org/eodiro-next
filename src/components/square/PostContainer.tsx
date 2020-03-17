@@ -90,7 +90,7 @@ const PostContainer: React.FC = () => {
   }, [])
 
   async function loadMore(): Promise<boolean> {
-    const posts = getState(setPosts)
+    const posts = await getState(setPosts)
     const newPosts = await oneAPIClient<FetchPostsOfBoard>(ApiHost.getHost(), {
       action: 'fetchPostsOfBoard',
       data: {
@@ -114,7 +114,7 @@ const PostContainer: React.FC = () => {
   }
 
   async function loadNew(): Promise<void> {
-    const posts = getState(setPosts)
+    const posts = await getState(setPosts)
     if (posts && posts.length > 0) {
       const payload = await oneAPIClient<FetchRecentPostsOfBoard>(
         ApiHost.getHost(),

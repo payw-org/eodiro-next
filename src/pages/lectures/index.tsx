@@ -53,9 +53,9 @@ const LecturesContent: React.FC<LecturesPageProps> = ({ lectures }) => {
       return false
     }
 
-    const searchQuery = getState<string>(setSearchQuery)
-    const defaultLectures = getState<Lectures>(setDefaultLectures)
-    const displayLectures = getState<Lectures>(setDisplayLectures)
+    const searchQuery = await getState<string>(setSearchQuery)
+    const defaultLectures = await getState<Lectures>(setDefaultLectures)
+    const displayLectures = await getState<Lectures>(setDisplayLectures)
 
     let moreLectures: Lectures
 

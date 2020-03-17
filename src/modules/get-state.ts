@@ -6,11 +6,11 @@
  */
 export default function getState<T = any>(
   setStateFunction: (value: React.SetStateAction<T>) => void
-): T {
-  let value: T
-  setStateFunction((v) => {
-    value = v
-    return v
+): Promise<T> {
+  return new Promise((resolve) => {
+    setStateFunction((prevState) => {
+      resolve(prevState)
+      return prevState
+    })
   })
-  return value
 }
