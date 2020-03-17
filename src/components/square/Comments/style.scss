@@ -3,7 +3,7 @@
 .eodiro-square-post-comments {
   @include bg;
   @include border-radius-outer;
-  padding: 1rem;
+  padding: 0.5rem 1rem 1rem;
   margin-top: 4rem;
 
   .no-comments-yet {
@@ -19,6 +19,11 @@
       border-bottom: none;
     }
 
+    .first-row {
+      display: flex;
+      justify-content: space-between;
+    }
+
     .nick-and-time {
       font-size: 0.9rem;
 
@@ -30,6 +35,16 @@
         margin-left: 0.5rem;
       }
     }
+
+    .delete {
+      font-size: 0.9rem;
+    }
+
+    .delete {
+      color: $eodiro-primary-color;
+      margin-left: 0.5rem;
+    }
+
     .body {
       font-size: 1rem;
       margin-top: 0.3rem;

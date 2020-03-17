@@ -1,15 +1,20 @@
 import { Tokens } from '@/api'
 import Information from '@/components/Information'
 import ApiHost from '@/modules/api-host'
-import Time from '@/modules/time'
+import { useAuth } from '@/pages/_app'
 import { Dispatcher } from '@/types/react-helper'
 import { oneAPIClient } from '@payw/eodiro-one-api/client'
 import { DBSchema } from '@payw/eodiro-one-api/db-schema'
 import { GetComments, UploadComment } from '@payw/eodiro-one-api/scheme'
 import _ from 'lodash'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useRef, useState } from 'react'
 import './style.scss'
+
+const FriendlyTime = dynamic(() => import('@/components/utils/FriendlyTime'), {
+  ssr: false,
+})
 
 const CommentsContext = createContext(
   {} as {
@@ -18,49 +23,82 @@ const CommentsContext = createContext(
   }
 )
 
-const CommentItem: React.FC<{ comment: DBSchema.Comment }> = ({ comment }) => {
-  return (
-    <div className="comment-item">
-      <div className="nick-and-time">
-        <span className="nick">{comment.random_nickname}</span>
-        <span className="time">{Time.friendly(comment.uploaded_at)}</span>
+const CommentItem: React.FC<{ comment: DBSchema.Comment }> = React.memo(
+  ({ comment }) => {
+    const auth = useAuth()
+
+    return (
+      <div className="comment-item">
+        <div className="first-row">
+          <div className="nick-and-time">
+            <span className="nick">{comment.random_nickname}</span>
+            <FriendlyTime time={comment.uploaded_at} className="time" />
+          </div>
+          {auth.userId === comment.user_id && (
+            <div>
+              <button className="delete">삭제</button>
+            </div>
+          )}
+        </div>
+        <p className="body">{comment.body}</p>
       </div>
-      <p className="body">{comment.body}</p>
-    </div>
-  )
-}
+    )
+  }
+)
 
 const NewComment: React.FC = () => {
   const router = useRouter()
   const [value, setValue] = useState('')
   const { comments, setComments } = useContext(CommentsContext)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const auth = useAuth()
 
   return (
     <input
+      ref={inputRef}
       className="new-comment"
       type="text"
-      placeholder="댓글을 입력하세요."
+      placeholder="댓글"
+      spellCheck={false}
+      autoComplete="off"
       value={value}
       onChange={(e): void => setValue(e.target.value)}
-      onKeyDown={async (e): Promise<void> => {
+      onKeyUp={async (e): Promise<void> => {
         if (e.key !== 'Enter') return
 
         setValue('')
 
-        const pyld = await oneAPIClient<UploadComment>(ApiHost.getHost(), {
-          action: 'uploadComment',
-          data: {
-            postId: Number(router.query.postId),
-            body: value,
-            accessToken: (await Tokens.get()).accessToken,
-          },
-        })
+        const uploadPayload = await oneAPIClient<UploadComment>(
+          ApiHost.getHost(),
+          {
+            action: 'uploadComment',
+            data: {
+              postId: Number(router.query.postId),
+              body: value,
+              accessToken: (await Tokens.get()).accessToken,
+            },
+          }
+        )
 
+        if (uploadPayload.err) {
+          if (uploadPayload.err === 'No Body') {
+            alert('내용을 입력하세요.')
+            return
+          }
+        }
+
+        // Upload success
+
+        // Blur input
+        inputRef.current.blur()
+
+        // Refresh recent comments
         const newCommentsPyld = await oneAPIClient<GetComments>(
           ApiHost.getHost(),
           {
             action: 'getComments',
             data: {
+              accessToken: auth.tokens.accessToken,
               postId: Number(router.query.postId),
               mostRecentCommentId:
                 comments.length > 0 ? _.last(comments).id : 0,
