@@ -50,14 +50,7 @@ const PostContainer: React.FC = () => {
     )
   }
 
-  function getCached(): Posts | null {
-    return JSON.parse(sessionStorage.getItem('sbpd'))
-  }
-
-  function getScrollPos(): number {
-    return Number(sessionStorage.getItem('sbsp'))
-  }
-
+  // Get board name from router
   const router = useRouter()
   const boardName = router.query.boardName as string
 
@@ -82,15 +75,15 @@ const PostContainer: React.FC = () => {
     })
   }, [])
 
-  // Resotre cached scroll
+  // Resotre cached data and scroll position
   useEffect(() => {
     if (isFromPostOrNew()) {
-      const cached = getCached()
+      const cached = JSON.parse(sessionStorage.getItem('sbpd'))
       if (cached !== null) {
         setPosts(cached)
       }
       setTimeout(() => {
-        window.scrollTo(0, getScrollPos())
+        window.scrollTo(0, Number(sessionStorage.getItem('sbsp')))
         visualizeBody()
       }, 0)
     } else {
@@ -113,9 +106,8 @@ const PostContainer: React.FC = () => {
     }
 
     const updatedPosts = [...posts, ...newPosts]
-    sessionStorage.setItem('sbpd', JSON.stringify(updatedPosts))
-
     setPosts(updatedPosts)
+    sessionStorage.setItem('sbpd', JSON.stringify(updatedPosts))
   }
 
   async function loadNew(): Promise<void> {
