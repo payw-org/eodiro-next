@@ -11,6 +11,8 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode }) => {
   const msg =
     statusCode === 500
       ? '서버에 연결할 수 없습니다.'
+      : statusCode === 999
+      ? '알 수 없는 오류입니다.'
       : '페이지를 찾을 수 없습니다.'
 
   return (
@@ -24,7 +26,12 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode }) => {
 }
 
 ErrorPage.getInitialProps = async ({ res, err }): Promise<ErrorPageProps> => {
-  const statusCode = res ? res.statusCode : err ? err.statusCode : 404
+  const statusCode =
+    res && res.statusCode
+      ? res.statusCode
+      : err && err.statusCode
+      ? err.statusCode
+      : 999
 
   return {
     statusCode,
