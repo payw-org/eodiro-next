@@ -1,7 +1,7 @@
 export default class ApiHost {
   public static getHost(): string {
     const host =
-      process.env.NODE_ENV === 'development'
+      process.env.API_ENV === 'development'
         ? 'http://localhost:4020'
         : 'https://api2.eodiro.com'
 
