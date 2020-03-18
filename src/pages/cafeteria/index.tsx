@@ -8,8 +8,9 @@ import Grid from '@/layouts/Grid'
 import Time from '@/modules/time'
 import { Restaurant } from '@payw/cau-cafeteria-menus-scraper-types'
 import dayjs from 'dayjs'
+import _ from 'lodash'
 import { NextPage } from 'next'
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useMemo, useState } from 'react'
 import './CafeteriaPage.scss'
 
 type CafeteriaPageProps = {
@@ -18,7 +19,7 @@ type CafeteriaPageProps = {
 
 const TimeGroup: React.FC<{
   timeGroup: Restaurant[]
-}> = ({ timeGroup }) => {
+}> = memo(({ timeGroup }) => {
   return (
     <Grid>
       {timeGroup.length > 0 ? (
@@ -56,65 +57,66 @@ const TimeGroup: React.FC<{
       )}
     </Grid>
   )
-}
+}, _.isEqual)
 
-const EodiroCafeteria: React.FC<{ menus: CafeteriaMenus }> = ({ menus }) => {
-  const [now, setNow] = useState(dayjs())
-  const [todayMenus, setTodayMenus] = useState(menus)
+const EodiroCafeteria: React.FC<{ menus: CafeteriaMenus }> = memo(
+  ({ menus }) => {
+    const [now, setNow] = useState(dayjs())
+    const [todayMenus, setTodayMenus] = useState(menus)
 
-  useEffect(() => {
-    ;(async (): Promise<void> => {
-      const newMenus = await CafeteriaApi.menus({
-        date: now.format('YYYY-MM-DD'),
-      })
+    useEffect(() => {
+      ;(async (): Promise<void> => {
+        const newMenus = await CafeteriaApi.menus({
+          date: now.format('YYYY-MM-DD'),
+        })
 
-      setTodayMenus(newMenus)
-    })()
-  }, [now])
+        setTodayMenus(newMenus)
+      })()
+    }, [now])
 
-  return (
-    <div id="eodiro-cafeteria">
-      {todayMenus ? (
-        <>
-          <div className="date-container">
-            <button
-              className="date-change-btn previous"
-              onClick={(): void => {
-                setNow(now.subtract(1, 'd'))
-              }}
-            >
-              <ArrowIcon direction="left" fill="#31a8ff" />
-            </button>
-            <p className="date">
-              {now.format('YYYY년 M월 D일')} ({Time.day(now.day())})
-            </p>
-            <button
-              className="date-change-btn next"
-              onClick={(): void => {
-                setNow(now.add(1, 'd'))
-              }}
-            >
-              <ArrowIcon fill="#31a8ff" />
-            </button>
-          </div>
+    return useMemo(
+      () => (
+        <div id="eodiro-cafeteria">
+          {todayMenus ? (
+            <>
+              <div className="date-container">
+                <button
+                  className="date-change-btn previous"
+                  onClick={(): void => setNow(now.subtract(1, 'd'))}
+                >
+                  <ArrowIcon direction="left" fill="#31a8ff" />
+                </button>
+                <p className="date">
+                  {now.format('YYYY년 M월 D일')} ({Time.day(now.day())})
+                </p>
+                <button
+                  className="date-change-btn next"
+                  onClick={(): void => setNow(now.add(1, 'd'))}
+                >
+                  <ArrowIcon fill="#31a8ff" />
+                </button>
+              </div>
 
-          <div>
-            <h1 className="time">조식</h1>
-            <TimeGroup timeGroup={todayMenus.breakfast} />
+              <div>
+                <h1 className="time">조식</h1>
+                <TimeGroup timeGroup={todayMenus.breakfast} />
 
-            <h1 className="time">중식</h1>
-            <TimeGroup timeGroup={todayMenus.lunch} />
+                <h1 className="time">중식</h1>
+                <TimeGroup timeGroup={todayMenus.lunch} />
 
-            <h1 className="time">석식</h1>
-            <TimeGroup timeGroup={todayMenus.supper} />
-          </div>
-        </>
-      ) : (
-        <ServerError />
-      )}
-    </div>
-  )
-}
+                <h1 className="time">석식</h1>
+                <TimeGroup timeGroup={todayMenus.supper} />
+              </div>
+            </>
+          ) : (
+            <ServerError />
+          )}
+        </div>
+      ),
+      [todayMenus]
+    )
+  }
+)
 
 const CafeteriaPage: NextPage<CafeteriaPageProps> = (props) => {
   return (
