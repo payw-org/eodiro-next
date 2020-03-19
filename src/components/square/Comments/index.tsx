@@ -76,8 +76,6 @@ const NewComment: React.FC = () => {
           },
         })
 
-        console.log(uploadPayload)
-
         if (uploadPayload.err) {
           if (uploadPayload.err === 'No Body') {
             alert('내용을 입력하세요.')
