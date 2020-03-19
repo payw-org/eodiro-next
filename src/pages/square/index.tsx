@@ -1,12 +1,12 @@
 import { FlatBlock } from '@/components/ui'
 import Body from '@/layouts/BaseLayout/Body'
-import { Post } from '@payw/eodiro-one-api/db-schema/generated'
+import { PostType } from '@payw/eodiro-one-api/database/models/post'
 import { GetServerSideProps } from 'next'
 import { EodiroPage } from '../_app'
 import './style.scss'
 
 type SquareMainPageProps = {
-  globalPosts: Post[]
+  globalPosts: PostType[]
 }
 
 const SquareMainPage: EodiroPage<SquareMainPageProps> = (props) => {
