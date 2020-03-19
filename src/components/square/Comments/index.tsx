@@ -3,9 +3,8 @@ import Information from '@/components/Information'
 import ApiHost from '@/modules/api-host'
 import { useAuth } from '@/pages/_app'
 import { Dispatcher } from '@/types/react-helper'
-import { oneAPIClient } from '@payw/eodiro-one-api/client'
-import { DBSchema } from '@payw/eodiro-one-api/db-schema'
-import { GetComments, UploadComment } from '@payw/eodiro-one-api/scheme'
+import { oneAPIClient } from '@payw/eodiro-one-api'
+import { CommentType } from '@payw/eodiro-one-api/database/models/comment'
 import _ from 'lodash'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
@@ -18,12 +17,12 @@ const FriendlyTime = dynamic(() => import('@/components/utils/FriendlyTime'), {
 
 const CommentsContext = createContext(
   {} as {
-    comments: DBSchema.Comments
-    setComments: Dispatcher<DBSchema.Comments>
+    comments: CommentType[]
+    setComments: Dispatcher<CommentType[]>
   }
 )
 
-const CommentItem: React.FC<{ comment: DBSchema.Comment }> = React.memo(
+const CommentItem: React.FC<{ comment: CommentType }> = React.memo(
   ({ comment }) => {
     const auth = useAuth()
 
@@ -68,17 +67,16 @@ const NewComment: React.FC = () => {
 
         setValue('')
 
-        const uploadPayload = await oneAPIClient<UploadComment>(
-          ApiHost.getHost(),
-          {
-            action: 'uploadComment',
-            data: {
-              postId: Number(router.query.postId),
-              body: value,
-              accessToken: (await Tokens.get()).accessToken,
-            },
-          }
-        )
+        const uploadPayload = await oneAPIClient(ApiHost.getHost(), {
+          action: 'uploadComment',
+          data: {
+            postId: Number(router.query.postId),
+            body: value,
+            accessToken: (await Tokens.get()).accessToken,
+          },
+        })
+
+        console.log(uploadPayload)
 
         if (uploadPayload.err) {
           if (uploadPayload.err === 'No Body') {
@@ -93,18 +91,14 @@ const NewComment: React.FC = () => {
         inputRef.current.blur()
 
         // Refresh recent comments
-        const newCommentsPyld = await oneAPIClient<GetComments>(
-          ApiHost.getHost(),
-          {
-            action: 'getComments',
-            data: {
-              accessToken: auth.tokens.accessToken,
-              postId: Number(router.query.postId),
-              mostRecentCommentId:
-                comments.length > 0 ? _.last(comments).id : 0,
-            },
-          }
-        )
+        const newCommentsPyld = await oneAPIClient(ApiHost.getHost(), {
+          action: 'getComments',
+          data: {
+            accessToken: auth.tokens.accessToken,
+            postId: Number(router.query.postId),
+            mostRecentCommentId: comments.length > 0 ? _.last(comments).id : 0,
+          },
+        })
 
         setComments([...comments, ...newCommentsPyld.data])
       }}
@@ -113,7 +107,7 @@ const NewComment: React.FC = () => {
 }
 
 const Comments: React.FC<{
-  comments: DBSchema.Comments
+  comments: CommentType[]
 }> = (props) => {
   const [comments, setComments] = useState(props.comments)
 

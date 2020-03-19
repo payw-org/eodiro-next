@@ -7,15 +7,15 @@ import Body from '@/layouts/BaseLayout/Body'
 import ApiHost from '@/modules/api-host'
 import Time from '@/modules/time'
 import { EodiroPage } from '@/pages/_app'
-import { oneAPIClient } from '@payw/eodiro-one-api/client'
-import { DBSchema } from '@payw/eodiro-one-api/db-schema'
-import { GetComments, GetPostById } from '@payw/eodiro-one-api/scheme'
+import { oneAPIClient } from '@payw/eodiro-one-api'
+import { GetComments, GetPostById } from '@payw/eodiro-one-api/api/one/scheme'
+import { CommentType } from '@payw/eodiro-one-api/database/models/comment'
 import { GetServerSideProps } from 'next'
 import './style.scss'
 
 type ContentProps = {
   post: GetPostById['payload']['data']
-  comments: DBSchema.Comments
+  comments: CommentType[]
 }
 
 const Content: React.FC<ContentProps> = ({ post, comments }) => {
@@ -76,7 +76,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   query,
   req,
 }) => {
-  const postPayload = await oneAPIClient<GetPostById>(ApiHost.getHost(), {
+  const postPayload = await oneAPIClient(ApiHost.getHost(), {
     action: 'getPostById',
     data: {
       postID: Number(query.postId),
@@ -84,7 +84,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     },
   })
 
-  const commentsPayload = await oneAPIClient<GetComments>(ApiHost.getHost(), {
+  const commentsPayload = await oneAPIClient(ApiHost.getHost(), {
     action: 'getComments',
     data: {
       postId: Number(query.postId),

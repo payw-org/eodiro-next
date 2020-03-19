@@ -4,12 +4,8 @@ import ApiHost from '@/modules/api-host'
 import getState from '@/modules/get-state'
 import mergeClassName from '@/modules/merge-class-name'
 import Time from '@/modules/time'
-import { oneAPIClient } from '@payw/eodiro-one-api/client'
-import { Post, Posts } from '@payw/eodiro-one-api/db-schema/generated'
-import {
-  FetchPostsOfBoard,
-  FetchRecentPostsOfBoard,
-} from '@payw/eodiro-one-api/scheme'
+import { oneAPIClient } from '@payw/eodiro-one-api'
+import { PostType } from '@payw/eodiro-one-api/database/models/post'
 import { ResizeSensor } from 'css-element-queries'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
@@ -17,7 +13,7 @@ import React, { useEffect, useRef, useState } from 'react'
 
 const PostItem: React.FC<{
   boardName: string
-  post: Post
+  post: PostType
 }> = React.memo(({ boardName, post }) => {
   return (
     <a
@@ -55,7 +51,7 @@ const PostContainer: React.FC = () => {
   const boardName = router.query.boardName as string
 
   // Posts init value with cached ones
-  const [posts, setPosts] = useState<Posts>([])
+  const [posts, setPosts] = useState<PostType[]>([])
   const [isMobile, setIsMobile] = useState(false)
   const postContainerRef = useRef<HTMLDivElement>(null)
 
@@ -93,7 +89,7 @@ const PostContainer: React.FC = () => {
 
   async function loadMore(): Promise<boolean> {
     const posts = await getState(setPosts)
-    const newPosts = await oneAPIClient<FetchPostsOfBoard>(ApiHost.getHost(), {
+    const newPosts = await oneAPIClient(ApiHost.getHost(), {
       action: 'fetchPostsOfBoard',
       data: {
         boardID: 1,
@@ -113,16 +109,13 @@ const PostContainer: React.FC = () => {
   async function loadNew(): Promise<void> {
     const posts = await getState(setPosts)
     if (posts && posts.length > 0) {
-      const payload = await oneAPIClient<FetchRecentPostsOfBoard>(
-        ApiHost.getHost(),
-        {
-          action: 'fetchRecentPostsOfBoard',
-          data: {
-            boardID: 1,
-            mostRecentPostID: posts[0].id,
-          },
-        }
-      )
+      const payload = await oneAPIClient(ApiHost.getHost(), {
+        action: 'fetchRecentPostsOfBoard',
+        data: {
+          boardID: 1,
+          mostRecentPostID: posts[0].id,
+        },
+      })
       if (payload && payload.length > 0) {
         sessionStorage.setItem('sbpd', JSON.stringify([...payload, ...posts]))
         const updatedPosts = [...payload, ...posts]

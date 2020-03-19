@@ -5,8 +5,7 @@ import WhiteBody from '@/components/utils/WhiteBody'
 import Body from '@/layouts/BaseLayout/Body'
 import ApiHost from '@/modules/api-host'
 import { EodiroPage } from '@/pages/_app'
-import { oneAPIClient } from '@payw/eodiro-one-api/client'
-import { UploadPost } from '@payw/eodiro-one-api/scheme'
+import { oneAPIClient } from '@payw/eodiro-one-api'
 import { useRouter } from 'next/router'
 import { MutableRefObject, useContext, useEffect, useRef } from 'react'
 import './style.scss'
@@ -86,18 +85,15 @@ const NewPostPage: EodiroPage = () => {
         <button
           className="upload-btn"
           onClick={async (): Promise<void> => {
-            const { err, data } = await oneAPIClient<UploadPost>(
-              ApiHost.getHost(),
-              {
-                action: 'uploadPost',
-                data: {
-                  boardID: 0,
-                  title: titleRef.current.value,
-                  body: bodyRef.current.value,
-                  accessToken: (await Tokens.get()).accessToken,
-                },
-              }
-            )
+            const { err, data } = await oneAPIClient(ApiHost.getHost(), {
+              action: 'uploadPost',
+              data: {
+                boardID: 0,
+                title: titleRef.current.value,
+                body: bodyRef.current.value,
+                accessToken: (await Tokens.get()).accessToken,
+              },
+            })
 
             if (!err) {
               alert('업로드되었습니다.')
