@@ -1,6 +1,8 @@
 import { AuthApi, Tokens } from '@/api'
 import dayjs from 'dayjs'
 import { IncomingMessage, ServerResponse } from 'http'
+import ApiHost from '../api-host'
+import eodiroAxios from '../eodiro-axios'
 import EodiroHttpCookie from '../eodiro-http-cookie'
 
 type AuthState = {
@@ -39,11 +41,20 @@ export async function getAuthState(
       const newTokens = await AuthApi.refresh(req)
 
       if (newTokens) {
-        await Tokens.set(newTokens, { req, res })
-        const authCheck = await AuthApi.isSigned(req)
-        authState.isSigned = authCheck.isSigned
-        authState.isAdmin = authCheck.isAdmin
-        authState.userId = authCheck.userId
+        const [err, authCheck] = await eodiroAxios({
+          method: 'POST',
+          url: ApiHost.getHost() + `/auth/is-signed-in`,
+          headers: {
+            accessToken: newTokens.accessToken,
+          },
+        })
+
+        if (!err) {
+          await Tokens.set(newTokens, { req, res })
+          authState.isSigned = authCheck.isSigned
+          authState.isAdmin = authCheck.isAdmin
+          authState.userId = authCheck.userId
+        }
       } else {
         // Clear tokens
         await EodiroHttpCookie.set(
