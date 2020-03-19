@@ -4,6 +4,7 @@ import ApiHost from '@/modules/api-host'
 import { useAuth } from '@/pages/_app'
 import { Dispatcher } from '@/types/react-helper'
 import { oneAPIClient } from '@payw/eodiro-one-api'
+import { OneApiError } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
 import { CommentType } from '@payw/eodiro-one-api/database/models/comment'
 import _ from 'lodash'
 import dynamic from 'next/dynamic'
@@ -22,28 +23,50 @@ const CommentsContext = createContext(
   }
 )
 
-const CommentItem: React.FC<{ comment: CommentType }> = React.memo(
-  ({ comment }) => {
-    const auth = useAuth()
+const CommentItem: React.FC<{
+  comment: CommentType
+  index: number
+  deleteComment: (index: number) => void
+}> = React.memo(({ comment, index, deleteComment }) => {
+  const auth = useAuth()
 
-    return (
-      <div className="comment-item">
-        <div className="first-row">
-          <div className="nick-and-time">
-            <span className="nick">{comment.random_nickname}</span>
-            <FriendlyTime time={comment.uploaded_at} className="time" />
-          </div>
-          {auth.userId === comment.user_id && (
-            <div>
-              <button className="delete">삭제</button>
-            </div>
-          )}
+  return (
+    <div className="comment-item">
+      <div className="first-row">
+        <div className="nick-and-time">
+          <span className="nick">{comment.random_nickname}</span>
+          <FriendlyTime time={comment.uploaded_at} className="time" />
         </div>
-        <p className="body">{comment.body}</p>
+        {auth.userId === comment.user_id && (
+          <div>
+            <button
+              className="delete"
+              onClick={async () => {
+                const payload = await oneAPIClient(ApiHost.getHost(), {
+                  action: 'deleteComment',
+                  data: {
+                    accessToken: (await Tokens.get()).accessToken,
+                    commentId: comment.id,
+                  },
+                })
+
+                if (payload.err === OneApiError.NO_CONTENT) {
+                  alert('이미 삭제되었거나 존재하지 않는 댓글입니다.')
+                } else {
+                  deleteComment(index)
+                  alert('삭제되었습니다.')
+                }
+              }}
+            >
+              삭제
+            </button>
+          </div>
+        )}
       </div>
-    )
-  }
-)
+      <p className="body">{comment.body}</p>
+    </div>
+  )
+})
 
 const NewComment: React.FC = () => {
   const router = useRouter()
@@ -111,6 +134,11 @@ const Comments: React.FC<{
 
   let inner: JSX.Element | JSX.Element[]
 
+  function deleteComment(commentIndex: number): void {
+    _.pullAt(comments, commentIndex)
+    setComments([...comments])
+  }
+
   if (!comments) {
     inner = <Information title="댓글을 가져올 수 없습니다." />
   } else if (comments && comments.length === 0) {
@@ -118,8 +146,13 @@ const Comments: React.FC<{
   } else {
     inner = (
       <div>
-        {comments.map((comment) => (
-          <CommentItem key={comment.id} comment={comment} />
+        {comments.map((comment, i) => (
+          <CommentItem
+            key={comment.id}
+            comment={comment}
+            index={i}
+            deleteComment={deleteComment}
+          />
         ))}
       </div>
     )
