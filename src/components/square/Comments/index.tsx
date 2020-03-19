@@ -42,6 +42,8 @@ const CommentItem: React.FC<{
             <button
               className="delete"
               onClick={async () => {
+                if (!confirm('정말 삭제하시겠습니까?')) return
+
                 const payload = await oneAPIClient(ApiHost.getHost(), {
                   action: 'deleteComment',
                   data: {
