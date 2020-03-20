@@ -79,11 +79,12 @@ const NewComment: React.FC = () => {
 
   return (
     <input
+      maxLength={3000}
       ref={inputRef}
       className="new-comment"
       type="text"
       placeholder="댓글"
-      spellCheck={false}
+      spellCheck="false"
       autoComplete="off"
       value={value}
       onChange={(e): void => setValue(e.target.value)}
