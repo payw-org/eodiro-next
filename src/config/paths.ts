@@ -1,3 +1,3 @@
 export const pathIds = {
-  writePost: 'new',
+  writePost: 'editor',
 }
