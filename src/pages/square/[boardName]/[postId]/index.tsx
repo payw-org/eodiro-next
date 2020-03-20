@@ -30,6 +30,10 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
   return (
     <div>
       <WhiteBody />
+      <a href={`/square/${boardName}`} className="to-list">
+        ← 목록으로
+      </a>
+
       <article className="post">
         <div className="info">
           <span className="author">{post.random_nickname}</span>
@@ -80,7 +84,7 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
                   _.pullAt(cached, index)
                   sessionStorage.setItem('sbpd', JSON.stringify(cached))
 
-                  // Redirec to the list
+                  // Redirect to the list
                   window.location.replace(`/square/${boardName}`)
                 }}
               >
@@ -122,6 +126,7 @@ const PostPage: EodiroPage<PostPageProps> = ({
       titleHidden
       textMargin="1rem"
       bodyClassName="eodiro-post-view"
+      hasTopGap={false}
     >
       {post && <Content post={post} comments={comments} />}
       {err === 'Unauthorized' && <RequireAuth />}
