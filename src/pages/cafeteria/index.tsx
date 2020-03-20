@@ -83,6 +83,7 @@ const EodiroCafeteria: React.FC<{ menus: CafeteriaMenus }> = memo(
                 <button
                   className="date-change-btn previous"
                   onClick={(): void => setNow(now.subtract(1, 'd'))}
+                  onTouchStart={(e) => e.preventDefault()}
                 >
                   <ArrowIcon direction="left" fill="#31a8ff" />
                 </button>
@@ -92,6 +93,7 @@ const EodiroCafeteria: React.FC<{ menus: CafeteriaMenus }> = memo(
                 <button
                   className="date-change-btn next"
                   onClick={(): void => setNow(now.add(1, 'd'))}
+                  onTouchStart={(e) => e.preventDefault()}
                 >
                   <ArrowIcon fill="#31a8ff" />
                 </button>
