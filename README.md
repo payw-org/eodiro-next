@@ -31,7 +31,7 @@ npm run dev --useProdApi
 
 ### Using dev API (localhost)
 
-By default, `npm run dev` connects to local dev API server and `npm start` tries to connect to the real server(https://eodiro.com). However, sometimes you need to test the production-ready, built version of client application with the dev API. To achieve this, simply pass an argument similart to the one above
+By default, `npm run dev` connects to local dev API server and `npm start` tries to connect to the real server(https://eodiro.com). However, sometimes you need to test the production-ready, built version of client application with the dev API. To achieve this, simply pass an argument similar to the one above
 
 ```zsh
 npm start --useDevApi
