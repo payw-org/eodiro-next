@@ -3,13 +3,13 @@
  * published on the server
  */
 
-if (process.env.npm_config_useprodapi) {
-  console.log('[ApiHost] using production API')
-}
-
 export default class ApiHost {
   public static getHost(): string {
-    if (process.env.npm_config_useprodapi) {
+    if (
+      process.env.npm_config_useProdApi ||
+      (typeof window !== 'undefined' &&
+        document.documentElement.hasAttribute('data-use-prod-api'))
+    ) {
       return 'https://api2.eodiro.com'
     }
 
