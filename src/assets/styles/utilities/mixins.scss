@@ -201,10 +201,10 @@ $border-radius-inner: r(2);
   display: block;
   width: 100%;
   resize: none;
-  box-shadow: inset 0 0 0.15rem rgba(#000, 0.1);
+  transition: border-color 200ms ease;
 
-  @include dark-mode {
-    box-shadow: inset 0 0 0.2rem rgba(#000, 0.5);
+  &:focus {
+    border-color: $eodiro-primary-color;
   }
 
   @include input-text;
