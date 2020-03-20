@@ -17,7 +17,7 @@
   "license": "MIT",
   "repository": "https://github.com/paywteam/eodiro-next.git",
   "dependencies": {
-    "@payw/eodiro-one-api": "^1.3.0",
+    "@payw/eodiro-one-api": "^1.3.1",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cookie": "^0.4.0",
