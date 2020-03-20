@@ -6,11 +6,14 @@ import WhiteBody from '@/components/utils/WhiteBody'
 import Body from '@/layouts/BaseLayout/Body'
 import ApiHost from '@/modules/api-host'
 import Time from '@/modules/time'
-import { EodiroPage } from '@/pages/_app'
+import { EodiroPage, useAuth } from '@/pages/_app'
 import { oneAPIClient } from '@payw/eodiro-one-api'
 import { GetComments, GetPostById } from '@payw/eodiro-one-api/api/one/scheme'
 import { CommentType } from '@payw/eodiro-one-api/database/models/comment'
+import { PostType } from '@payw/eodiro-one-api/database/models/post'
+import _ from 'lodash'
 import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
 import './style.scss'
 
 type ContentProps = {
@@ -19,14 +22,67 @@ type ContentProps = {
 }
 
 const Content: React.FC<ContentProps> = ({ post, comments }) => {
+  const authInfo = useAuth()
+  const router = useRouter()
+
   return (
     <div>
       <WhiteBody />
       <article className="post">
-        <span className="author">{post.random_nickname}</span>
-        <span className="time">
-          {Time.yyyymmddhhmmss(post.uploaded_at, true)}
-        </span>
+        <div className="info">
+          <span className="author">{post.random_nickname}</span>
+
+          <span className="time">
+            {Time.yyyymmddhhmmss(post.uploaded_at, true)}
+          </span>
+
+          {post.user_id === authInfo.userId && (
+            <span className="actions">
+              <button className="edit">수정</button>
+              <button
+                className="delete"
+                onClick={async () => {
+                  // Confirm
+                  const confirmation = confirm(
+                    '삭제된 포스트는 되돌릴 수 없으며 모든 댓글도 함께 삭제됩니다.\n정말 삭제하시겠습니까?'
+                  )
+
+                  if (!confirmation) return
+
+                  // Delete
+                  oneAPIClient(ApiHost.getHost(), {
+                    action: 'deletePost',
+                    data: {
+                      accessToken: (await Tokens.get()).accessToken,
+                      postId: post.id,
+                    },
+                  })
+
+                  alert('삭제되었습니다.')
+
+                  // Update cached posts
+                  const cached: PostType[] = JSON.parse(
+                    sessionStorage.getItem('sbpd')
+                  )
+                  // If no cached data, no update
+                  if (!cached) return
+                  const index = cached.findIndex(
+                    (cachedPost) => cachedPost.id === post.id
+                  )
+                  if (index === -1) return
+                  // Only if it exists in the cache
+                  _.pullAt(cached, index)
+                  sessionStorage.setItem('sbpd', JSON.stringify(cached))
+
+                  // Redirec to the list
+                  window.location.replace(`/square/${router.query.boardName}`)
+                }}
+              >
+                삭제
+              </button>
+            </span>
+          )}
+        </div>
         <h1 className="title">{post.title}</h1>
         {post.body.split('\n').map((line, i) => {
           return line.length === 0 ? (
