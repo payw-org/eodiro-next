@@ -64,6 +64,14 @@
   }
 }
 
+@mixin elm-fill-distinct {
+  background-color: $base-white-blue;
+
+  @include dark-mode {
+    background-color: $base-black-soft;
+  }
+}
+
 // layered fill
 @mixin overlay {
   background-color: $t-white;

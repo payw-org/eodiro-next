@@ -1,7 +1,7 @@
 @use '@/assets/styles/main' as *;
 
 .eodiro-square-post-comments {
-  @include bg;
+  @include elm-fill-distinct;
   @include border-radius-outer;
   padding: 0.5rem 1rem 1rem;
   margin-top: 4rem;
