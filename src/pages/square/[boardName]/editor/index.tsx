@@ -21,6 +21,7 @@ type NewPostPageProps = {
 
 const NewPostPage: EodiroPage<NewPostPageProps> = ({ title, body, postId }) => {
   const mode = title.length === 0 ? 'new' : 'edit'
+  const isEditMode = mode === 'new'
   const router = useRouter()
 
   const titleRef = useRef<HTMLTextAreaElement>(null)
@@ -184,7 +185,7 @@ const NewPostPage: EodiroPage<NewPostPageProps> = ({ title, body, postId }) => {
             }
           }}
         >
-          업로드
+          {isEditMode ? '수정 완료' : '업로드'}
         </button>
       </Body>
     </>
