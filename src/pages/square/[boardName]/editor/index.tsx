@@ -21,7 +21,7 @@ type NewPostPageProps = {
 
 const NewPostPage: EodiroPage<NewPostPageProps> = ({ title, body, postId }) => {
   const mode = title.length === 0 ? 'new' : 'edit'
-  const isEditMode = mode === 'new'
+  const isEditMode = mode === 'edit'
   const router = useRouter()
 
   const titleRef = useRef<HTMLTextAreaElement>(null)
@@ -55,6 +55,8 @@ const NewPostPage: EodiroPage<NewPostPageProps> = ({ title, body, postId }) => {
     })
 
     // Auto resize the input fields' height when window is resized
+    autoResize(titleRef, titleShadowRef)
+    autoResize(bodyRef, bodyShadowRef)
     window.addEventListener('resize', () => {
       autoResize(titleRef, titleShadowRef)
       autoResize(bodyRef, bodyShadowRef)
