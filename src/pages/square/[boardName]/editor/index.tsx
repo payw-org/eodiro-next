@@ -138,13 +138,15 @@ const NewPostPage: EodiroPage<NewPostPageProps> = ({ title, body, postId }) => {
                   const index = cached.findIndex(
                     (cachedPost) => cachedPost.id === postId
                   )
-                  if (index === -1) return
-                  // Only if it exists in the cache
-                  const newOne = cached[index]
-                  newOne.title = titleRef.current.value
-                  newOne.body = bodyRef.current.value
-                  cached.splice(index, 1, newOne)
-                  sessionStorage.setItem('sbpd', JSON.stringify(cached))
+
+                  if (index !== -1) {
+                    // Only if it exists in the cache
+                    const newOne = cached[index]
+                    newOne.title = titleRef.current.value
+                    newOne.body = bodyRef.current.value
+                    cached.splice(index, 1, newOne)
+                    sessionStorage.setItem('sbpd', JSON.stringify(cached))
+                  }
                 }
 
                 location.replace(`/square/${router.query.boardName}/${postId}`)

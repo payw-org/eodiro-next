@@ -60,7 +60,7 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
                   if (!confirmation) return
 
                   // Delete
-                  oneAPIClient(ApiHost.getHost(), {
+                  await oneAPIClient(ApiHost.getHost(), {
                     action: 'deletePost',
                     data: {
                       accessToken: (await Tokens.get()).accessToken,
@@ -74,15 +74,18 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
                   const cached: PostType[] = JSON.parse(
                     sessionStorage.getItem('sbpd')
                   )
-                  // If no cached data, no update
-                  if (!cached) return
-                  const index = cached.findIndex(
-                    (cachedPost) => cachedPost.id === post.id
-                  )
-                  if (index === -1) return
-                  // Only if it exists in the cache
-                  _.pullAt(cached, index)
-                  sessionStorage.setItem('sbpd', JSON.stringify(cached))
+                  // Update when there is cache
+                  if (cached) {
+                    const index = cached.findIndex(
+                      (cachedPost) => cachedPost.id === post.id
+                    )
+
+                    if (index !== -1) {
+                      // Only if it exists in the cache
+                      _.pullAt(cached, index)
+                      sessionStorage.setItem('sbpd', JSON.stringify(cached))
+                    }
+                  }
 
                   // Redirect to the list
                   window.location.replace(`/square/${boardName}`)
