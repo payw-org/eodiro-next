@@ -16,10 +16,15 @@ import './style.scss'
 type NewPostPageProps = {
   title: string
   body: string
+  boardId: number
   postId: number
 }
-
-const NewPostPage: EodiroPage<NewPostPageProps> = ({ title, body, postId }) => {
+const NewPostPage: EodiroPage<NewPostPageProps> = ({
+  title,
+  body,
+  boardId,
+  postId,
+}) => {
   const mode = title.length === 0 ? 'new' : 'edit'
   const isEditMode = mode === 'edit'
   const router = useRouter()
@@ -165,8 +170,7 @@ const NewPostPage: EodiroPage<NewPostPageProps> = ({ title, body, postId }) => {
               const { err, data } = await oneAPIClient(ApiHost.getHost(), {
                 action: 'uploadPost',
                 data: {
-                  // TODO: get board id from board name
-                  boardID: 1,
+                  boardID: boardId,
                   title: titleRef.current.value,
                   body: bodyRef.current.value,
                   accessToken: (await Tokens.get()).accessToken,
@@ -204,8 +208,8 @@ export const getServerSideProps: GetServerSideProps<NewPostPageProps> = async ({
   res,
 }) => {
   const postId = Number(query['post_id'])
-  let title = '',
-    body = ''
+  let title = ''
+  let body = ''
 
   // Editing mode
   if (postId) {
@@ -227,10 +231,24 @@ export const getServerSideProps: GetServerSideProps<NewPostPageProps> = async ({
     body = data.body
   }
 
+  // Get board ID
+  const { err, data: boardId } = await oneAPIClient(ApiHost.getHost(), {
+    action: 'getBoardId',
+    data: {
+      boardName: query.boardName as string,
+    },
+  })
+
+  if (err) {
+    redirect(res)
+    return
+  }
+
   return {
     props: {
       title,
       body,
+      boardId,
       postId,
     },
   }

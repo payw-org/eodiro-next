@@ -12,6 +12,7 @@ import _ from 'lodash'
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
 
+// Post item component (memoized)
 const PostItem: React.FC<{
   boardName: string
   post: PostType
@@ -37,7 +38,11 @@ const PostItem: React.FC<{
   )
 })
 
-const PostContainer: React.FC = () => {
+// Dynamic post container component
+type PostContainerProps = {
+  boardId: number
+}
+const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
   function isFromPostOrNew(): boolean {
     const lastpage = sessionStorage.getItem('lastpage')
     if (!lastpage) return false
@@ -97,7 +102,7 @@ const PostContainer: React.FC = () => {
     const newPosts = await oneAPIClient(ApiHost.getHost(), {
       action: 'fetchPostsOfBoard',
       data: {
-        boardID: 1,
+        boardID: boardId,
         lastPostID: _.last(posts)?.id,
       },
     })
@@ -117,7 +122,7 @@ const PostContainer: React.FC = () => {
       const payload = await oneAPIClient(ApiHost.getHost(), {
         action: 'fetchRecentPostsOfBoard',
         data: {
-          boardID: 1,
+          boardID: boardId,
           mostRecentPostID: posts[0].id,
         },
       })
