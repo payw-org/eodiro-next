@@ -6,6 +6,7 @@ import { NextComponentType, NextPageContext } from 'next'
 import App, { AppContext, AppInitialProps } from 'next/app'
 import Head from 'next/head'
 import React, { createContext, useContext, useState } from 'react'
+import './_document.scss'
 
 type AuthProps = {
   tokens: TokensPack
