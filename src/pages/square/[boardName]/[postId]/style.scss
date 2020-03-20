@@ -2,6 +2,7 @@
 
 .eodiro-post-view {
   max-width: 50rem !important;
+  padding-top: $nav-height + 1.5rem !important;
 
   .to-list {
     font-size: 1rem;
@@ -10,7 +11,7 @@
     @include border-radius-outer;
     line-height: 1;
     padding: 0.5rem;
-    margin: 1.5rem 0;
+    margin-bottom: 1.5rem;
     display: inline-block;
     color: $eodiro-primary-color;
   }

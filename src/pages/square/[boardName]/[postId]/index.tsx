@@ -115,22 +115,18 @@ type PostPageProps = {
   postErr: GetPostById['payload']['err']
 }
 
-const PostPage: EodiroPage<PostPageProps> = ({
-  post,
-  comments,
-  postErr: err,
-}) => {
+const PostPage: EodiroPage<PostPageProps> = ({ post, comments, postErr }) => {
   return (
     <Body
       pageTitle={post?.title || '포스트'}
       titleHidden
-      textMargin="1rem"
+      textMargin="7rem"
       bodyClassName="eodiro-post-view"
-      hasTopGap={false}
+      hasTopGap={postErr ? true : false}
     >
       {post && <Content post={post} comments={comments} />}
-      {err === 'Unauthorized' && <RequireAuth />}
-      {err === 'No Content' && (
+      {postErr === 'Unauthorized' && <RequireAuth />}
+      {postErr === 'No Content' && (
         <Information title="존재하지 않는 포스트입니다." />
       )}
     </Body>
