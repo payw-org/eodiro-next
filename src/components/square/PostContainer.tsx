@@ -1,4 +1,5 @@
 import InfiniteScrollContainer from '@/components/utils/InfiniteScrollContainer'
+import { pathIds } from '@/config/paths'
 import { visualizeBody } from '@/layouts/BaseLayout/Body'
 import ApiHost from '@/modules/api-host'
 import getState from '@/modules/get-state'
@@ -40,9 +41,13 @@ const PostContainer: React.FC = () => {
   function isFromPostOrNew(): boolean {
     const lastpage = sessionStorage.getItem('lastpage')
     if (!lastpage) return false
+    const writePageRegExp = new RegExp(
+      `\/square\/.*\/${pathIds.writePost}`,
+      'g'
+    )
     return (
       lastpage.match(/\/square\/.*\/[0-9]*/g)?.length > 0 ||
-      lastpage.match(/\/square\/.*\/new/g)?.length > 0
+      lastpage.match(writePageRegExp)?.length > 0
     )
   }
 

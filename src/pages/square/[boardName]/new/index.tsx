@@ -88,7 +88,8 @@ const NewPostPage: EodiroPage = () => {
             const { err, data } = await oneAPIClient(ApiHost.getHost(), {
               action: 'uploadPost',
               data: {
-                boardID: 0,
+                // TODO: get board id from board name
+                boardID: 1,
                 title: titleRef.current.value,
                 body: bodyRef.current.value,
                 accessToken: (await Tokens.get()).accessToken,

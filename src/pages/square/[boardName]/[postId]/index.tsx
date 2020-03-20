@@ -3,6 +3,7 @@ import Information from '@/components/Information'
 import RequireAuth from '@/components/RequireAuth'
 import Comments from '@/components/square/Comments'
 import WhiteBody from '@/components/utils/WhiteBody'
+import { pathIds } from '@/config/paths'
 import Body from '@/layouts/BaseLayout/Body'
 import ApiHost from '@/modules/api-host'
 import Time from '@/modules/time'
@@ -24,6 +25,7 @@ type ContentProps = {
 const Content: React.FC<ContentProps> = ({ post, comments }) => {
   const authInfo = useAuth()
   const router = useRouter()
+  const boardName = router.query.boardName
 
   return (
     <div>
@@ -38,7 +40,11 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
 
           {post.user_id === authInfo.userId && (
             <span className="actions">
-              <button className="edit">수정</button>
+              <a
+                href={`/square/${boardName}/${pathIds.writePost}?post_id=${post.id}`}
+              >
+                <button className="edit">수정</button>
+              </a>
               <button
                 className="delete"
                 onClick={async () => {
@@ -75,7 +81,7 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
                   sessionStorage.setItem('sbpd', JSON.stringify(cached))
 
                   // Redirec to the list
-                  window.location.replace(`/square/${router.query.boardName}`)
+                  window.location.replace(`/square/${boardName}`)
                 }}
               >
                 삭제
