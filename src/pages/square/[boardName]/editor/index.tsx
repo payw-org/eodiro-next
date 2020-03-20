@@ -215,6 +215,7 @@ export const getServerSideProps: GetServerSideProps<NewPostPageProps> = async ({
 
     if (err) {
       redirect(res, `/square/${encodeURIComponent(query.boardName as string)}`)
+      return
     }
 
     title = data.title
