@@ -78,55 +78,67 @@ const NewComment: React.FC = () => {
   const auth = useAuth()
 
   return (
-    <input
-      maxLength={3000}
-      ref={inputRef}
-      className="new-comment"
-      type="text"
-      placeholder="댓글"
-      spellCheck="false"
-      autoComplete="off"
-      value={value}
-      onChange={(e): void => setValue(e.target.value)}
-      onKeyUp={async (e): Promise<void> => {
-        if (e.key !== 'Enter') return
+    <>
+      <input
+        maxLength={500}
+        ref={inputRef}
+        className="new-comment"
+        type="text"
+        placeholder="댓글"
+        spellCheck="false"
+        autoComplete="off"
+        value={value}
+        onChange={(e): void => setValue(e.target.value)}
+        onKeyUp={async (e): Promise<void> => {
+          if (e.key !== 'Enter') return
 
-        setValue('')
+          setValue('')
 
-        const uploadPayload = await oneAPIClient(ApiHost.getHost(), {
-          action: 'uploadComment',
-          data: {
-            postId: Number(router.query.postId),
-            body: value,
-            accessToken: (await Tokens.get()).accessToken,
-          },
-        })
+          const uploadPayload = await oneAPIClient(ApiHost.getHost(), {
+            action: 'uploadComment',
+            data: {
+              postId: Number(router.query.postId),
+              body: value,
+              accessToken: (await Tokens.get()).accessToken,
+            },
+          })
 
-        if (uploadPayload.err) {
-          if (uploadPayload.err === 'No Body') {
-            alert('내용을 입력하세요.')
-            return
+          if (uploadPayload.err) {
+            if (uploadPayload.err === 'No Body') {
+              alert('내용을 입력하세요.')
+              return
+            }
           }
-        }
 
-        // Upload success
+          // Upload success
 
-        // Blur input
-        inputRef.current.blur()
+          // Blur input
+          inputRef.current.blur()
 
-        // Refresh recent comments
-        const newCommentsPyld = await oneAPIClient(ApiHost.getHost(), {
-          action: 'getComments',
-          data: {
-            accessToken: auth.tokens.accessToken,
-            postId: Number(router.query.postId),
-            mostRecentCommentId: comments.length > 0 ? _.last(comments).id : 0,
-          },
-        })
+          // Refresh recent comments
+          const newCommentsPyld = await oneAPIClient(ApiHost.getHost(), {
+            action: 'getComments',
+            data: {
+              accessToken: auth.tokens.accessToken,
+              postId: Number(router.query.postId),
+              mostRecentCommentId:
+                comments.length > 0 ? _.last(comments).id : 0,
+            },
+          })
 
-        setComments([...comments, ...newCommentsPyld.data])
-      }}
-    />
+          setComments([...comments, ...newCommentsPyld.data])
+        }}
+      />
+      <input
+        type="text"
+        style={{
+          visibility: 'hidden',
+          pointerEvents: 'none',
+          position: 'fixed',
+          left: '200%',
+        }}
+      />
+    </>
   )
 }
 
