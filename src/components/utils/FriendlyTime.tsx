@@ -1,6 +1,6 @@
 import Time from '@/modules/time'
 
-export default function({
+export default function FriendlyTime({
   time,
   className,
 }: {
