@@ -3,6 +3,7 @@
 .eodiro-square-post-comments {
   @include elm-fill-distinct;
   @include border-radius-outer;
+  @include bordered;
   padding: 0.5rem 1rem 1rem;
   margin-top: 4rem;
 
@@ -53,5 +54,17 @@
 
   .new-comment {
     margin-top: 1rem;
+    transition: background-color 200ms ease;
+
+    background-color: $base-white-blue;
+    &:focus {
+      background-color: #fff;
+    }
+    @include dark-mode {
+      background-color: $base-black-soft;
+      &:focus {
+        background-color: #000;
+      }
+    }
   }
 }
