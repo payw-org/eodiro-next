@@ -93,15 +93,15 @@ const Navigation: React.FC = () => {
 
         <NavMenus />
 
-        <div className="more-tappable">
-          <VerticalThreeDotsIcon
-            className="more-icon"
-            onClick={(): void => {
-              setMenuOpen((open) => {
-                return !open
-              })
-            }}
-          />
+        <div
+          className="more-tappable"
+          onClick={(): void => {
+            setMenuOpen((open) => {
+              return !open
+            })
+          }}
+        >
+          <VerticalThreeDotsIcon className="more-icon" />
         </div>
       </div>
     </nav>
