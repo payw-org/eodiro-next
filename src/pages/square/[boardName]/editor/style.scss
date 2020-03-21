@@ -17,7 +17,7 @@
     box-shadow: none;
     padding: 0;
     border-radius: unset;
-    font-size: 1.3rem;
+    font-size: 1.15rem;
   }
 
   .title {
@@ -60,6 +60,8 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    max-width: 50rem;
+    margin: auto;
     right: 1.5rem;
     color: #fff;
     font-size: 1.1rem;
