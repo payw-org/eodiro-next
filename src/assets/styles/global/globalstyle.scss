@@ -6,6 +6,10 @@
 @use '@/assets/styles/classes/colors';
 @use '@/assets/styles/page/class.scss';
 
+// Classes
+@use '@/assets/styles/classes/box-model';
+@use '@/assets/styles/classes/text';
+
 html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -154,7 +158,7 @@ a,
 textarea,
 input,
 div {
-  font-size: b(3);
+  font-size: 1rem;
 }
 
 input[type='text'],
@@ -174,7 +178,8 @@ a {
   color: inherit;
   -webkit-touch-callout: none !important;
 
-  &.absolute-link {
+  &.absolute-link,
+  &.abs-link {
     position: absolute;
     top: 0;
     left: 0;
