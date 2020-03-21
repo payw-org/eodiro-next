@@ -1,8 +1,11 @@
 import React from 'react'
-import { FillableAndClickableIcon } from '@/types'
 
-const VerticalThreeDotsIcon: FillableAndClickableIcon = ({
-  appearance,
+type VerticalThreeDotsIconProps = {
+  className?: string
+  fill?: string
+  onClick?: (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => void
+}
+const VerticalThreeDotsIcon: React.FC<VerticalThreeDotsIconProps> = ({
   className,
   fill,
   onClick,
@@ -10,7 +13,6 @@ const VerticalThreeDotsIcon: FillableAndClickableIcon = ({
   return (
     <svg
       className={className}
-      data-appearance={appearance}
       onClick={onClick}
       width="30px"
       height="162px"
