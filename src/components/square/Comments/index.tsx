@@ -54,9 +54,6 @@ const CommentItem: React.FC<{
 
                 if (payload.err === OneApiError.NO_CONTENT) {
                   alert('이미 삭제되었거나 존재하지 않는 댓글입니다.')
-                } else {
-                  deleteComment(index)
-                  alert('삭제되었습니다.')
                 }
               }}
             >
