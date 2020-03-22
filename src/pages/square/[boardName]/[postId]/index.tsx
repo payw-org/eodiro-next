@@ -2,6 +2,7 @@ import { Tokens } from '@/api'
 import Information from '@/components/Information'
 import RequireAuth from '@/components/RequireAuth'
 import Comments from '@/components/square/Comments'
+import { PostViewerFileContainer } from '@/components/square/PostViewerFileContainer'
 import WhiteBody from '@/components/utils/WhiteBody'
 import { pathIds } from '@/config/paths'
 import Body from '@/layouts/BaseLayout/Body'
@@ -90,7 +91,9 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
             </span>
           )}
         </div>
+        {/* Post title */}
         <h1 className="title">{post.title}</h1>
+        {/* Post body */}
         {post.body.split('\n').map((line, i) => {
           return line.length === 0 ? (
             <br key={`br-${i}`} className="line-break" />
@@ -100,6 +103,9 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
             </p>
           )
         })}
+        {post.files && post.files.length > 0 && (
+          <PostViewerFileContainer files={post.files} />
+        )}
       </article>
 
       <Comments comments={comments} />

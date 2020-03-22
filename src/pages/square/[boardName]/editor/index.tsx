@@ -99,7 +99,6 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
       errMsg?: string
     }[]
   >(props.files || [])
-  const fileUploadLabel = useRef<HTMLLabelElement>(null)
   const uploadSection = useRef<HTMLElement>(null)
 
   // Upload or edit post
