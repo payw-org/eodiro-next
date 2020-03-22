@@ -4,7 +4,7 @@ import './Button.scss'
 
 type ButtonProps = {
   className?: string
-  label: string
+  label: string | JSX.Element
   full?: boolean
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   disabled?: boolean
