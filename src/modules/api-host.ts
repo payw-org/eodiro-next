@@ -11,15 +11,19 @@
 import { isClient } from './utils/is-client'
 import { isDev } from './utils/is-dev'
 
+// TODO: refactor the class name for universal usage
 export default class ApiHost {
-  public static getHost(): string {
+  public static getHost(cdn?: boolean): string {
+    const port = cdn ? 5020 : 4020
+    const sub = cdn ? 'cdn' : 'api2'
+
     // Forced to use production API
     // distributed on eodiro.com server
     if (
       process.env.npm_config_useProdApi ||
       (isClient() && document.documentElement.hasAttribute('data-use-prod-api'))
     ) {
-      return 'https://api2.eodiro.com'
+      return `https://${sub}.eodiro.com`
     }
 
     // Forced to use dev API
@@ -28,23 +32,23 @@ export default class ApiHost {
       (isClient() && document.documentElement.hasAttribute('data-use-dev-api'))
     ) {
       if (isClient()) {
-        return `http://${location.hostname}:4020`
+        return `http://${location.hostname}:${port}`
       } else {
-        return 'http://localhost:4020'
+        return `http://localhost:${port}`
       }
     }
 
     // Dev mode
     // Use local machine's IP address
     if (isDev() && isClient()) {
-      return `http://${location.hostname}:4020`
+      return `http://${location.hostname}:${port}`
     }
 
     // General, including server side call
     const host =
       process.env.NODE_ENV === 'development'
-        ? 'http://localhost:4020'
-        : 'https://api2.eodiro.com'
+        ? `http://localhost:${port}`
+        : `https://${sub}.eodiro.com`
 
     return host
   }
