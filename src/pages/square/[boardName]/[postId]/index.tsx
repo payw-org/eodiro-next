@@ -21,11 +21,46 @@ type ContentProps = {
   post: GetPostById['payload']['data']
   comments: CommentType[]
 }
-
 const Content: React.FC<ContentProps> = ({ post, comments }) => {
   const authInfo = useAuth()
   const router = useRouter()
   const boardName = router.query.boardName
+
+  async function deletePost() {
+    // Confirm
+    const confirmation = confirm(
+      '삭제된 포스트는 되돌릴 수 없으며 모든 댓글도 함께 삭제됩니다.\n정말 삭제하시겠습니까?'
+    )
+
+    if (!confirmation) return
+
+    // Delete
+    await oneAPIClient(ApiHost.getHost(), {
+      action: 'deletePost',
+      data: {
+        accessToken: (await Tokens.get()).accessToken,
+        postId: post.id,
+      },
+    })
+
+    alert('삭제되었습니다.')
+
+    // Update cached posts
+    const cached: PostType[] = JSON.parse(sessionStorage.getItem('sbpd'))
+    // Update when there is cache
+    if (cached) {
+      const index = cached.findIndex((cachedPost) => cachedPost.id === post.id)
+
+      if (index !== -1) {
+        // Only if it exists in the cache
+        _.pullAt(cached, index)
+        sessionStorage.setItem('sbpd', JSON.stringify(cached))
+      }
+    }
+
+    // Redirect to the list
+    window.location.replace(`/square/${boardName}`)
+  }
 
   return (
     <div>
@@ -49,48 +84,7 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
               >
                 <button className="edit">수정</button>
               </a>
-              <button
-                className="delete"
-                onClick={async () => {
-                  // Confirm
-                  const confirmation = confirm(
-                    '삭제된 포스트는 되돌릴 수 없으며 모든 댓글도 함께 삭제됩니다.\n정말 삭제하시겠습니까?'
-                  )
-
-                  if (!confirmation) return
-
-                  // Delete
-                  await oneAPIClient(ApiHost.getHost(), {
-                    action: 'deletePost',
-                    data: {
-                      accessToken: (await Tokens.get()).accessToken,
-                      postId: post.id,
-                    },
-                  })
-
-                  alert('삭제되었습니다.')
-
-                  // Update cached posts
-                  const cached: PostType[] = JSON.parse(
-                    sessionStorage.getItem('sbpd')
-                  )
-                  // Update when there is cache
-                  if (cached) {
-                    const index = cached.findIndex(
-                      (cachedPost) => cachedPost.id === post.id
-                    )
-
-                    if (index !== -1) {
-                      // Only if it exists in the cache
-                      _.pullAt(cached, index)
-                      sessionStorage.setItem('sbpd', JSON.stringify(cached))
-                    }
-                  }
-
-                  // Redirect to the list
-                  window.location.replace(`/square/${boardName}`)
-                }}
-              >
+              <button className="delete" onClick={deletePost}>
                 삭제
               </button>
             </span>
@@ -107,6 +101,7 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
           )
         })}
       </article>
+
       <Comments comments={comments} />
     </div>
   )
@@ -117,7 +112,6 @@ type PostPageProps = {
   comments: GetComments['payload']['data']
   postErr: GetPostById['payload']['err']
 }
-
 const PostPage: EodiroPage<PostPageProps> = ({ post, comments, postErr }) => {
   return (
     <Body
@@ -145,7 +139,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const postPayload = await oneAPIClient(ApiHost.getHost(), {
     action: 'getPostById',
     data: {
-      postID: Number(query.postId),
+      postId: Number(query.postId),
       accessToken: (await Tokens.get(req)).accessToken,
     },
   })
