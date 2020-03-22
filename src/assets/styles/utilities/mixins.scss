@@ -32,6 +32,13 @@
   }
 }
 
+@mixin bg-black-and-white {
+  background-color: #fff;
+  @include dark-mode {
+    background-color: #000;
+  }
+}
+
 // text color
 @mixin text-color {
   color: $base-black;
