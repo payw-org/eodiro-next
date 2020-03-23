@@ -34,10 +34,10 @@ export const PostViewerFileContainer: React.FC<PostViewerFileContainerProps> = (
         return (
           <a
             href={ApiHost.getHost(true) + file.path}
-            download
-            className="file"
+            className="file d-flex align-items-center"
             key={file.fileId}
           >
+            <i className="icon octicon octicon-file" />
             {file.name}
           </a>
         )

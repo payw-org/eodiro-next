@@ -5,6 +5,7 @@
 
   .images {
     display: block;
+    margin-bottom: 2rem;
 
     .image-container {
       display: inline-block;
@@ -45,10 +46,13 @@
   }
 
   .file {
-    display: inline-block;
     @include clickable;
-    color: $eodiro-blue-1;
     margin-right: 0.5rem;
     margin-bottom: 0.5rem;
+
+    .icon {
+      margin-right: 0.5rem;
+      font-size: 1.3em;
+    }
   }
 }
