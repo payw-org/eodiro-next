@@ -17,8 +17,6 @@ export const PostViewerFileContainer: React.FC<PostViewerFileContainerProps> = (
     (file) => !file.mimeType.startsWith('image/')
   )
 
-  console.log(imageFiles)
-
   return (
     <div id="post-viewer-file-container">
       <div className="images">
