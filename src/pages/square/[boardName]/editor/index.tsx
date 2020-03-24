@@ -438,7 +438,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
 
         {/* Upload or finish edit */}
         <button className="upload-btn" onClick={uploadPost}>
-          <i className="icofont-check" />
+          <i className="octicon octicon-check font-weight-bold" />
         </button>
 
         {/* File upload button on mobile */}
@@ -449,7 +449,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
             uploadSection.current.classList.add('opened')
           }}
         >
-          <i className="icofont-plus" />
+          <i className="octicon octicon-cloud-upload" />
         </button>
       </Body>
     </>
