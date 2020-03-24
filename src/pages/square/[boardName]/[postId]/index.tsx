@@ -126,7 +126,7 @@ const PostPage: EodiroPage<PostPageProps> = ({ post, comments, postErr }) => {
     <Body
       pageTitle={post?.title || '포스트'}
       titleHidden
-      textMargin="7rem"
+      textMargin="4rem"
       bodyClassName="eodiro-post-view"
       hasTopGap={postErr ? true : false}
     >
