@@ -132,14 +132,12 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
         setPosts(updatedPosts)
       }
     }
-
-    setTimeout(() => {
-      loadNew()
-    }, 3000)
   }
 
+  // Poll to update new data
   useEffect(() => {
     loadNew()
+    setInterval(loadNew, 3000)
   }, [])
 
   return (
