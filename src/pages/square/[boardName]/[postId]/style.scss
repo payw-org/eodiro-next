@@ -7,13 +7,11 @@
   .to-list {
     font-size: 1rem;
     font-weight: 500;
-    @include elm-fill-distinct;
-    @include border-radius-outer;
     line-height: 1;
-    padding: 0.5rem;
     margin-bottom: 1.5rem;
     display: inline-block;
     color: $eodiro-primary-color;
+    @include clickable;
   }
 
   .post {
