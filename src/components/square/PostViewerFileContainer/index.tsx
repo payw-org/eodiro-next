@@ -19,15 +19,18 @@ export const PostViewerFileContainer: React.FC<PostViewerFileContainerProps> = (
 
   return (
     <div id="post-viewer-file-container">
+      {/* Images */}
       <div className="images">
         {imageFiles.map((image) => {
           return (
             <div className="image-container" key={image.fileId}>
-              <img src={ApiHost.getHost(true) + image.path} alt="" />
+              <img src={ApiHost.getHost(true) + image.path} alt={image.name} />
             </div>
           )
         })}
       </div>
+
+      {/* Other downloadable files */}
       {otherFiles.map((file) => {
         return (
           <a
