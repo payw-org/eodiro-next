@@ -8,6 +8,7 @@
     margin-bottom: 2rem;
 
     .image-container {
+      cursor: pointer;
       display: inline-block;
       width: calc(25% - 0.53rem);
       position: relative;
@@ -15,7 +16,6 @@
       overflow: hidden;
       margin-right: 0.7rem;
       margin-bottom: 0.7rem;
-      @include bordered;
       @include smaller-than(699px) {
         &:nth-child(4n) {
           margin-right: 0;
