@@ -377,7 +377,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
                               })
                             }}
                           />
-                          <div>
+                          <div className="d-flex">
                             {/* Display image file if possible */}
                             {fileState.mimeType.startsWith('image/') &&
                               fileState.status === 'uploaded' &&
@@ -387,7 +387,6 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
                                   alt={fileState.name}
                                   style={{
                                     width: '100%',
-                                    marginBottom: '0.5rem',
                                     borderRadius: '0.5rem',
                                     overflow: 'hidden',
                                   }}
@@ -396,14 +395,16 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
                             {fileState.errMsg && (
                               <p className="err-msg">{fileState.errMsg}</p>
                             )}
-                            <span
-                              className={mergeClassName(
-                                'file-name',
-                                fileState.errMsg && 'failed'
-                              )}
-                            >
-                              {fileState.name}
-                            </span>
+                            {!fileState.mimeType.startsWith('image/') && (
+                              <span
+                                className={mergeClassName(
+                                  'file-name',
+                                  fileState.errMsg && 'failed'
+                                )}
+                              >
+                                {fileState.name}
+                              </span>
+                            )}
                           </div>
                         </div>
 
