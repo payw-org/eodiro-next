@@ -181,6 +181,8 @@ $border-radius-inner: r(2);
 }
 
 @mixin clickable {
+  transition: opacity 150ms ease;
+
   & {
     cursor: pointer;
     user-select: none;
