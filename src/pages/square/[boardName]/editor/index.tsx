@@ -300,7 +300,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
                             const newState = [...prevState]
                             newState[index].status = 'failed'
                             newState[index].errMsg =
-                              '파일이 너무 큽니다. 4MB 이하의 파일만 업로드할 수 있습니다.'
+                              '파일이 너무 큽니다. 3MB 이하의 파일만 업로드할 수 있습니다.'
                             return newState
                           })
                           return
