@@ -37,14 +37,15 @@ const ImageViewer: React.FC<ImageViewerProps> = (props) => {
         {props.srcs.map((src, i) => {
           return (
             <div key={i} className="image-wrapper swiper-slide">
-              <a
-                href={src}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="img-link"
-              >
+              <div className="linker">
                 <img src={src} alt={src} />
-              </a>
+                <a
+                  href={src}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="img-link absolute-link"
+                />
+              </div>
             </div>
           )
         })}
