@@ -1,6 +1,7 @@
 import ApiHost from '@/modules/api-host'
 import { GetPostById } from '@payw/eodiro-one-api/api/one/scheme'
-import { useState } from 'react'
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
+import { useRef, useState } from 'react'
 import ImageViewer from '../ImageViewer'
 import './style.scss'
 
@@ -13,6 +14,7 @@ export const PostViewerFileContainer: React.FC<PostViewerFileContainerProps> = (
 ) => {
   const [isImageViewerOpen, setIsImageViewerOpen] = useState(false)
   const [initialImageIndex, setInitialImageIndex] = useState(0)
+  const imageViewerWrapper = useRef<HTMLDivElement>(null)
 
   const imageFiles = props.files.filter((file) =>
     file.mimeType.startsWith('image/')
@@ -32,6 +34,7 @@ export const PostViewerFileContainer: React.FC<PostViewerFileContainerProps> = (
               className="image-container"
               key={image.fileId}
               onClick={() => {
+                disableBodyScroll(imageViewerWrapper.current)
                 setInitialImageIndex(i)
                 setIsImageViewerOpen(true)
               }}
@@ -43,6 +46,7 @@ export const PostViewerFileContainer: React.FC<PostViewerFileContainerProps> = (
       </div>
 
       <div
+        ref={imageViewerWrapper}
         style={{
           visibility: isImageViewerOpen ? 'visible' : 'hidden',
         }}
@@ -51,6 +55,7 @@ export const PostViewerFileContainer: React.FC<PostViewerFileContainerProps> = (
           srcs={imageFiles.map((image) => ApiHost.getHost(true) + image.path)}
           close={() => {
             setIsImageViewerOpen(false)
+            enableBodyScroll(imageViewerWrapper.current)
           }}
           initialIndex={initialImageIndex}
         />
