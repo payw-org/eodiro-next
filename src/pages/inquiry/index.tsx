@@ -20,7 +20,7 @@ const InquiryPage: EodiroPage<InquiryProps> = ({ inquiries }) => {
 
   const inquiriesContainerRef = useRef<HTMLDivElement>(null)
   async function loadMore(): Promise<boolean> {
-    const items = await getState<InquiryData[]>(setItems)
+    const items = getState(setItems)
 
     const moreInquiries = await InquiryApi.inquiries(items.length)
 
