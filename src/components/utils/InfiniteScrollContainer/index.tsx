@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react'
+import getState from '@/modules/get-state'
+import React, { useEffect, useRef, useState } from 'react'
 import './style.scss'
 
 type InfiniteScrollContainerProps = {
@@ -9,23 +10,26 @@ const InfiniteScrollContainer: React.FC<InfiniteScrollContainerProps> = (
   props
 ) => {
   const bodyContentBottomRef = useRef<HTMLDivElement>(null)
-  let isLoading = false
-  let noMore = false
+  const [, setIsLoading] = useState(false)
+  const [, setNoMore] = useState(false)
 
   function isReachBottom(ref: React.MutableRefObject<HTMLElement>): boolean {
     return window.innerHeight < ref.current.getBoundingClientRect().bottom
   }
 
   async function processStrategy(): Promise<void> {
+    const isLoading = getState(setIsLoading)
+    const noMore = getState(setNoMore)
+
     if (noMore) return
     if (isLoading) return
 
-    isLoading = true
+    setIsLoading(true)
     document.querySelector('.loading-indicator').classList.add('processing')
 
     const shouldProcessAgain = await props.strategy()
 
-    isLoading = false
+    setIsLoading(false)
 
     setTimeout(() => {
       document
@@ -34,7 +38,7 @@ const InfiniteScrollContainer: React.FC<InfiniteScrollContainerProps> = (
     }, 700)
 
     if (shouldProcessAgain === false) {
-      noMore = true
+      setNoMore(true)
       return
     }
 
@@ -57,6 +61,11 @@ const InfiniteScrollContainer: React.FC<InfiniteScrollContainerProps> = (
 
     observer.observe(bodyContentBottomRef.current)
   }, [])
+
+  // Reset noMore flag when the strategy changes
+  useEffect(() => {
+    setNoMore(false)
+  }, [props.strategy])
 
   return (
     <div className="infinite-scroll-container">
