@@ -4,7 +4,10 @@ import './Button.scss'
 
 type ButtonProps = {
   className?: string
-  label: string | JSX.Element
+  /**
+   * @deprecated Pass children instead
+   */
+  label?: string | JSX.Element
   full?: boolean
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   disabled?: boolean
@@ -33,6 +36,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
       disabled={props.disabled}
     >
       {props.label}
+      {props.children}
     </button>
   )
 }
