@@ -91,7 +91,10 @@ const NewComment: React.FC = () => {
         onKeyUp={async (e): Promise<void> => {
           if (e.key !== 'Enter') return
 
-          setValue('')
+          e.preventDefault()
+
+          // Blur input
+          inputRef.current.blur()
 
           const uploadPayload = await oneAPIClient(ApiHost.getHost(), {
             action: 'uploadComment',
@@ -111,8 +114,8 @@ const NewComment: React.FC = () => {
 
           // Upload success
 
-          // Blur input
-          inputRef.current.blur()
+          // Reset the input value
+          setValue('')
 
           // Refresh recent comments
           const newCommentsPyld = await oneAPIClient(ApiHost.getHost(), {
