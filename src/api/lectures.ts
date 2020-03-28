@@ -1,8 +1,7 @@
 import ApiHost from '@/modules/api-host'
 import getSemester from '@/modules/get-semester'
 import useFetch from '@/modules/use-fetch'
-import { Campus, Semester } from '@/types'
-import { Lectures } from '@payw/cau-timetable-scraper-types'
+import { Campus, LecturesWithMajorCode, Semester } from '@/types'
 import dayjs from 'dayjs'
 import queryString from 'query-string'
 
@@ -13,7 +12,7 @@ export class LecturesApi {
     campus: Campus
     amount?: number
     offset: number
-  }): Promise<Lectures> {
+  }): Promise<LecturesWithMajorCode> {
     const now = dayjs()
     const year = options?.year || now.year()
     const semeseter = encodeURIComponent(options?.semeseter || getSemester())
@@ -21,7 +20,7 @@ export class LecturesApi {
     const amount = options.amount
     const offset = options.offset
 
-    const [err, data] = await useFetch<Lectures>(
+    const [err, data] = await useFetch<LecturesWithMajorCode>(
       ApiHost.getHost() +
         `/lectures/${year}/${semeseter}/${campus}/list?` +
         queryString.stringify({
@@ -42,7 +41,7 @@ export class LecturesApi {
       amount?: number
       offset: number
     }
-  ): Promise<Lectures> {
+  ): Promise<LecturesWithMajorCode> {
     const now = dayjs()
     const year = options?.year || now.year()
     const semeseter = encodeURIComponent(options?.semeseter || getSemester())
@@ -51,7 +50,7 @@ export class LecturesApi {
     const amount = options.amount
     const offset = options.offset
 
-    const [err, data] = await useFetch<Lectures>(
+    const [err, data] = await useFetch<LecturesWithMajorCode>(
       ApiHost.getHost() +
         `/lectures/${year}/${semeseter}/${campus}/search?` +
         queryString.stringify({

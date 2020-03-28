@@ -4,15 +4,17 @@ import { ArrowBlock, LineInput, LineInputOnChangeHook } from '@/components/ui'
 import InfiniteScrollContainer from '@/components/utils/InfiniteScrollContainer'
 import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
+import { getSyllabusUrl } from '@/modules/cau/get-syllabus-url'
 import getState from '@/modules/get-state'
-import { Lectures } from '@payw/cau-timetable-scraper-types'
+import { LecturesWithMajorCode } from '@/types'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
+import { useAuth } from '../_app'
 import './LecturesPage.scss'
 
 interface LecturesPageProps {
-  lectures: Lectures
+  lectures: LecturesWithMajorCode
 }
 
 const LecturesContent: React.FC<LecturesPageProps> = ({ lectures }) => {
@@ -21,6 +23,8 @@ const LecturesContent: React.FC<LecturesPageProps> = ({ lectures }) => {
   const [displayLectures, setDisplayLectures] = useState(lectures)
 
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>(null)
+
+  const { isSigned } = useAuth()
 
   useEffect(() => {
     setDisplayLectures(defaultLectures)
@@ -53,11 +57,11 @@ const LecturesContent: React.FC<LecturesPageProps> = ({ lectures }) => {
       return false
     }
 
-    const searchQuery = await getState<string>(setSearchQuery)
-    const defaultLectures = await getState<Lectures>(setDefaultLectures)
-    const displayLectures = await getState<Lectures>(setDisplayLectures)
+    const searchQuery = getState(setSearchQuery)
+    const defaultLectures = getState(setDefaultLectures)
+    const displayLectures = getState(setDisplayLectures)
 
-    let moreLectures: Lectures
+    let moreLectures: LecturesWithMajorCode
 
     if (searchQuery.length === 0) {
       // Load more default lectures
@@ -91,7 +95,7 @@ const LecturesContent: React.FC<LecturesPageProps> = ({ lectures }) => {
             value={searchQuery}
             setValue={setSearchQuery}
             className="search-field"
-            placeholder="강의명, 학과, 교수, 강의실 등"
+            placeholder="강의명, 학과, 교수, 강의실, 과목코드"
             type="search"
             onChangeHook={onChange}
           />
@@ -135,6 +139,21 @@ const LecturesContent: React.FC<LecturesPageProps> = ({ lectures }) => {
                             </div>
                           </div>
                         )}
+
+                        <a
+                          href={isSigned ? getSyllabusUrl(lecture) : undefined}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="syllabus"
+                          onClick={() => {
+                            if (!isSigned) {
+                              alert('로그인이 필요합니다.')
+                            }
+                          }}
+                        >
+                          <i className="icon octicon octicon-file" />
+                          강의 계획서
+                        </a>
                       </div>
                     </ArrowBlock>
                   )
@@ -156,7 +175,7 @@ const LecturesPage: NextPage<LecturesPageProps> = (props) => {
       <Head>
         <title>강의 검색</title>
       </Head>
-      <Body pageTitle="강의 검색">
+      <Body pageTitle="강의 검색" bodyClassName="lectures-body">
         <LecturesContent {...props} />
       </Body>
     </>
