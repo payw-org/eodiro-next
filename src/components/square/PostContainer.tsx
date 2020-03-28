@@ -98,7 +98,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
   }, [])
 
   async function loadMore(): Promise<boolean> {
-    const posts = await getState(setPosts)
+    const posts = getState(setPosts)
     const newPosts = await oneAPIClient(ApiHost.getHost(), {
       action: 'fetchPostsOfBoard',
       data: {
@@ -117,7 +117,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
   }
 
   async function loadNew(): Promise<void> {
-    const posts = await getState(setPosts)
+    const posts = getState(setPosts)
     if (posts && posts.length > 0) {
       const payload = await oneAPIClient(ApiHost.getHost(), {
         action: 'fetchRecentPostsOfBoard',
