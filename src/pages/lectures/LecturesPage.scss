@@ -2,7 +2,7 @@
 
 #eodiro-lectures {
   .page-app-title {
-    color: $eodiro-green-1;
+    color: $eodiro-primary-color;
   }
 
   .search-field {
@@ -37,7 +37,7 @@
 
           .code {
             margin-left: s(3);
-            color: $eodiro-green-2;
+            color: $eodiro-primary-color;
             font-size: b(1);
             white-space: nowrap;
           }
@@ -63,7 +63,7 @@
 
             h3 {
               font-size: b(3);
-              color: $eodiro-green-2;
+              color: $eodiro-primary-color;
               line-height: 1;
             }
 

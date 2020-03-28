@@ -27,7 +27,7 @@ type LineInputProps = {
 const IconField = React.memo(() => {
   return (
     <div className="magnifier-icon-wrapper">
-      <Magnifier className="icon" fill={EodiroColors.green1} />
+      <Magnifier className="icon" fill={EodiroColors.primary} />
     </div>
   )
 })
