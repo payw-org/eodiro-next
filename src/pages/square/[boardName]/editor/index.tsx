@@ -1,3 +1,5 @@
+// TODO Replace updload and edit with universal savePost One API
+
 import { Tokens } from '@/api'
 import { NavTitleDispatchContext } from '@/components/Navigation'
 import { Spinner } from '@/components/Spinner'
@@ -8,6 +10,7 @@ import Body from '@/layouts/BaseLayout/Body'
 import ApiHost from '@/modules/api-host'
 import mergeClassName from '@/modules/merge-class-name'
 import { redirect } from '@/modules/server/redirect'
+import { useAuth } from '@/pages/_app'
 import { oneAPIClient } from '@payw/eodiro-one-api'
 import { PostType } from '@payw/eodiro-one-api/database/models/post'
 import Axios from 'axios'
@@ -42,6 +45,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
   const mode = title.length === 0 ? 'new' : 'edit'
   const isEditMode = mode === 'edit'
   const router = useRouter()
+  const auth = useAuth()
 
   const titleRef = useRef<HTMLTextAreaElement>(null)
   const titleShadowRef = useRef<HTMLTextAreaElement>(null)
@@ -103,28 +107,29 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
 
   // Upload or edit post
   async function uploadPost(): Promise<void> {
-    // Editing mode
-    if (mode === 'edit') {
-      const { err } = await oneAPIClient(ApiHost.getHost(), {
-        action: 'editPost',
-        data: {
-          accessToken: (await Tokens.get()).accessToken,
-          postId,
-          title: titleRef.current.value,
-          body: bodyRef.current.value,
-          fileIds: filesState
-            .filter((fileState) => {
-              return fileState.status === 'uploaded'
-            })
-            .map((fileState) => fileState.fileId),
-        },
-      })
+    // Upload post first
+    const { err, data: inserId } = await oneAPIClient(ApiHost.getHost(), {
+      action: 'savePost',
+      data: {
+        accessToken: auth.tokens.accessToken,
+        boardId: boardId,
+        title: titleRef.current.value,
+        body: bodyRef.current.value,
+        fileIds: filesState
+          .filter((fileState) => {
+            return fileState.status === 'uploaded'
+          })
+          .map((fileState) => fileState.fileId),
+        update: mode === 'edit',
+        postId,
+      },
+    })
 
-      // Completely edited without error
-      if (!err) {
-        alert('수정되었습니다.')
+    if (!err) {
+      alert(mode === 'edit' ? '수정되었습니다.' : '업로드되었습니다.')
 
-        // Update cached posts
+      // If edit mode, update the cached posts
+      if (mode === 'edit') {
         const cached: PostType[] = JSON.parse(sessionStorage.getItem('sbpd'))
         // If no cached data, no update
         if (cached) {
@@ -141,53 +146,23 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
             sessionStorage.setItem('sbpd', JSON.stringify(cached))
           }
         }
-
-        // Detach preventing event before redirection
-        window.onbeforeunload = undefined
-        location.replace(`/square/${router.query.boardName}/${postId}`)
-        return
       }
 
-      if (err === 'No Title') {
-        alert('제목을 입력해주세요.')
-        titleRef.current.focus()
-      } else if (err === 'No Body') {
-        alert('내용을 입력해주세요.')
-        bodyRef.current.focus()
-      }
-    } else if (mode === 'new') {
-      // Upload a new post
-      const { err, data } = await oneAPIClient(ApiHost.getHost(), {
-        action: 'uploadPost',
-        data: {
-          boardID: boardId,
-          title: titleRef.current.value,
-          body: bodyRef.current.value,
-          accessToken: (await Tokens.get()).accessToken,
-          fileIds: filesState
-            .filter((fileState) => {
-              return fileState.status === 'uploaded'
-            })
-            .map((fileState) => fileState.fileId),
-        },
-      })
-
-      if (!err) {
-        alert('업로드되었습니다.')
-        // Detach preventing event before redirection
-        window.onbeforeunload = undefined
-        location.replace(`/square/${router.query.boardName}/${data}`)
-        return
-      }
-
-      if (err === 'No Title') {
-        alert('제목을 입력해주세요.')
-        titleRef.current.focus()
-      } else if (err === 'No Body') {
-        alert('내용을 입력해주세요.')
-        bodyRef.current.focus()
-      }
+      // Detach preventing event before redirection
+      window.onbeforeunload = undefined
+      location.replace(`/square/${router.query.boardName}/${postId || inserId}`)
+      return
     }
+
+    if (err === 'No Title') {
+      alert('제목을 입력해주세요.')
+      titleRef.current.focus()
+    } else if (err === 'No Body') {
+      alert('내용을 입력해주세요.')
+      bodyRef.current.focus()
+    }
+
+    return
   }
 
   return (
@@ -256,6 +231,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
             </button>
             <h2 className="header">파일</h2>
 
+            {/* File input */}
             <input
               type="file"
               className="input-file"
@@ -291,11 +267,11 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
                     },
                   })
                     .then((res) => {
-                      const { data } = res
+                      const result = res.data.result[0]
 
                       // Error occurs
-                      if (data.err) {
-                        if (data.err === 'File Too Large') {
+                      if (result.err) {
+                        if (result.err === 'File Too Large') {
                           setFilesState((prevState) => {
                             const newState = [...prevState]
                             newState[index].status = 'failed'
@@ -304,7 +280,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
                             return newState
                           })
                           return
-                        } else if (data.err === 'Unsupported MIME Type') {
+                        } else if (result.err === 'Unsupported MIME Type') {
                           setFilesState((prevState) => {
                             const newState = [...prevState]
                             newState[index].status = 'failed'
@@ -320,8 +296,8 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
                           const newState = [...prevState]
                           // Copy the information to the files state
                           newState[index].status = 'uploaded'
-                          newState[index].path = data.path
-                          newState[index].fileId = data.fileId
+                          newState[index].path = result.path
+                          newState[index].fileId = result.fileId
                           return newState
                         })
                       }
@@ -377,7 +353,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
                               })
                             }}
                           />
-                          <div className="d-flex">
+                          <div>
                             {/* Display image file if possible */}
                             {fileState.mimeType.startsWith('image/') &&
                               fileState.status === 'uploaded' &&
@@ -465,12 +441,14 @@ export const getServerSideProps: GetServerSideProps<NewPostPageProps> = async ({
   req,
   res,
 }) => {
-  const postId = Number(query['post_id'])
   let title = ''
   let body = ''
   let files = null
 
-  // Edit mode
+  // Check if there is auto saved version
+
+  // Edit mode when post ID is given as URL query
+  const postId = Number(query['post_id']) || null
   if (postId) {
     const { err, data } = await oneAPIClient(ApiHost.getHost(), {
       action: 'getPostById',
@@ -494,7 +472,6 @@ export const getServerSideProps: GetServerSideProps<NewPostPageProps> = async ({
           return file
         })
       : null
-    console.log(data)
   }
 
   // Get board ID
