@@ -1,12 +1,24 @@
 # Changelog
 
+## v3.5.0
+
+### Features
+
+- Post image viewer
+
 ## v3.4.0
 
 ### Features
 
 - You can now view the syllabus of each lecture (sign in required)
 
-## v3.0.0 ~ v3.4.0
+## v3.0.0 ~ < v3.4.0
+
+### Highlights
+
+- All new design
+- Rewrite the entire source codes from the ground up using React and Next.js
+- Integrate popular and much stable modules instead of creating our owns
 
 ### Features
 
@@ -37,14 +49,6 @@
 - Write a post
 - Upload and view any files
 - You can leave comments
-
-## v3.0.0
-
-### Highlights
-
-- All new design
-- Rewrite the source codes from the ground up using React and Next.js
-- Integrate popular and much stable modules instead of creating our owns
 
 ---
 
