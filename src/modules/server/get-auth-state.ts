@@ -1,9 +1,7 @@
 import { AuthApi, Tokens } from '@/api'
-import dayjs from 'dayjs'
 import { IncomingMessage, ServerResponse } from 'http'
 import ApiHost from '../api-host'
 import eodiroAxios from '../eodiro-axios'
-import EodiroHttpCookie from '../eodiro-http-cookie'
 
 type AuthState = {
   isSigned: boolean
@@ -34,10 +32,13 @@ export async function getAuthState(
     const authCheck = await AuthApi.isSigned(req)
 
     if (authCheck.isSigned) {
+      // Token is signed and available to be used with
       authState.isSigned = authCheck.isSigned
       authState.isAdmin = authCheck.isAdmin
       authState.userId = authCheck.userId
     } else {
+      // The access token has been expired and
+      // needs to be refresehd with the refresh token
       const newTokens = await AuthApi.refresh(req)
 
       if (newTokens) {
@@ -55,30 +56,6 @@ export async function getAuthState(
           authState.isAdmin = authCheck.isAdmin
           authState.userId = authCheck.userId
         }
-      } else {
-        // Clear tokens
-        await EodiroHttpCookie.set(
-          [
-            {
-              expires: dayjs('1970-01-01')
-                .toDate()
-                .toUTCString(),
-              name: 'accessToken',
-              value: '',
-            },
-            {
-              expires: dayjs('1970-01-01')
-                .toDate()
-                .toUTCString(),
-              name: 'refreshToken',
-              value: '',
-            },
-          ],
-          {
-            req,
-            res,
-          }
-        )
       }
     }
   }
