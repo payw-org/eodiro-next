@@ -19,7 +19,7 @@
     "update": "git reset --hard && git fetch --prune && npm run checkout-latest && npm install && npm run pm2:reboot"
   },
   "dependencies": {
-    "@payw/eodiro-one-api": "^1.6.0",
+    "@payw/eodiro-one-api": "^1.6.1",
     "@popmotion/popcorn": "^0.4.4",
     "@types/body-scroll-lock": "^2.6.1",
     "axios": "^0.19.2",
@@ -29,7 +29,7 @@
     "css-element-queries": "^1.2.3",
     "dayjs": "^1.8.23",
     "express": "^4.17.1",
-    "framer-motion": "^1.10.2",
+    "framer-motion": "^1.10.3",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.15",
     "next": "9.3.4",
