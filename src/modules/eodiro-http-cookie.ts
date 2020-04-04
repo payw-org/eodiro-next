@@ -54,7 +54,7 @@ export default class EodiroHttpCookie {
 
     if (typeof window === 'undefined') {
       throw new Error(
-        `Don't use eodiro http cookie on server without passing http object`
+        `Don't use eodiro http cookie on server side without passing http object`
       )
     }
 
@@ -79,7 +79,7 @@ export default class EodiroHttpCookie {
 
     if (typeof window === 'undefined') {
       throw new Error(
-        `Don't use eodiro http cookie on server without passing request`
+        `Don't use eodiro http cookie on server side without passing request`
       )
     }
 
