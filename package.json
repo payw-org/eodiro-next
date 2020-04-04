@@ -19,7 +19,7 @@
     "update": "git reset --hard && git fetch --prune && npm run checkout-latest && npm install && npm run pm2:reboot"
   },
   "dependencies": {
-    "@payw/eodiro-one-api": "^1.6.1",
+    "@payw/eodiro-one-api": "^1.6.2",
     "@popmotion/popcorn": "^0.4.4",
     "@types/body-scroll-lock": "^2.6.1",
     "axios": "^0.19.2",
@@ -44,8 +44,8 @@
     "@payw/cau-timetable-scraper-types": "^2.1.1",
     "@types/express": "^4.17.4",
     "@types/lodash": "^4.14.149",
-    "@types/node": "^13.9.8",
-    "@types/react": "^16.9.31",
+    "@types/node": "^13.11.0",
+    "@types/react": "^16.9.32",
     "@types/swiper": "^5.2.1",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
