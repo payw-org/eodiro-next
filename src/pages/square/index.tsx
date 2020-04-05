@@ -61,8 +61,6 @@ export const getServerSideProps: GetServerSideProps<SquareMainPageProps> = async
     },
   })
 
-  console.log(freeBoardPosts)
-
   // 취업 후기
   const empReviews = await oneAPIClient(ApiHost.getHost(), {
     action: 'fetchPostsOfBoard',
