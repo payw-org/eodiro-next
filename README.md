@@ -45,7 +45,7 @@ npm start --useDevApi
 
 **`getAuthState({ req, res })`**
 
-On server side, you can check the user's authentication status by using this method. It always returns the latest .information by validating from the eodiro API server.
+On server side, you can check the user's authentication status by using this method. It always returns the latest information by validating from the eodiro API server.
 
 **`useAuth()`**
 
