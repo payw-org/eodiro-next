@@ -37,12 +37,10 @@
     }
 
     .delete {
-      font-size: 0.9rem;
-    }
-
-    .delete {
+      font-size: 1rem;
       color: $eodiro-primary-color;
       margin-left: 0.5rem;
+      display: flex;
     }
 
     .body {

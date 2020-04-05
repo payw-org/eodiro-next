@@ -10,7 +10,7 @@ import _ from 'lodash'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { createContext, useContext, useRef, useState } from 'react'
-import './style.scss'
+import './Comments.scss'
 
 const FriendlyTime = dynamic(() => import('@/components/utils/FriendlyTime'), {
   ssr: false,
