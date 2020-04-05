@@ -164,7 +164,6 @@
 
     .information {
       @include elm-fill-distinct;
-      @include bordered;
       padding: 1rem;
       @include border-radius-outer;
 

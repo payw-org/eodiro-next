@@ -4,7 +4,6 @@
 
 @mixin block-style {
   @include elm-fill;
-  @include bordered;
   @include rounded;
   position: relative;
   display: flex;

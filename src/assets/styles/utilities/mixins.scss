@@ -198,11 +198,10 @@ $border-radius-inner: r(2);
 }
 
 @mixin input-style {
-  @include bordered;
   @include border-radius-outer;
   @include text-color;
   @include elm-fill;
-  font-size: b(3);
+  font-size: 1rem;
   padding: s(3) s(4);
   height: $btn-height;
   appearance: none;

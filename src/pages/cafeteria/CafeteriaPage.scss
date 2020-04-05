@@ -19,7 +19,6 @@
       line-height: 1;
       margin: 0 s(5);
       @include elm-fill;
-      @include bordered;
       height: 2.5rem;
       flex: 1;
       display: flex;
@@ -31,12 +30,12 @@
 
     .date-change-btn {
       @include elm-fill;
-      @include bordered;
       @include clickable;
       $btn-size: 2.5rem;
+      font-size: 1.2rem;
       width: $btn-size;
       height: $btn-size;
-      border-radius: 50px;
+      @include border-radius-outer;
       display: flex;
       align-items: center;
       justify-content: center;

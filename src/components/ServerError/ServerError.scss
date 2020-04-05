@@ -2,7 +2,6 @@
 
 .server-error {
   @include elm-fill;
-  @include bordered;
   @include rounded;
   padding: s(6);
 
