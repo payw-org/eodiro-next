@@ -10,7 +10,7 @@ import Grid from '@/layouts/Grid'
 import { ColorIcon } from '@/types'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './HomePage.scss'
 
 type HomeFeatureBoxProps = {
@@ -49,17 +49,17 @@ const Emoji: React.FC = () => {
   ]
   const [emojiIndex, setEmojiIndex] = useState(0)
 
-  useEffect(() => {
-    let i = emojiIndex
-    const timeout = setInterval(() => {
-      i = (i + 1) % emojiList.length
-      setEmojiIndex(i)
-    }, 500)
+  // useEffect(() => {
+  //   let i = emojiIndex
+  //   const timeout = setInterval(() => {
+  //     i = (i + 1) % emojiList.length
+  //     setEmojiIndex(i)
+  //   }, 500)
 
-    return (): void => {
-      clearTimeout(timeout)
-    }
-  }, [])
+  //   return (): void => {
+  //     clearTimeout(timeout)
+  //   }
+  // }, [])
 
   return <span className="emoji">{emojiList[emojiIndex]}</span>
 }
@@ -74,7 +74,7 @@ const HomePage: NextPage = () => {
         <div id="eodiro-home">
           <h1 className="header">
             <div className="text-wrapper">
-              <span className="name">어디로</span> <Emoji />
+              <span className="name">어디로</span>
             </div>
           </h1>
           <p className="manifesto">

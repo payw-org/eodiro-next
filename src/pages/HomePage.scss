@@ -44,15 +44,16 @@
     }
 
     .name {
-      @include text-color;
+      // @include text-color;
+      color: $eodiro-primary-color;
       font-weight: 700;
-      background-image: linear-gradient(
-        to bottom right,
-        $eodiro-primary-color,
-        $eodiro-yellow-1
-      );
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+      // background-image: linear-gradient(
+      //   to bottom right,
+      //   $eodiro-primary-color,
+      //   $eodiro-yellow-1
+      // );
+      // background-clip: text;
+      // -webkit-text-fill-color: transparent;
     }
   }
 
