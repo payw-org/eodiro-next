@@ -1,3 +1,7 @@
+/**
+ * @deprecated
+ */
+
 import fetch from 'isomorphic-unfetch'
 
 type UseFetchError = any
