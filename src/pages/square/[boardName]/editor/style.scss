@@ -135,7 +135,6 @@
 
       .file {
         @include elm-fill-distinct;
-        @include bordered;
         padding: 0.7rem;
         @include border-radius-outer;
         margin-bottom: 0.7rem;
