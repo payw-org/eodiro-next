@@ -1,4 +1,4 @@
-import mergeClassName from '@/modules/merge-class-name'
+import mergeClassNames from '@/modules/merge-class-name'
 import Head from 'next/head'
 import React, { FC } from 'react'
 import Header, { HeaderProps } from './Header'
@@ -25,7 +25,7 @@ const Body: FC<BodyProps> = (props) => {
         <title>{props.pageTitle}</title>
       </Head>
       <div
-        className={mergeClassName(
+        className={mergeClassNames(
           'body-content',
           bodyClassName,
           hasTopGap && 'top-gap',

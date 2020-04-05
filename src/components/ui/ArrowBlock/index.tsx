@@ -1,5 +1,5 @@
 import { ArrowIcon } from '@/components/icons'
-import mergeClassName from '@/modules/merge-class-name'
+import mergeClassNames from '@/modules/merge-class-name'
 import React from 'react'
 import './ArrowBlock.scss'
 
@@ -19,7 +19,7 @@ export const ArrowBlock: React.FC<ArrowBlockProps> = ({
 }) => {
   return (
     <div
-      className={mergeClassName(
+      className={mergeClassNames(
         'arrow-block',
         className,
         !flat && 'unflat',

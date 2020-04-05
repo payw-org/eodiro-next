@@ -1,6 +1,6 @@
 import { VerticalThreeDotsIcon } from '@/components/icons'
 import EodiroLogo from '@/components/icons/EodiroLogo'
-import mergeClassName from '@/modules/merge-class-name'
+import mergeClassNames from '@/modules/merge-class-name'
 import { AuthContext } from '@/pages/_app'
 import React, { useContext } from 'react'
 import './Navigation.scss'
@@ -22,7 +22,7 @@ type NavItemProps = {
 
 const NavItem: React.FC<NavItemProps> = ({ to, title, className }) => {
   return (
-    <a className={mergeClassName('en-menu-link', className)} href={to}>
+    <a className={mergeClassNames('en-menu-link', className)} href={to}>
       <li className="en-menu-item">{title}</li>
     </a>
   )
@@ -34,7 +34,7 @@ const BgBar: React.FC = () => {
 
   return (
     <div
-      className={mergeClassName(
+      className={mergeClassNames(
         'en-bar',
         (isScrolled || menuOpened) && 'scrolled'
       )}
@@ -47,7 +47,7 @@ const PageAppTitle: React.FC = () => {
   const title = useContext(NavTitleStateContext)
 
   return (
-    <h1 className={mergeClassName('page-app-title', !hidden && 'show')}>
+    <h1 className={mergeClassNames('page-app-title', !hidden && 'show')}>
       {title}
     </h1>
   )
@@ -59,7 +59,7 @@ const NavMenus: React.FC = () => {
 
   return (
     <ul
-      className={mergeClassName(
+      className={mergeClassNames(
         'en-menus-container',
         menuOpened ? 'opened' : ''
       )}

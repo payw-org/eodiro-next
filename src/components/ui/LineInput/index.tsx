@@ -1,5 +1,5 @@
 import { Magnifier } from '@/components/icons'
-import mergeClassName from '@/modules/merge-class-name'
+import mergeClassNames from '@/modules/merge-class-name'
 import EodiroColors from '@/modules/styles/EodiroColors'
 import React, { useState } from 'react'
 import './LineInput.scss'
@@ -57,7 +57,7 @@ export const LineInput = React.memo(
       const [throttleTimeout, setThrottleTimeout] = useState<number>(null)
 
       return (
-        <div className={mergeClassName('eodiro-line-input', className)}>
+        <div className={mergeClassNames('eodiro-line-input', className)}>
           <input
             ref={ref}
             value={value}
@@ -65,7 +65,7 @@ export const LineInput = React.memo(
             type={type === 'search' ? 'text' : type}
             spellCheck="false"
             placeholder={placeholder}
-            className={mergeClassName(
+            className={mergeClassNames(
               'li-field',
               type === 'search' && 'search',
               alignCenter && 'center'

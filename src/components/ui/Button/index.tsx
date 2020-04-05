@@ -1,4 +1,4 @@
-import mergeClassName from '@/modules/merge-class-name'
+import mergeClassNames from '@/modules/merge-class-name'
 import React from 'react'
 import './Button.scss'
 
@@ -26,7 +26,7 @@ type ButtonProps = {
 export const Button: React.FC<ButtonProps> = (props) => {
   return (
     <button
-      className={mergeClassName(
+      className={mergeClassNames(
         'eodiro-btn',
         props.className,
         props.full && 'full'

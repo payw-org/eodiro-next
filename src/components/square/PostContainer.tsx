@@ -3,7 +3,7 @@ import { pathIds } from '@/config/paths'
 import { visualizeBody } from '@/layouts/BaseLayout/Body'
 import ApiHost from '@/modules/api-host'
 import getState from '@/modules/get-state'
-import mergeClassName from '@/modules/merge-class-name'
+import mergeClassNames from '@/modules/merge-class-name'
 import Time from '@/modules/time'
 import { oneAPIClient } from '@payw/eodiro-one-api'
 import { PostType } from '@payw/eodiro-one-api/database/models/post'
@@ -25,7 +25,7 @@ const PostItem: React.FC<{
         sessionStorage.setItem('sbsp', window.scrollY?.toString())
       }}
     >
-      <div className={mergeClassName('post')}>
+      <div className={mergeClassNames('post')}>
         <div>
           <p className="title">{post.title}</p>
         </div>
@@ -142,7 +142,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
 
   return (
     <div
-      className={mergeClassName('posts-container', isMobile && 'mobile')}
+      className={mergeClassNames('posts-container', isMobile && 'mobile')}
       ref={postContainerRef}
     >
       <InfiniteScrollContainer strategy={loadMore}>

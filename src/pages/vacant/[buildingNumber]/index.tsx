@@ -4,7 +4,7 @@ import ServerError from '@/components/ServerError'
 import { ArrowBlock } from '@/components/ui'
 import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
-import mergeClassName from '@/modules/merge-class-name'
+import mergeClassNames from '@/modules/merge-class-name'
 import dayjs from 'dayjs'
 import { NextPage } from 'next'
 import Head from 'next/head'
@@ -75,7 +75,7 @@ const VacantClassroomsPage: NextPage<VacantClassroomsPageProps> = ({
                   <ArrowBlock
                     noArrow
                     key={info.classroom_number}
-                    className={mergeClassName(
+                    className={mergeClassNames(
                       'classroom-info-container',
                       inClass ? 'in-class' : 'vacant'
                     )}

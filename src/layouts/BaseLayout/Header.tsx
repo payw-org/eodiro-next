@@ -1,9 +1,11 @@
+// TODO: Pass header reference and dynamically load title sentinels
+
 import {
   NavHiddenDispatchContext,
   NavScrollDispatchContext,
   NavTitleDispatchContext,
 } from '@/components/Navigation'
-import mergeClassName from '@/modules/merge-class-name'
+import mergeClassNames from '@/modules/merge-class-name'
 import React, { FC, useContext, useEffect, useRef } from 'react'
 
 export type HeaderProps = {
@@ -59,7 +61,7 @@ const Header: FC<HeaderProps> = ({
 
   return (
     <h1
-      className={mergeClassName(
+      className={mergeClassNames(
         'page-app-title',
         titleAlign === 'center' && 'center',
         titleHidden && 'hidden'
