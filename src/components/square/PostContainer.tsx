@@ -11,6 +11,7 @@ import { ResizeSensor } from 'css-element-queries'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
+import { Spinner } from '../global/Spinner'
 
 // Post item component (memoized)
 const PostItem: React.FC<{
@@ -136,8 +137,14 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
 
   // Poll to update new data
   useEffect(() => {
+    // Initial refresh
     loadNew()
-    setInterval(loadNew, 3000)
+
+    const refreshInterval = setInterval(loadNew, 3000)
+
+    return () => {
+      clearInterval(refreshInterval)
+    }
   }, [])
 
   return (
@@ -146,9 +153,15 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
       ref={postContainerRef}
     >
       <InfiniteScrollContainer strategy={loadMore}>
-        {posts.map((post) => {
-          return <PostItem key={post.id} boardName={boardName} post={post} />
-        })}
+        {posts.length > 0 ? (
+          posts.map((post) => {
+            return <PostItem key={post.id} boardName={boardName} post={post} />
+          })
+        ) : (
+          <div className="d-flex justify-content-center">
+            <Spinner />
+          </div>
+        )}
       </InfiniteScrollContainer>
     </div>
   )
