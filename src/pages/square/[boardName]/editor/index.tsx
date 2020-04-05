@@ -1,14 +1,14 @@
 // TODO Replace updload and edit with universal savePost One API
 
 import { Tokens } from '@/api'
+import { Spinner } from '@/components/global/Spinner'
 import { NavTitleDispatchContext } from '@/components/Navigation'
-import { Spinner } from '@/components/Spinner'
 import NoFooter from '@/components/utils/NoFooter'
 import WhiteBody from '@/components/utils/WhiteBody'
 import { availableMimeTypes } from '@/config/available-mime-types'
 import Body from '@/layouts/BaseLayout/Body'
 import ApiHost from '@/modules/api-host'
-import mergeClassName from '@/modules/merge-class-name'
+import mergeClassNames from '@/modules/merge-class-name'
 import { redirect } from '@/modules/server/redirect'
 import { useAuth } from '@/pages/_app'
 import { oneAPIClient } from '@payw/eodiro-one-api'
@@ -373,7 +373,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
                             )}
                             {!fileState.mimeType.startsWith('image/') && (
                               <span
-                                className={mergeClassName(
+                                className={mergeClassNames(
                                   'file-name',
                                   fileState.errMsg && 'failed'
                                 )}
