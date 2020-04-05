@@ -31,7 +31,7 @@ npm run dev --useProdApi
 
 ### Using dev API (localhost)
 
-By default, `npm run dev` connects to local dev API server and `npm start` tries to connect to the real server(https://eodiro.com). However, sometimes you need to test the production-ready, built version of client application with the dev API. To retrieve this, simply pass an argument similar to the one above
+By default, `npm run dev` connects to local dev API server and `npm start` tries to connect to the real server(https://eodiro.com). However, sometimes you need to test the production-ready, built version of client application with the dev API. To achieve this, simply pass an argument similar to the one above
 
 ```zsh
 npm start --useDevApi
@@ -49,7 +49,7 @@ On server side, you can check the user's authentication status by using this met
 
 **`useAuth()`**
 
-Inside React components, you can achieve the same auth information with this hook. Although either you can use `getAuthState` on client side, you should not use it because the `AuthContext` that `useAuth` returns is already set by the same function internally.
+Inside React components, you can retrieve the same auth information with this hook. Although either you can use `getAuthState` on client side, you should not use it because the `AuthContext` that `useAuth` returns is already set by the same function internally.
 
 ### JSX className
 
