@@ -59,7 +59,7 @@ const CommentItem: React.FC<{
                 }
               }}
             >
-              삭제
+              <i className="octicon octicon-trashcan" />
             </button>
           </div>
         )}

@@ -86,10 +86,12 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
               <a
                 href={`/square/${boardName}/${pathIds.writePost}?post_id=${post.id}`}
               >
-                <button className="edit">수정</button>
+                <button className="edit">
+                  <i className="octicon octicon-pencil" />
+                </button>
               </a>
               <button className="delete" onClick={deletePost}>
-                삭제
+                <i className="octicon octicon-trashcan" />
               </button>
             </span>
           )}

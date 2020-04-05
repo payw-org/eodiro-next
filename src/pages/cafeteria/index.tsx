@@ -1,5 +1,4 @@
 import { CafeteriaApi, CafeteriaMenus } from '@/api'
-import { ArrowIcon } from '@/components/icons'
 import Information from '@/components/Information'
 import ServerError from '@/components/ServerError'
 import { ArrowBlock } from '@/components/ui'
@@ -85,7 +84,7 @@ const EodiroCafeteria: React.FC<{ menus: CafeteriaMenus }> = memo(
                   onClick={(): void => setNow(now.subtract(1, 'd'))}
                   onTouchStart={(e) => e.preventDefault()}
                 >
-                  <ArrowIcon direction="left" fill="#31a8ff" />
+                  <i className="octicon octicon-chevron-left" />
                 </button>
                 <p className="date">
                   {now.format('YYYY년 M월 D일')} ({Time.day(now.day())})
@@ -95,7 +94,7 @@ const EodiroCafeteria: React.FC<{ menus: CafeteriaMenus }> = memo(
                   onClick={(): void => setNow(now.add(1, 'd'))}
                   onTouchStart={(e) => e.preventDefault()}
                 >
-                  <ArrowIcon fill="#31a8ff" />
+                  <i className="octicon octicon-chevron-right" />
                 </button>
               </div>
 
