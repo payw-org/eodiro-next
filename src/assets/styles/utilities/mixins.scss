@@ -165,7 +165,7 @@ $border-color-dark: rgba(#fff, 0.17);
   }
 }
 
-$border-radius-outer: r(5);
+$border-radius-outer: 0.7rem;
 @mixin border-radius-outer {
   border-radius: $border-radius-outer;
 }
