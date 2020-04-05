@@ -71,8 +71,6 @@ export const getServerSideProps: GetServerSideProps<SquareMainPageProps> = async
     },
   })
 
-  console.log(empReviews)
-
   return {
     props: {
       freeBoardPosts,
