@@ -51,20 +51,24 @@ export default async function eodiroAxios<T = any>(
         config.headers = {}
       }
 
-      if (access && !accessToken) {
-        return [true, null, 401]
-      } else if (access) {
-        config.headers.accessToken = accessToken
+      if (access) {
+        if (!accessToken) {
+          return [true, null, 401]
+        } else {
+          config.headers.accessToken = accessToken
+        }
       }
 
       if (accessIfExist && accessToken !== undefined) {
         config.headers.accessToken = accessToken
       }
 
-      if (refresh && !refreshToken) {
-        return [true, null, 401]
-      } else if (refresh) {
-        config.headers.refreshToken = refreshToken
+      if (refresh) {
+        if (!refreshToken) {
+          return [true, null, 401]
+        } else {
+          config.headers.refreshToken = refreshToken
+        }
       }
     }
   }
