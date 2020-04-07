@@ -1,5 +1,5 @@
-import { VerticalThreeDotsIcon } from '@/components/icons'
-import EodiroLogo from '@/components/icons/EodiroLogo'
+import { VerticalThreeDotsIcon } from '@/components/global/icons'
+import EodiroLogo from '@/components/global/icons/EodiroLogo'
 import mergeClassNames from '@/modules/merge-class-name'
 import { AuthContext } from '@/pages/_app'
 import React, { useContext } from 'react'

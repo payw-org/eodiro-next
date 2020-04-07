@@ -1,5 +1,5 @@
 import { Tokens } from '@/api'
-import Information from '@/components/Information'
+import Information from '@/components/global/Information'
 import ApiHost from '@/modules/api-host'
 import { useAuth } from '@/pages/_app'
 import { Dispatcher } from '@/types/react-helper'

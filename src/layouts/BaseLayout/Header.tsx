@@ -4,7 +4,7 @@ import {
   NavHiddenDispatchContext,
   NavScrollDispatchContext,
   NavTitleDispatchContext,
-} from '@/components/Navigation'
+} from '@/components/global/Navigation'
 import mergeClassNames from '@/modules/merge-class-name'
 import React, { FC, useContext, useEffect, useRef } from 'react'
 

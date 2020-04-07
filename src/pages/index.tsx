@@ -4,7 +4,7 @@ import {
   OpensourceAppIcon,
   SquareAppIcon,
   VacantAppIcon,
-} from '@/components/icons'
+} from '@/components/global/icons'
 import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
 import { ColorIcon } from '@/types'

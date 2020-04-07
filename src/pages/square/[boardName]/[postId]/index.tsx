@@ -1,6 +1,6 @@
 import { Tokens } from '@/api'
-import Information from '@/components/Information'
-import RequireAuth from '@/components/RequireAuth'
+import Information from '@/components/global/Information'
+import RequireAuth from '@/components/global/RequireAuth'
 import Comments from '@/components/square/Comments'
 import { PostViewerFileContainer } from '@/components/square/PostViewerFileContainer'
 import WhiteBody from '@/components/utils/WhiteBody'

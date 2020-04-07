@@ -1,6 +1,6 @@
 import { VacantApi } from '@/api'
 import { VacantClassrooms } from '@/api/vacant'
-import ServerError from '@/components/ServerError'
+import ServerError from '@/components/global/ServerError'
 import { ArrowBlock } from '@/components/ui'
 import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'

@@ -1,5 +1,5 @@
-import GlobalFooter from '@/components/GlobalFooter'
-import Navigation, { NavContextProvider } from '@/components/Navigation'
+import GlobalFooter from '@/components/global/GlobalFooter'
+import Navigation, { NavContextProvider } from '@/components/global/Navigation'
 import React from 'react'
 import './BaseLayout.scss'
 

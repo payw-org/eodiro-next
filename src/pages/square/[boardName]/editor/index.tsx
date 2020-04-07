@@ -1,8 +1,8 @@
 // TODO Replace updload and edit with universal savePost One API
 
 import { Tokens } from '@/api'
+import { NavTitleDispatchContext } from '@/components/global/Navigation'
 import { Spinner } from '@/components/global/Spinner'
-import { NavTitleDispatchContext } from '@/components/Navigation'
 import NoFooter from '@/components/utils/NoFooter'
 import WhiteBody from '@/components/utils/WhiteBody'
 import { availableMimeTypes } from '@/config/available-mime-types'

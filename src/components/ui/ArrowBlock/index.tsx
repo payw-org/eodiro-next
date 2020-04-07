@@ -1,4 +1,4 @@
-import { ArrowIcon } from '@/components/icons'
+import { ArrowIcon } from '@/components/global/icons'
 import mergeClassNames from '@/modules/merge-class-name'
 import React from 'react'
 import './ArrowBlock.scss'

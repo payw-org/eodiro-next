@@ -1,4 +1,4 @@
-import { Magnifier } from '@/components/icons'
+import { Magnifier } from '@/components/global/icons'
 import mergeClassNames from '@/modules/merge-class-name'
 import EodiroColors from '@/modules/styles/EodiroColors'
 import React, { useState } from 'react'
