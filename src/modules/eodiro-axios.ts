@@ -53,7 +53,7 @@ export default async function eodiroAxios<T = any>(
 
       if (access && !accessToken) {
         return [true, null, 401]
-      } else {
+      } else if (access) {
         config.headers.accessToken = accessToken
       }
 
@@ -63,7 +63,7 @@ export default async function eodiroAxios<T = any>(
 
       if (refresh && !refreshToken) {
         return [true, null, 401]
-      } else {
+      } else if (refresh) {
         config.headers.refreshToken = refreshToken
       }
     }

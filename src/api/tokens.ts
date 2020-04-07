@@ -30,18 +30,12 @@ export class Tokens {
         {
           name: 'accessToken',
           value: accessToken,
-          expires: dayjs()
-            .add(1, 'd')
-            .toDate()
-            .toUTCString(),
+          expires: dayjs().add(1, 'd').toDate().toUTCString(),
         },
         {
           name: 'refreshToken',
           value: refreshToken,
-          expires: dayjs()
-            .add(13, 'd')
-            .toDate()
-            .toUTCString(),
+          expires: dayjs().add(14, 'd').toDate().toUTCString(),
         },
       ],
       http
@@ -58,16 +52,12 @@ export class Tokens {
       {
         name: 'accessToken',
         value: '',
-        expires: dayjs('1970-01-01')
-          .toDate()
-          .toUTCString(),
+        expires: dayjs('1970-01-01').toDate().toUTCString(),
       },
       {
         name: 'refreshToken',
         value: '',
-        expires: dayjs('1970-01-01')
-          .toDate()
-          .toUTCString(),
+        expires: dayjs('1970-01-01').toDate().toUTCString(),
       },
     ])
 
