@@ -15,7 +15,7 @@ const SquareMainPage: EodiroPage<SquareMainPageProps> = (props) => {
     <>
       <Body pageTitle="빼빼로 광장" bodyClassName="eodiro-square-main">
         <FlatBlock className="board">
-          <h1 className="board-name p-relative">
+          <h1 className="board-name position-relative">
             자유 게시판
             <a href="/square/자유 게시판" className="abs-link" />
           </h1>
@@ -26,11 +26,13 @@ const SquareMainPage: EodiroPage<SquareMainPageProps> = (props) => {
                 return (
                   <a
                     href={`/square/자유 게시판/${globalPost.id}`}
-                    className="post-item d-flex"
+                    className="post-item display-flex"
                     key={globalPost.id}
                   >
-                    <div className="d-flex align-items-center">
-                      <span className="title d-block">{globalPost.title}</span>
+                    <div className="display-flex align-items-center">
+                      <span className="title display-block">
+                        {globalPost.title}
+                      </span>
                       {globalPost.comment_count > 0 && (
                         <span className="comments-count line-height-1">
                           {globalPost.comment_count}

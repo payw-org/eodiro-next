@@ -68,7 +68,7 @@ export const PostViewerFileContainer: React.FC<PostViewerFileContainerProps> = (
             href={ApiHost.getHost(true) + file.path}
             target="_blank"
             rel="noopener noreferrer"
-            className="file d-flex align-items-center"
+            className="file display-flex align-items-center"
             key={file.fileId}
           >
             <i className="icon octicon octicon-file" />

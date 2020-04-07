@@ -174,7 +174,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
         titleHidden
         bodyClassName="eodiro-new-post"
       >
-        <div className="d-flex flex-dir-row">
+        <div className="display-flex flex-direction-row">
           <section className="edit-section">
             <div className="title-container">
               {/* Shadow */}
@@ -218,7 +218,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
 
           <section
             ref={uploadSection}
-            className="upload-section align-self-start"
+            className="upload-section align-self-flex-start"
           >
             <button
               className="close"
@@ -338,10 +338,10 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
                     return (
                       // File
                       <div
-                        className="file d-flex align-items-center justify-content-between"
+                        className="file display-flex align-items-center justify-content-space-between"
                         key={i}
                       >
-                        <div className="d-flex align-items-center">
+                        <div className="display-flex align-items-center">
                           {/* Remove item btn */}
                           <button
                             className="remove octicon octicon-x font-weight-bold flex-none"

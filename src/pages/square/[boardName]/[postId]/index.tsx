@@ -67,7 +67,7 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
     <div>
       <WhiteBody />
       <a href={`/square/${boardName}`} className="to-list">
-        <span className="d-flex align-items-center">
+        <span className="display-flex align-items-center">
           <i className="octicon octicon-chevron-left font-weight-bold" />{' '}
           목록으로
         </span>
