@@ -58,6 +58,26 @@ export async function getAuthState(
         }
       }
     }
+  } else if (tokens.refreshToken) {
+    // Access token has expired and refresh token is available
+    const newTokens = await AuthApi.refresh(req)
+
+    if (newTokens) {
+      const [err, authCheck] = await eodiroAxios({
+        method: 'POST',
+        url: ApiHost.getHost() + `/auth/is-signed-in`,
+        headers: {
+          accessToken: newTokens.accessToken,
+        },
+      })
+
+      if (!err) {
+        await Tokens.set(newTokens, { req, res })
+        authState.isSigned = authCheck.isSigned
+        authState.isAdmin = authCheck.isAdmin
+        authState.userId = authCheck.userId
+      }
+    }
   }
 
   return authState
