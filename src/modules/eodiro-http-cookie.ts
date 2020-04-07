@@ -23,6 +23,8 @@ function buildCookieString(cookie: Cookie, req?: IncomingMessage): string {
     cookieString += 'Secure;'
   }
 
+  cookieString += 'Path=/;'
+
   return cookieString
 }
 
