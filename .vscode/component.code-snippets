@@ -5,7 +5,7 @@
     "body": [
       "import React from 'react'",
       "",
-      "const $1: React.FC = () => {",
+      "const ${1:Component}: React.FC${2:<${3:ComponentProps}>} = (${4:props}) => {",
       "  return (",
       "    $0",
       "  )",
