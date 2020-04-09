@@ -1,7 +1,7 @@
 {
   "name": "eodiro-next",
   "version": "3.5.0",
-  "api-server-version": "1.6.0",
+  "eodiro-api-version": "1.6.0",
   "author": "PAYW",
   "license": "MIT",
   "repository": "https://github.com/paywteam/eodiro-next.git",
