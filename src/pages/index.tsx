@@ -11,7 +11,7 @@ import { ColorIcon } from '@/types'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useState } from 'react'
-import './HomePage.scss'
+import './home.scss'
 
 type HomeFeatureBoxProps = {
   title: string

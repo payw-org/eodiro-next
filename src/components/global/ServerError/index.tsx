@@ -1,6 +1,6 @@
 import mergeClassNames from '@/modules/merge-class-name'
 import React from 'react'
-import './ServerError.scss'
+import './style.scss'
 
 const ServerError: React.FC<{ raw?: boolean }> = ({ raw }) => {
   return (

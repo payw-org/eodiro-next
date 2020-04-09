@@ -2,16 +2,35 @@ import { AuthApi, Tokens, UserInfo } from '@/api'
 import { Button, FlatBlock } from '@/components/ui'
 import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
+import ApiHost from '@/modules/api-host'
 import { redirect } from '@/modules/server/redirect'
+import { Unpacked } from '@/types/unpacked'
+import { oneAPIClient } from '@payw/eodiro-one-api'
+import { GetMyPosts } from '@payw/eodiro-one-api/api/one/scheme'
+import { OneApiPayload } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
 import dayjs from 'dayjs'
-import { EodiroPage } from '../_app'
-import './MyPage.scss'
+import { NextPage } from 'next'
+import './style.scss'
+
+type PostItemProps = {
+  postData: Unpacked<OneApiPayload<GetMyPosts>['data']>
+}
+const PostItem: React.FC<PostItemProps> = ({ postData }) => {
+  return (
+    <div className="post-item">
+      <span>{postData.board_name}</span>
+      <span>{postData.uploaded_at}</span>
+      <h1>{postData.title}</h1>
+    </div>
+  )
+}
 
 type MyPageProps = {
   userInfo: UserInfo
+  myPosts: OneApiPayload<GetMyPosts>['data']
 }
 
-const MyPage: EodiroPage<MyPageProps> = ({ userInfo }) => {
+const MyPage: NextPage<MyPageProps> = ({ userInfo, myPosts }) => {
   return (
     <Body pageTitle={userInfo.nickname} bodyClassName="eodiro-my">
       <section className="info-section">
@@ -38,6 +57,14 @@ const MyPage: EodiroPage<MyPageProps> = ({ userInfo }) => {
         </Grid>
       </section>
 
+      {/* My Posts */}
+      <section className="my-posts">
+        {myPosts.map((post, i) => {
+          return <PostItem key={i} postData={post} />
+        })}
+      </section>
+
+      {/* Sign out section */}
       <section className="signout-section">
         <Button
           className="signout-btn"
@@ -71,6 +98,12 @@ const MyPage: EodiroPage<MyPageProps> = ({ userInfo }) => {
 
 MyPage.getInitialProps = async ({ req, res }): Promise<MyPageProps> => {
   const userInfo = await AuthApi.info(req)
+  const { data: myPosts } = await oneAPIClient(ApiHost.getHost(), {
+    action: 'getMyPosts',
+    data: {
+      accessToken: (await Tokens.get(req)).accessToken,
+    },
+  })
 
   if (!userInfo) {
     redirect(res, '/')
@@ -79,6 +112,7 @@ MyPage.getInitialProps = async ({ req, res }): Promise<MyPageProps> => {
 
   return {
     userInfo,
+    myPosts,
   }
 }
 

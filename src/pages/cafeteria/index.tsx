@@ -10,7 +10,7 @@ import dayjs from 'dayjs'
 import _ from 'lodash'
 import { NextPage } from 'next'
 import React, { memo, useEffect, useMemo, useState } from 'react'
-import './CafeteriaPage.scss'
+import './style.scss'
 
 type CafeteriaPageProps = {
   menus: CafeteriaMenus

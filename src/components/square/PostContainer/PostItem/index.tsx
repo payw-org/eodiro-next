@@ -4,6 +4,7 @@ import { Unpacked } from '@/types/unpacked'
 import { FetchPostsOfBoard } from '@payw/eodiro-one-api/api/one/scheme'
 import { OneApiPayload } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
 import React from 'react'
+import './style.scss'
 
 // Post item component (memoized)
 const PostItem: React.FC<{

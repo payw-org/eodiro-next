@@ -3,7 +3,6 @@ import EodiroLogo from '@/components/global/icons/EodiroLogo'
 import mergeClassNames from '@/modules/merge-class-name'
 import { AuthContext } from '@/pages/_app'
 import React, { useContext } from 'react'
-import './Navigation.scss'
 import {
   NavHiddenStateContext,
   NavMenuOpenDispatchContext,
@@ -11,6 +10,7 @@ import {
   NavScrollStateContext,
   NavTitleStateContext,
 } from './NavigationContext'
+import './style.scss'
 
 export * from './NavigationContext'
 

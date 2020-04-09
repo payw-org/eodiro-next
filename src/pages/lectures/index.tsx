@@ -11,7 +11,7 @@ import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../_app'
-import './LecturesPage.scss'
+import './style.scss'
 
 interface LecturesPageProps {
   lectures: LecturesWithMajorCode

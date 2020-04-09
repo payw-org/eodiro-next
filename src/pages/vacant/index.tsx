@@ -11,7 +11,7 @@ import dayjs from 'dayjs'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import React from 'react'
-import './VacantBuildingPage.scss'
+import './style.scss'
 
 interface VacantBuildingsPageProps {
   buildingsInfo: VacantBuildings

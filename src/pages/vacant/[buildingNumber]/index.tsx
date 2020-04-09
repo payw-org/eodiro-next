@@ -9,7 +9,7 @@ import dayjs from 'dayjs'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import React from 'react'
-import './VacantClassroomsPage.scss'
+import './style.scss'
 
 type VacantClassroomsPageProps = {
   buildingNumber: string

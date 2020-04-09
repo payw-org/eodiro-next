@@ -1,4 +1,4 @@
-import './Spinner.scss'
+import './style.scss'
 
 export const Spinner: React.FC = () => {
   return (

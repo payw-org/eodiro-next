@@ -3,7 +3,7 @@ import { Button, LineInput } from '@/components/ui'
 import Body from '@/layouts/BaseLayout/Body'
 import { EodiroPage } from '@/pages/_app'
 import { useState } from 'react'
-import './ChangePasswordRequestPage.scss'
+import './style.scss'
 
 type ChangePasswordRequestPageProps = {
   token: string

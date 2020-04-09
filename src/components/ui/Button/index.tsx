@@ -1,6 +1,6 @@
 import mergeClassNames from '@/modules/merge-class-name'
 import React from 'react'
-import './Button.scss'
+import './style.scss'
 
 type ButtonProps = {
   className?: string

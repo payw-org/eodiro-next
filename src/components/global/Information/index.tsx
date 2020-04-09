@@ -1,5 +1,5 @@
 import React from 'react'
-import './Information.scss'
+import './style.scss'
 
 type InformationProps = {
   title: string

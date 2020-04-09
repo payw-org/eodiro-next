@@ -8,7 +8,7 @@ import dayjs from 'dayjs'
 import Head from 'next/head'
 import React, { useContext, useRef, useState } from 'react'
 import { AuthContext, EodiroPage } from '../_app'
-import './InquiryPage.scss'
+import './style.scss'
 type InquiryProps = {
   inquiries: InquiryData[]
 }

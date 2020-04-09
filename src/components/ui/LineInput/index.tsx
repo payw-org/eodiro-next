@@ -2,7 +2,7 @@ import { Magnifier } from '@/components/global/icons'
 import mergeClassNames from '@/modules/merge-class-name'
 import EodiroColors from '@/modules/styles/EodiroColors'
 import React, { useState } from 'react'
-import './LineInput.scss'
+import './style.scss'
 
 export type LineInputOnChangeHook = (inputValue: string) => void
 

@@ -1,7 +1,7 @@
 import GlobalFooter from '@/components/global/GlobalFooter'
 import Navigation, { NavContextProvider } from '@/components/global/Navigation'
 import React from 'react'
-import './BaseLayout.scss'
+import './style.scss'
 
 const BaseLayout: React.FC = (props) => {
   return (
