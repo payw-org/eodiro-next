@@ -1,43 +1,18 @@
+import { Spinner } from '@/components/global/Spinner'
 import InfiniteScrollContainer from '@/components/utils/InfiniteScrollContainer'
 import { pathIds } from '@/config/paths'
 import { visualizeBody } from '@/layouts/BaseLayout/Body'
 import ApiHost from '@/modules/api-host'
 import getState from '@/modules/get-state'
 import mergeClassNames from '@/modules/merge-class-name'
-import Time from '@/modules/time'
 import { oneAPIClient } from '@payw/eodiro-one-api'
-import { PostType } from '@payw/eodiro-one-api/database/models/post'
+import { FetchPostsOfBoard } from '@payw/eodiro-one-api/api/one/scheme'
+import { OneApiPayload } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
 import { ResizeSensor } from 'css-element-queries'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
-import { Spinner } from '../global/Spinner'
-
-// Post item component (memoized)
-const PostItem: React.FC<{
-  boardName: string
-  post: PostType
-}> = React.memo(({ boardName, post }) => {
-  return (
-    <a
-      key={post.id}
-      href={`/square/${boardName}/${post.id}`}
-      onClick={(): void => {
-        sessionStorage.setItem('sbsp', window.scrollY?.toString())
-      }}
-    >
-      <div className={mergeClassNames('post')}>
-        <div>
-          <p className="title">{post.title}</p>
-        </div>
-        <div className="right">
-          <p className="nick">{post.random_nickname}</p>
-          <p className="time">{Time.friendly(post.uploaded_at)}</p>
-        </div>
-      </div>
-    </a>
-  )
-})
+import PostItem from './PostItem'
 
 // Dynamic post container component
 type PostContainerProps = {
@@ -62,7 +37,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
   const boardName = router.query.boardName as string
 
   // Posts init value with cached ones
-  const [posts, setPosts] = useState<PostType[]>([])
+  const [posts, setPosts] = useState<OneApiPayload<FetchPostsOfBoard>>([])
   const [isMobile, setIsMobile] = useState(false)
   const postContainerRef = useRef<HTMLDivElement>(null)
 
@@ -158,7 +133,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
             return <PostItem key={post.id} boardName={boardName} post={post} />
           })
         ) : (
-          <div className="d-flex justify-content-center">
+          <div className="display-flex justify-content-center">
             <Spinner />
           </div>
         )}
