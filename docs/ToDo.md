@@ -35,6 +35,10 @@ It includes new features to be added, bug fixes, source code refactoring and any
 
 ## Pepero Square (Tentative Title)
 
+### UI
+
+- Pagination instead of infinite scroll
+
 ### Chore
 
 - Display 'need to sign in' component instead of `require-auth` mixin, popup and redirection
