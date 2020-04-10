@@ -29,31 +29,46 @@
       animation-timing-function: ease;
     }
 
-    .name,
-    .emoji {
-      font-size: 7rem;
-
-      @include on-mobile {
-        font-size: 5rem;
-      }
-    }
-
     .emoji {
       display: inline-block;
       margin-left: s(3);
     }
 
     .name {
-      // @include text-color;
-      color: $eodiro-primary-color;
+      $pink: #ffe6e6;
+      @include text-color;
       font-weight: 700;
-      // background-image: linear-gradient(
-      //   to bottom right,
-      //   $eodiro-primary-color,
-      //   $eodiro-yellow-1
-      // );
-      // background-clip: text;
-      // -webkit-text-fill-color: transparent;
+      font-size: 7rem;
+      animation: 300ms linear 1s forwards color-shadow;
+      @include dark-mode {
+        animation: 300ms linear 900ms forwards color-shadow-dark;
+      }
+
+      @include on-mobile {
+        font-size: 5rem;
+      }
+
+      @keyframes color-shadow {
+        0% {
+          text-shadow: none;
+          color: $base-black;
+        }
+        100% {
+          text-shadow: 0.3rem 0.3rem $eodiro-primary-color;
+          color: $pink;
+        }
+      }
+
+      @keyframes color-shadow-dark {
+        0% {
+          text-shadow: none;
+          color: $base-white;
+        }
+        100% {
+          text-shadow: 0.3rem 0.3rem $eodiro-primary-color;
+          color: $pink;
+        }
+      }
     }
   }
 
@@ -63,6 +78,7 @@
     overflow-y: hidden;
 
     .text {
+      color: $base-gray;
       font-size: 2rem;
       @include on-mobile {
         font-size: 1.5rem;
