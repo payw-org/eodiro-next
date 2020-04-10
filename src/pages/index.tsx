@@ -11,7 +11,7 @@ import { ColorIcon } from '@/types'
 import classNames from 'classnames'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './index.scss'
 
 type HomeFeatureBoxProps = {
@@ -35,12 +35,6 @@ const HomeFeatureBox: React.FC<HomeFeatureBoxProps> = ({ title, to, Icon }) => {
 const HomePage: NextPage = () => {
   const [isLoaded, setIsLoaded] = useState(false)
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoaded(true)
-    }, 800)
-  })
-
   return (
     <>
       <Head>
@@ -49,7 +43,12 @@ const HomePage: NextPage = () => {
       <Body pageTitle="어디로" titleHidden centered>
         <div id="eodiro-home">
           <h1 className="header">
-            <div className="text-wrapper">
+            <div
+              className="text-wrapper"
+              onAnimationEnd={() => {
+                setIsLoaded(true)
+              }}
+            >
               <span className={classNames('name', { shadowed: isLoaded })}>
                 어디로
               </span>
