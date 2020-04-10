@@ -42,8 +42,8 @@
       transition: color 400ms ease, text-shadow 400ms ease;
 
       &.shadowed {
-        text-shadow: 0.4rem 0.4rem $eodiro-primary-color;
-        color: #3d3d3d;
+        text-shadow: 0.3rem 0.3rem $eodiro-primary-color;
+        color: $base-white;
 
         @include dark-mode {
           color: $pink;
