@@ -1,7 +1,7 @@
 import Body from '@/layouts/BaseLayout/Body'
 import { NextPage } from 'next'
 import React from 'react'
-import './error.scss'
+import './_error.scss'
 
 type ErrorPageProps = {
   statusCode: number
