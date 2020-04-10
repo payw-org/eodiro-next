@@ -20,12 +20,14 @@ const PostItem: React.FC<{
       }}
     >
       <div className={mergeClassNames('post')}>
-        <div className="display-flex align-items-center">
+        <div className="display-flex flex-direction-row align-items-center justify-content-space-between">
           <p className="title">{post.title}</p>
-          <div>
-            <i className="octicon octicon-comment" />
-            <span>{post.comment_count}</span>
-          </div>
+          {post.comment_count > 0 && (
+            <div className="comments font-weight-bold">
+              <i className="octicon octicon-comment" />
+              <span className="count">{post.comment_count}</span>
+            </div>
+          )}
         </div>
         <div className="right">
           <p className="nick">{post.random_nickname}</p>

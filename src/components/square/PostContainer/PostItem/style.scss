@@ -55,6 +55,19 @@
       font-size: 0.8rem;
       white-space: nowrap;
     }
+
+    .comments {
+      font-size: 0.9rem;
+      margin-left: 0.5rem;
+      padding-left: 0.5rem;
+      @include separator('left');
+      margin-top: 0.2rem;
+      color: $eodiro-primary-color;
+
+      .count {
+        margin-left: 0.3em;
+      }
+    }
   }
 
   &.mobile {
