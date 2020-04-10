@@ -39,6 +39,7 @@
       @include text-color;
       font-weight: 700;
       font-size: 7rem;
+      text-shadow: 0 0 transparent;
       animation: 300ms linear 1s forwards color-shadow;
       @include dark-mode {
         animation: 300ms linear 900ms forwards color-shadow-dark;
