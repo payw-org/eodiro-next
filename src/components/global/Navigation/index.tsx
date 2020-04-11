@@ -9,10 +9,10 @@ import {
   NavMenuOpenStateContext,
   NavScrollStateContext,
   NavTitleStateContext,
-} from './NavigationContext'
+} from './navigation-context'
 import './style.scss'
 
-export * from './NavigationContext'
+export * from './navigation-context'
 
 type NavItemProps = {
   className?: string
