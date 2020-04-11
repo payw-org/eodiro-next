@@ -227,7 +227,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
                 enableBodyScroll(uploadSection.current)
               }}
             >
-              <i className="icofont-curved-down" />
+              <i className="octicon octicon-triangle-down" />
             </button>
             <h2 className="header">파일</h2>
 
@@ -321,7 +321,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
               className="file-upload-label line-height-1"
             >
               <span
-                className="icofont-plus"
+                className="octicon octicon-plus"
                 style={{
                   marginRight: '0.3rem',
                 }}
@@ -415,7 +415,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
 
         {/* Upload or finish edit */}
         <button className="upload-btn" onClick={uploadPost}>
-          <i className="octicon octicon-check font-weight-bold" />
+          <i className="octicon octicon-check" />
         </button>
 
         {/* File upload button on mobile */}
