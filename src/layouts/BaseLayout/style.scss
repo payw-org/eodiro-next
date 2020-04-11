@@ -27,43 +27,6 @@
         opacity: 0;
       }
 
-      .page-app-title {
-        position: relative;
-        line-height: 1;
-        font-size: h(12);
-        margin-bottom: s(8);
-        display: block;
-        width: 100%;
-        @include resolve-optical-illusion(r(4));
-
-        &.center {
-          margin-left: 0;
-          text-align: center;
-          padding-left: 0;
-        }
-
-        &.hidden {
-          height: 0px;
-          padding: 0;
-          margin: 0;
-          visibility: hidden;
-        }
-
-        .top-sentinel {
-          position: absolute;
-          width: 100%;
-          height: 1px;
-          top: -$nav-height;
-        }
-
-        .pat-sentinel {
-          position: absolute;
-          width: 100%;
-          height: 1px;
-          top: h(12) - $nav-height;
-        }
-      }
-
       .body-content-bottom-sentinel {
         position: absolute;
         left: 0;

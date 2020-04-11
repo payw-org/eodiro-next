@@ -67,7 +67,7 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
     <div>
       <WhiteBody />
       <a href={`/square/${boardName}`} className="to-list">
-        <span className="display-flex align-items-center">
+        <span className="display-flex align-items-center overlay-sentinel-spot">
           <i className="octicon octicon-chevron-left font-weight-bold" />{' '}
           목록으로
         </span>
@@ -96,8 +96,12 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
             </span>
           )}
         </div>
+
         {/* Post title */}
-        <h1 className="title">{post.title}</h1>
+        <h1 className="title">
+          <span className="title-sentinel-spot">{post.title}</span>
+        </h1>
+
         {/* Post body */}
         {post.body.split('\n').map((line, i) => {
           return line.length === 0 ? (
@@ -128,7 +132,6 @@ const PostPage: EodiroPage<PostPageProps> = ({ post, comments, postErr }) => {
     <Body
       pageTitle={post?.title || '포스트'}
       titleHidden
-      textMargin="4rem"
       bodyClassName="eodiro-post-view"
       hasTopGap={postErr ? true : false}
     >

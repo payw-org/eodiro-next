@@ -183,7 +183,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
               <textarea
                 defaultValue={title}
                 ref={titleRef}
-                className="title"
+                className="title overlay-sentinel-spot title-sentinel-spot"
                 spellCheck={false}
                 placeholder="제목"
                 maxLength={100}
