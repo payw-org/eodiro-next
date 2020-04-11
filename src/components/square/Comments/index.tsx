@@ -2,26 +2,19 @@ import { Tokens } from '@/api'
 import Information from '@/components/global/Information'
 import ApiHost from '@/modules/api-host'
 import { useAuth } from '@/pages/_app'
-import { Dispatcher } from '@/types/react-helper'
 import { oneAPIClient } from '@payw/eodiro-one-api'
 import { OneApiError } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
 import { CommentType } from '@payw/eodiro-one-api/database/models/comment'
 import _ from 'lodash'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
-import React, { createContext, useContext, useRef, useState } from 'react'
+import React, { useState } from 'react'
+import CommentsContext from './comments-context'
+import NewComment from './NewComment'
 import './style.scss'
 
 const FriendlyTime = dynamic(() => import('@/components/utils/FriendlyTime'), {
   ssr: false,
 })
-
-const CommentsContext = createContext(
-  {} as {
-    comments: CommentType[]
-    setComments: Dispatcher<CommentType[]>
-  }
-)
 
 const CommentItem: React.FC<{
   comment: CommentType
@@ -68,81 +61,6 @@ const CommentItem: React.FC<{
     </div>
   )
 })
-
-const NewComment: React.FC = () => {
-  const router = useRouter()
-  const [value, setValue] = useState('')
-  const { comments, setComments } = useContext(CommentsContext)
-  const inputRef = useRef<HTMLInputElement>(null)
-  const auth = useAuth()
-
-  return (
-    <>
-      <input
-        maxLength={500}
-        ref={inputRef}
-        className="new-comment"
-        type="text"
-        placeholder="댓글"
-        spellCheck="false"
-        autoComplete="off"
-        value={value}
-        onChange={(e): void => setValue(e.target.value)}
-        onKeyUp={async (e): Promise<void> => {
-          if (e.key !== 'Enter') return
-
-          e.preventDefault()
-
-          // Blur input
-          inputRef.current.blur()
-
-          const uploadPayload = await oneAPIClient(ApiHost.getHost(), {
-            action: 'uploadComment',
-            data: {
-              postId: Number(router.query.postId),
-              body: value,
-              accessToken: (await Tokens.get()).accessToken,
-            },
-          })
-
-          if (uploadPayload.err) {
-            if (uploadPayload.err === 'No Body') {
-              alert('내용을 입력하세요.')
-              return
-            }
-          }
-
-          // Upload success
-
-          // Reset the input value
-          setValue('')
-
-          // Refresh recent comments
-          const newCommentsPyld = await oneAPIClient(ApiHost.getHost(), {
-            action: 'getComments',
-            data: {
-              accessToken: auth.tokens.accessToken,
-              postId: Number(router.query.postId),
-              mostRecentCommentId:
-                comments.length > 0 ? _.last(comments).id : 0,
-            },
-          })
-
-          setComments([...comments, ...newCommentsPyld.data])
-        }}
-      />
-      <input
-        type="text"
-        style={{
-          visibility: 'hidden',
-          pointerEvents: 'none',
-          position: 'fixed',
-          left: '200%',
-        }}
-      />
-    </>
-  )
-}
 
 const Comments: React.FC<{
   comments: CommentType[]

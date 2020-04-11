@@ -48,13 +48,4 @@
       margin-top: 0.3rem;
     }
   }
-
-  .new-comment {
-    margin-top: 1rem;
-    transition: background-color 200ms ease;
-
-    @include dark-mode {
-      background-color: #000;
-    }
-  }
 }
