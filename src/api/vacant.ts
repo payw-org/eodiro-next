@@ -64,6 +64,8 @@ export class VacantApi {
     year = year || now.year()
     semester = semester || getSemester()
 
+    // TODO: Rename `useFetch` because it's not a React hook
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [err, data] = await useFetch(
       ApiHost.getHost() +
         `/vacant/${year}/${encodeURIComponent(semester)}/${encodeURIComponent(
