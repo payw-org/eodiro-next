@@ -3,5 +3,10 @@
     "scope": "sass,scss",
     "prefix": "main",
     "body": ["@use '@/assets/styles/main' as *;"]
+  },
+  "Import style.scss": {
+    "scope": "typescriptreact",
+    "prefix": "is",
+    "body": "import './style.scss'"
   }
 }
