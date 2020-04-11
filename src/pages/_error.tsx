@@ -18,7 +18,9 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode }) => {
   return (
     <Body pageTitle={statusCode?.toString()} titleHidden centered>
       <div id="error-page">
-        <h1 className="status-code">{statusCode}</h1>
+        <h1 className="status-code overlay-sentinel-spot title-sentinel-spot">
+          {statusCode}
+        </h1>
         <p className="manifesto">{msg}</p>
       </div>
     </Body>

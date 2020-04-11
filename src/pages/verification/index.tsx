@@ -25,7 +25,9 @@ const VerifiedComp: React.FC<{ verified: boolean }> = ({ verified }) => {
 
   return (
     <div className="wrapper">
-      <h1 className="manifesto">{paragraph}</h1>
+      <h1 className="manifesto overlay-sentinel-spot title-sentinel-spot">
+        {paragraph}
+      </h1>
       <a href={anchor.href}>
         <Button label={anchor.text} className="btn" />
       </a>

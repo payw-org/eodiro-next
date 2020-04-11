@@ -42,7 +42,7 @@ const HomePage: NextPage = () => {
       </Head>
       <Body pageTitle="어디로" titleHidden centered>
         <div id="eodiro-home">
-          <h1 className="header">
+          <h1 className="header overlay-sentinel-spot title-sentinel-spot">
             <div
               className="text-wrapper"
               onAnimationEnd={() => {
