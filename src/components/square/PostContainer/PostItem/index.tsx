@@ -1,8 +1,8 @@
-import mergeClassNames from '@/modules/merge-class-name'
 import Time from '@/modules/time'
 import { Unpacked } from '@/types/unpacked'
 import { FetchPostsOfBoard } from '@payw/eodiro-one-api/api/one/scheme'
 import { OneApiPayload } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
+import classNames from 'classnames'
 import React from 'react'
 import './style.scss'
 
@@ -19,12 +19,12 @@ const PostItem: React.FC<{
         sessionStorage.setItem('sbsp', window.scrollY?.toString())
       }}
     >
-      <div className={mergeClassNames('post')}>
+      <div className={classNames('post')}>
         <div className="display-flex flex-direction-row align-items-center justify-content-space-between">
           <p className="title">{post.title}</p>
           {post.comment_count > 0 && (
-            <div className="comments font-weight-bold">
-              <i className="octicon octicon-comment" />
+            <div className="comments font-weight-bold display-flex align-items-center">
+              <i className="octicon octicon-comment icon" />
               <span className="count">{post.comment_count}</span>
             </div>
           )}

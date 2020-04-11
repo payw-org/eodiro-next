@@ -84,7 +84,7 @@
 
     .close {
       @include elm-fill-distinct;
-      font-size: 2.2rem;
+      font-size: 2rem;
       position: fixed;
       top: 0;
       left: 0;
@@ -211,11 +211,6 @@
     font-size: 1.8rem;
     @include clickable;
     display: none;
-
-    i {
-      position: relative;
-      top: -0.1rem;
-    }
 
     @include on-mobile {
       display: block;

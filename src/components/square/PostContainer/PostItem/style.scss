@@ -40,7 +40,7 @@
     .right {
       flex: none;
       text-align: right;
-      margin-left: 0.5rem;
+      margin-left: 1rem;
     }
 
     .nick,
@@ -57,11 +57,18 @@
     }
 
     .comments {
+      position: relative;
+      top: 0.05em;
+      line-height: 1.5;
       font-size: 0.9rem;
       margin-left: 0.5rem;
       padding-left: 0.5rem;
       @include separator('left');
       color: $eodiro-primary-color;
+
+      .icon {
+        transform: translateY(5%);
+      }
 
       .count {
         margin-left: 0.3em;

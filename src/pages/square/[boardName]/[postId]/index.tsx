@@ -68,8 +68,8 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
       <WhiteBody />
       <a href={`/square/${boardName}`} className="to-list">
         <span className="display-flex align-items-center overlay-sentinel-spot">
-          <i className="octicon octicon-chevron-left font-weight-bold" />{' '}
-          목록으로
+          <i className="octicon octicon-chevron-left font-weight-bold" />
+          &nbsp;목록으로
         </span>
       </a>
 
@@ -136,9 +136,15 @@ const PostPage: EodiroPage<PostPageProps> = ({ post, comments, postErr }) => {
       hasTopGap={postErr ? true : false}
     >
       {post && <Content post={post} comments={comments} />}
-      {postErr === 'Unauthorized' && <RequireAuth />}
+      {postErr === 'Unauthorized' && (
+        <div className="overlay-sentinel-spot title-sentinel-spot">
+          <RequireAuth />
+        </div>
+      )}
       {postErr === 'No Content' && (
-        <Information title="존재하지 않는 포스트입니다." />
+        <div className="overlay-sentinel-spot title-sentinel-spot">
+          <Information title="존재하지 않는 포스트입니다." />
+        </div>
       )}
     </Body>
   )
