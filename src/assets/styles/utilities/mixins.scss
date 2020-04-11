@@ -209,11 +209,6 @@ $border-radius-inner: r(2);
   display: block;
   width: 100%;
   resize: none;
-  transition: border-color 200ms ease;
-
-  &:focus {
-    border-color: $eodiro-primary-color;
-  }
 
   @include input-text;
 }
