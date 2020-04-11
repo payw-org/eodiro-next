@@ -2,7 +2,7 @@ import React from 'react'
 import './style.scss'
 
 type InformationProps = {
-  title: string
+  title: string | JSX.Element
   subtitle?: JSX.Element
 }
 
