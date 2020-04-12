@@ -104,15 +104,16 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
         </h1>
 
         {/* Post body */}
-        {post.body.split('\n').map((line, i) => {
-          return line.length === 0 ? (
-            <br key={`br-${i}`} className="line-break" />
-          ) : (
-            <p key={`p-${i}`} className={`paragraph-${i}`}>
-              {line}
-            </p>
-          )
-        })}
+        {post.body &&
+          post.body.split('\n').map((line, i) => {
+            return line.length === 0 ? (
+              <br key={`br-${i}`} className="line-break" />
+            ) : (
+              <p key={`p-${i}`} className={`paragraph-${i}`}>
+                {line}
+              </p>
+            )
+          })}
 
         {/* Files list */}
         {post.files && post.files.length > 0 && (
