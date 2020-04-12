@@ -76,7 +76,7 @@ const InfiniteScrollContainer: React.FC<InfiniteScrollContainerProps> = (
       />
       <div className="loading-indicator-wrapper">
         <div className="loading-indicator">
-          <p>🚀 로딩 중...</p>
+          <p>🚀 불러오는 중...</p>
         </div>
       </div>
     </div>
