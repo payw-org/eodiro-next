@@ -11,16 +11,17 @@ import Time from '@/modules/time'
 import { EodiroPage, useAuth } from '@/pages/_app'
 import { oneAPIClient } from '@payw/eodiro-one-api'
 import { GetComments, GetPostById } from '@payw/eodiro-one-api/api/one/scheme'
-import { CommentType } from '@payw/eodiro-one-api/database/models/comment'
-import { PostType } from '@payw/eodiro-one-api/database/models/post'
+import { OneApiPayload } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
+import { CommentAttrs } from '@payw/eodiro-one-api/database/models/comment'
+import { PostAttrs } from '@payw/eodiro-one-api/database/models/post'
 import _ from 'lodash'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import './style.scss'
 
 type ContentProps = {
-  post: GetPostById['payload']['data']
-  comments: CommentType[]
+  post: OneApiPayload<GetPostById>['data']
+  comments: CommentAttrs[]
 }
 const Content: React.FC<ContentProps> = ({ post, comments }) => {
   const authInfo = useAuth()
@@ -47,7 +48,7 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
     alert('삭제되었습니다.')
 
     // Update cached posts
-    const cached: PostType[] = JSON.parse(sessionStorage.getItem('sbpd'))
+    const cached: PostAttrs[] = JSON.parse(sessionStorage.getItem('sbpd'))
     // Update when there is cache
     if (cached) {
       const index = cached.findIndex((cachedPost) => cachedPost.id === post.id)
@@ -112,10 +113,19 @@ const Content: React.FC<ContentProps> = ({ post, comments }) => {
             </p>
           )
         })}
+
+        {/* Files list */}
         {post.files && post.files.length > 0 && (
           <PostViewerFileContainer files={post.files} />
         )}
       </article>
+
+      {/* Like */}
+      <div className="like-container display-flex justify-content-center">
+        <button className="like scheme-distinct">
+          <i className="octicon octicon-thumbsup" />
+        </button>
+      </div>
 
       <Comments comments={comments} />
     </div>
@@ -130,7 +140,7 @@ type PostPageProps = {
 const PostPage: EodiroPage<PostPageProps> = ({ post, comments, postErr }) => {
   return (
     <Body
-      pageTitle={post?.title || '포스트'}
+      pageTitle={post?.title || '어디로 - 포스트'}
       titleHidden
       bodyClassName="eodiro-post-view"
       hasTopGap={postErr ? true : false}

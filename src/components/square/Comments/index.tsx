@@ -4,7 +4,7 @@ import ApiHost from '@/modules/api-host'
 import { useAuth } from '@/pages/_app'
 import { oneAPIClient } from '@payw/eodiro-one-api'
 import { OneApiError } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
-import { CommentType } from '@payw/eodiro-one-api/database/models/comment'
+import { CommentAttrs } from '@payw/eodiro-one-api/database/models/comment'
 import _ from 'lodash'
 import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
@@ -17,7 +17,7 @@ const FriendlyTime = dynamic(() => import('@/components/utils/FriendlyTime'), {
 })
 
 const CommentItem: React.FC<{
-  comment: CommentType
+  comment: CommentAttrs
   index: number
   deleteComment: (index: number) => void
 }> = React.memo(({ comment, index, deleteComment }) => {
@@ -63,7 +63,7 @@ const CommentItem: React.FC<{
 })
 
 const Comments: React.FC<{
-  comments: CommentType[]
+  comments: CommentAttrs[]
 }> = (props) => {
   const [comments, setComments] = useState(props.comments)
 

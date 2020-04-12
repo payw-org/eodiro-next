@@ -6,8 +6,8 @@ import ApiHost from '@/modules/api-host'
 import getState from '@/modules/get-state'
 import mergeClassNames from '@/modules/merge-class-name'
 import { oneAPIClient } from '@payw/eodiro-one-api'
-import { FetchPostsOfBoard } from '@payw/eodiro-one-api/api/one/scheme'
-import { OneApiPayload } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
+import { GetPostsOfBoard } from '@payw/eodiro-one-api/api/one/scheme'
+import { OneApiPayloadData } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
 import { ResizeSensor } from 'css-element-queries'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
@@ -22,10 +22,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
   function isFromPostOrNew(): boolean {
     const lastpage = sessionStorage.getItem('lastpage')
     if (!lastpage) return false
-    const writePageRegExp = new RegExp(
-      `\/square\/.*\/${pathIds.writePost}`,
-      'g'
-    )
+    const writePageRegExp = new RegExp(`/square/.*/${pathIds.writePost}`, 'g')
     return (
       lastpage.match(/\/square\/.*\/[0-9]*/g)?.length > 0 ||
       lastpage.match(writePageRegExp)?.length > 0
@@ -37,7 +34,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
   const boardName = router.query.boardName as string
 
   // Posts init value with cached ones
-  const [posts, setPosts] = useState<OneApiPayload<FetchPostsOfBoard>>([])
+  const [posts, setPosts] = useState<OneApiPayloadData<GetPostsOfBoard>>([])
   const [isMobile, setIsMobile] = useState(false)
   const postContainerRef = useRef<HTMLDivElement>(null)
 
@@ -75,11 +72,12 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
 
   async function loadMore(): Promise<boolean> {
     const posts = getState(setPosts)
-    const newPosts = await oneAPIClient(ApiHost.getHost(), {
-      action: 'fetchPostsOfBoard',
+    const { data: newPosts } = await oneAPIClient(ApiHost.getHost(), {
+      action: 'getPostsOfBoard',
       data: {
-        boardID: boardId,
-        lastPostID: _.last(posts)?.id,
+        boardId,
+        lastPostId: _.last(posts)?.id,
+        noBody: true,
       },
     })
 
@@ -95,16 +93,19 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
   async function loadNew(): Promise<void> {
     const posts = getState(setPosts)
     if (posts && posts.length > 0) {
-      const payload = await oneAPIClient(ApiHost.getHost(), {
-        action: 'fetchRecentPostsOfBoard',
+      const { data: recentPosts } = await oneAPIClient(ApiHost.getHost(), {
+        action: 'getRecentPostsOfBoard',
         data: {
-          boardID: boardId,
-          mostRecentPostID: posts[0].id,
+          boardId,
+          mostRecentPostId: posts[0].id,
         },
       })
-      if (payload && payload.length > 0) {
-        sessionStorage.setItem('sbpd', JSON.stringify([...payload, ...posts]))
-        const updatedPosts = [...payload, ...posts]
+      if (recentPosts && recentPosts.length > 0) {
+        sessionStorage.setItem(
+          'sbpd',
+          JSON.stringify([...recentPosts, ...posts])
+        )
+        const updatedPosts = [...recentPosts, ...posts]
         setPosts(updatedPosts)
       }
     }

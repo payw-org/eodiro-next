@@ -56,6 +56,15 @@ const NewComment: React.FC = () => {
   return (
     <div className="new-comment position-relative">
       <input
+        tabIndex={-1}
+        type="text"
+        style={{
+          visibility: 'hidden',
+          pointerEvents: 'none',
+          position: 'absolute',
+        }}
+      />
+      <input
         maxLength={500}
         ref={inputRef}
         className="nc-input"
@@ -71,15 +80,6 @@ const NewComment: React.FC = () => {
           e.preventDefault()
 
           done()
-        }}
-      />
-      <input
-        type="text"
-        style={{
-          visibility: 'hidden',
-          pointerEvents: 'none',
-          position: 'fixed',
-          left: '200%',
         }}
       />
 

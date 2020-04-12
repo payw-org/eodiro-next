@@ -1,7 +1,7 @@
 import Time from '@/modules/time'
 import { Unpacked } from '@/types/unpacked'
-import { FetchPostsOfBoard } from '@payw/eodiro-one-api/api/one/scheme'
-import { OneApiPayload } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
+import { GetPostsOfBoard } from '@payw/eodiro-one-api/api/one/scheme'
+import { OneApiPayloadData } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
 import classNames from 'classnames'
 import React from 'react'
 import './style.scss'
@@ -9,7 +9,7 @@ import './style.scss'
 // Post item component (memoized)
 const PostItem: React.FC<{
   boardName: string
-  post: Unpacked<OneApiPayload<FetchPostsOfBoard>>
+  post: Unpacked<OneApiPayloadData<GetPostsOfBoard>>
 }> = React.memo(({ boardName, post }) => {
   return (
     <a
@@ -22,10 +22,20 @@ const PostItem: React.FC<{
       <div className={classNames('post')}>
         <div className="display-flex flex-direction-row align-items-center justify-content-space-between">
           <p className="title">{post.title}</p>
+
+          {/* Post comments amount */}
           {post.comment_count > 0 && (
             <div className="comments font-weight-bold display-flex align-items-center">
               <i className="octicon octicon-comment icon" />
               <span className="count">{post.comment_count}</span>
+            </div>
+          )}
+
+          {/* Post likes amount */}
+          {post.likes && (
+            <div className="likes">
+              <i className="octicon octicon-thumbsup icon" />
+              <span className="count">{post.likes}</span>
             </div>
           )}
         </div>

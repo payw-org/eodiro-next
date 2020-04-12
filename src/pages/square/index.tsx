@@ -2,13 +2,14 @@ import { FlatBlock } from '@/components/ui'
 import Body from '@/layouts/BaseLayout/Body'
 import ApiHost from '@/modules/api-host'
 import { oneAPIClient } from '@payw/eodiro-one-api'
-import { FetchPostsOfBoard } from '@payw/eodiro-one-api/api/one/scheme'
+import { GetPostsOfBoard } from '@payw/eodiro-one-api/api/one/scheme'
+import { OneApiPayloadData } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
 import { GetServerSideProps } from 'next'
 import { EodiroPage } from '../_app'
 import './style.scss'
 
 type SquareMainPageProps = {
-  freeBoardPosts: FetchPostsOfBoard['payload']
+  freeBoardPosts: OneApiPayloadData<GetPostsOfBoard>
 }
 const SquareMainPage: EodiroPage<SquareMainPageProps> = (props) => {
   return (
@@ -53,10 +54,10 @@ export default SquareMainPage
 
 export const getServerSideProps: GetServerSideProps<SquareMainPageProps> = async () => {
   // Fetch 자유 게시판 data
-  const freeBoardPosts = await oneAPIClient(ApiHost.getHost(), {
-    action: 'fetchPostsOfBoard',
+  const { data: freeBoardPosts } = await oneAPIClient(ApiHost.getHost(), {
+    action: 'getPostsOfBoard',
     data: {
-      boardID: 1, // 자유 게시판
+      boardId: 1, // 자유 게시판
       amount: 15,
       noBody: true,
       columns: ['id', 'title', 'random_nickname', 'uploaded_at'],
@@ -65,9 +66,9 @@ export const getServerSideProps: GetServerSideProps<SquareMainPageProps> = async
 
   // 취업 후기
   const empReviews = await oneAPIClient(ApiHost.getHost(), {
-    action: 'fetchPostsOfBoard',
+    action: 'getPostsOfBoard',
     data: {
-      boardID: 3,
+      boardId: 3,
     },
   })
 

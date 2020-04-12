@@ -56,23 +56,30 @@
       white-space: nowrap;
     }
 
-    .comments {
+    .comments,
+    .likes {
       position: relative;
       top: 0.05em;
       line-height: 1.5;
       font-size: 0.9rem;
       margin-left: 0.5rem;
-      padding-left: 0.5rem;
-      @include separator('left');
-      color: $eodiro-primary-color;
-
-      .icon {
-        transform: translateY(5%);
-      }
 
       .count {
         margin-left: 0.3em;
       }
+    }
+
+    .comments {
+      color: $eodiro-primary-color;
+
+      .icon {
+        position: relative;
+        top: 0.05rem;
+      }
+    }
+
+    .likes {
+      color: $eodiro-yellow-2;
     }
   }
 
