@@ -54,21 +54,18 @@
   }
 
   .restaurant-name {
-    font-size: b(8);
-    color: $eodiro-blue-1;
+    font-size: 1.2rem;
+    color: $eodiro-primary-color;
   }
 
   .meal {
-    @include overlay-inverted;
-    padding: s(3);
-    border-radius: r(3);
-    margin-top: s(4);
+    margin-top: 1rem;
+    padding-top: 1rem;
+    @include separator('top');
 
     .meal-title {
-      font-size: b(4);
-      margin-bottom: s(2);
-      padding-bottom: s(2);
-      @include separator('bottom');
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     .food-container {
