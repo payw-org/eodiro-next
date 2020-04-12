@@ -12,7 +12,7 @@ import mergeClassNames from '@/modules/merge-class-name'
 import { redirect } from '@/modules/server/redirect'
 import { useAuth } from '@/pages/_app'
 import { oneAPIClient } from '@payw/eodiro-one-api'
-import { PostType } from '@payw/eodiro-one-api/database/models/post'
+import { PostAttrs } from '@payw/eodiro-one-api/database/models/post'
 import Axios from 'axios'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import _ from 'lodash'
@@ -130,7 +130,7 @@ const NewPostPage: NextPage<NewPostPageProps> = (props) => {
 
       // If edit mode, update the cached posts
       if (mode === 'edit') {
-        const cached: PostType[] = JSON.parse(sessionStorage.getItem('sbpd'))
+        const cached: PostAttrs[] = JSON.parse(sessionStorage.getItem('sbpd'))
         // If no cached data, no update
         if (cached) {
           const index = cached.findIndex(
