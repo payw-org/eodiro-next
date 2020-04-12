@@ -41,12 +41,18 @@
       font-size: 7rem;
       transition: color 400ms ease, text-shadow 400ms ease;
 
+      $shadow-distance: 0.25rem;
+      $shadow-far: $shadow-distance * 2;
+
       &.shadowed {
-        text-shadow: 0.3rem 0.3rem $eodiro-primary-color;
+        text-shadow: $shadow-distance $shadow-distance $eodiro-primary-color,
+          $shadow-far $shadow-far #ffd07a;
         color: $base-white;
 
         @include dark-mode {
           color: $pink;
+          text-shadow: $shadow-distance $shadow-distance $eodiro-primary-color,
+            $shadow-far $shadow-far #bf8eff;
         }
       }
 
