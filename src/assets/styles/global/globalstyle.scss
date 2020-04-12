@@ -10,8 +10,7 @@
 @use '@/assets/styles/global/octicon';
 
 // Classes
-@use '@/assets/styles/classes/box-model';
-@use '@/assets/styles/classes/text';
+@use '@/assets/styles/classes/index';
 
 html {
   -ms-text-size-adjust: 100%;
