@@ -57,7 +57,7 @@
       display: inline-block;
       font-size: 1.1rem;
       font-weight: 500;
-      line-height: 1;
+      line-height: initial;
       opacity: 0;
       transform: translate3d(0, 15%, 0);
       transition: opacity 250ms ease, transform 250ms ease;
