@@ -95,7 +95,8 @@ const Navigation: React.FC = () => {
 
         <div
           className="more-tappable"
-          onClick={(): void => {
+          onClick={(e): void => {
+            e.preventDefault()
             setMenuOpen((open) => {
               return !open
             })
