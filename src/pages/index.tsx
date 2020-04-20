@@ -1,3 +1,6 @@
+import './index.scss'
+
+import ApolloClient, { gql } from 'apollo-boost'
 import {
   CafeteriaAppIcon,
   LecturesAppIcon,
@@ -5,14 +8,15 @@ import {
   SquareAppIcon,
   VacantAppIcon,
 } from '@/components/global/icons'
+import React, { useEffect, useState } from 'react'
+
+import ApiHost from '@/modules/api-host'
 import Body from '@/layouts/BaseLayout/Body'
-import Grid from '@/layouts/Grid'
 import { ColorIcon } from '@/types'
-import classNames from 'classnames'
-import { NextPage } from 'next'
+import Grid from '@/layouts/Grid'
 import Head from 'next/head'
-import React, { useState } from 'react'
-import './index.scss'
+import { NextPage } from 'next'
+import classNames from 'classnames'
 
 type HomeFeatureBoxProps = {
   title: string
@@ -34,6 +38,23 @@ const HomeFeatureBox: React.FC<HomeFeatureBoxProps> = ({ title, to, Icon }) => {
 
 const HomePage: NextPage = () => {
   const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    const client = new ApolloClient({
+      uri: ApiHost.getHost() + '/graphql',
+    })
+    const query = gql`
+      query GET_USER {
+        users {
+          portalId
+          randomNickname
+        }
+      }
+    `
+    client.query({ query }).then((result) => {
+      console.log(result)
+    })
+  }, [])
 
   return (
     <>

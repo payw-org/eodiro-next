@@ -1,7 +1,7 @@
 type AvailableEventNames = 'scrollends'
 
 // CustomEventManager
-export class CEM {
+export class Cem {
   private static storage:
     | Record<
         AvailableEventNames,
@@ -24,7 +24,7 @@ export class CEM {
   /**
    * Remove event listener with the same event name and callback
    */
-  static removeEventListener(
+  static unregister(
     eventName: AvailableEventNames,
     listener: EventListenerOrEventListenerObject
   ): void {
@@ -38,13 +38,13 @@ export class CEM {
   /**
    * Attach event listener to document.
    **/
-  static addEventListener(
+  static register(
     eventName: AvailableEventNames,
     target: HTMLElement | Element,
-    listener: EventListenerOrEventListenerObject
+    listener: (data: any) => void
   ): void {
     if (!(target instanceof HTMLElement) && !(target instanceof Element)) {
-      console.error('CEM - Second argument should be HTMLElement or Element')
+      console.error('[ CEM ] Second argument should be HTMLElement or Element')
       return
     }
 
@@ -54,13 +54,15 @@ export class CEM {
     for (const chunk of this.storage[eventName]) {
       if (chunk.target.isSameNode(target)) {
         console.info(
-          `CEM - ${eventName} event is already attached to ${target}`
+          `[ CEM ] ${eventName} event is already attached to ${target}`
         )
         return
       }
     }
 
-    document.addEventListener(eventName, listener)
+    document.addEventListener(eventName, (e) => {
+      listener((e as CustomEvent).detail)
+    })
     this.storage[eventName].push({
       target,
       listener,
@@ -70,7 +72,7 @@ export class CEM {
   /**
    * Dispatch custom event after validating if elements are included in document
    */
-  static dispatchEvent(eventName: AvailableEventNames, data?: any): void {
+  static fire(eventName: AvailableEventNames, data: any = null): void {
     if (this.storage[eventName] && Array.isArray(this.storage[eventName])) {
       let i = this.storage[eventName].length
       while (i--) {

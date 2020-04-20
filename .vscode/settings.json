@@ -1,6 +1,8 @@
 {
   "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": ["source.organizeImports"],
-  // "emmet.excludeLanguages": ["typescriptreact"],
+  "editor.codeActionsOnSave": [
+    // "source.organizeImports"
+  ],
+  "emmet.excludeLanguages": ["typescriptreact"],
   "typescript.tsdk": "node_modules/typescript/lib"
 }
