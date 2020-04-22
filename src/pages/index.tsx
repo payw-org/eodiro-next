@@ -1,3 +1,5 @@
+import './index.scss'
+
 import {
   CafeteriaAppIcon,
   LecturesAppIcon,
@@ -5,14 +7,14 @@ import {
   SquareAppIcon,
   VacantAppIcon,
 } from '@/components/global/icons'
+import React, { useEffect, useState } from 'react'
+
 import Body from '@/layouts/BaseLayout/Body'
-import Grid from '@/layouts/Grid'
 import { ColorIcon } from '@/types'
-import classNames from 'classnames'
-import { NextPage } from 'next'
+import Grid from '@/layouts/Grid'
 import Head from 'next/head'
-import React, { useState } from 'react'
-import './index.scss'
+import { NextPage } from 'next'
+import classNames from 'classnames'
 
 type HomeFeatureBoxProps = {
   title: string
@@ -33,7 +35,15 @@ const HomeFeatureBox: React.FC<HomeFeatureBoxProps> = ({ title, to, Icon }) => {
 }
 
 const HomePage: NextPage = () => {
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isAnimated, setIsAnimated] = useState(false)
+
+  const [animate, setAnimate] = useState(false)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAnimate(true)
+    }, 0)
+  }, [])
 
   return (
     <>
@@ -44,18 +54,20 @@ const HomePage: NextPage = () => {
         <div id="eodiro-home">
           <h1 className="header overlay-sentinel-spot title-sentinel-spot">
             <div
-              className="text-wrapper"
+              className={classNames('text-wrapper', { animate })}
               onAnimationEnd={() => {
-                setIsLoaded(true)
+                setIsAnimated(true)
               }}
             >
-              <span className={classNames('name', { shadowed: isLoaded })}>
+              <span className={classNames('name', { shadowed: isAnimated })}>
                 어디로
               </span>
             </div>
           </h1>
           <p className="manifesto">
-            <span className="text">중앙대 학생들만을 위한 특별한 서비스</span>
+            <span className={classNames('text', { animate })}>
+              중앙대 학생들만을 위한 특별한 서비스
+            </span>
           </p>
           <div className="features">
             <Grid>

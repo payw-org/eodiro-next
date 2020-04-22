@@ -6,6 +6,15 @@
   flex-direction: column;
   justify-content: center;
 
+  @keyframes float {
+    0% {
+      transform: translate3d(0, 200%, 0);
+    }
+    100% {
+      transform: translate3d(0, 0%, 0);
+    }
+  }
+
   .header {
     line-height: 1;
     @include resolve-optical-illusion($border-radius-outer);
@@ -14,19 +23,12 @@
     .text-wrapper {
       transform: translate3d(0, 200%, 0);
 
-      @keyframes float {
-        0% {
-          transform: translate3d(0, 200%, 0);
-        }
-        100% {
-          transform: translate3d(0, 0%, 0);
-        }
+      &.animate {
+        animation-name: float;
+        animation-duration: 800ms;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease;
       }
-
-      animation-name: float;
-      animation-duration: 800ms;
-      animation-fill-mode: forwards;
-      animation-timing-function: ease;
     }
 
     .emoji {
@@ -77,20 +79,13 @@
       transform: translate3d(0, 100%, 0);
       display: inline-block;
 
-      @keyframes float {
-        0% {
-          transform: translate3d(0, 200%, 0);
-        }
-        100% {
-          transform: translate3d(0, 0%, 0);
-        }
+      &.animate {
+        animation-name: float;
+        animation-duration: 1s;
+        animation-delay: 0.2s;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease;
       }
-
-      animation-name: float;
-      animation-duration: 1s;
-      animation-delay: 0.2s;
-      animation-fill-mode: forwards;
-      animation-timing-function: ease;
     }
   }
 
