@@ -1,12 +1,15 @@
-import { Tokens, TokensPack } from '@/api'
 import '@/assets/styles/global/globalstyle.scss'
-import BaseLayout from '@/layouts/BaseLayout'
-import { getAuthState } from '@/modules/server/get-auth-state'
-import { NextComponentType, NextPageContext } from 'next'
-import App, { AppContext, AppInitialProps } from 'next/app'
-import Head from 'next/head'
-import React, { createContext, useContext, useState } from 'react'
 import './_document.scss'
+
+import App, { AppContext, AppInitialProps } from 'next/app'
+import { NextComponentType, NextPageContext } from 'next'
+import React, { createContext, useContext, useState } from 'react'
+import { Tokens, TokensPack } from '@/api'
+
+import BaseLayout from '@/layouts/BaseLayout'
+import Head from 'next/head'
+import { getAuthState } from '@/modules/server/get-auth-state'
+import { isDev } from '@/modules/utils/is-dev'
 
 type AuthProps = {
   tokens: TokensPack
@@ -113,6 +116,20 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
             property="og:image"
             content="https://eodiro.com/open-graph/open_graph.png"
           />
+          {!isDev() && (
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+                
+                ga('create', 'UA-140443623-1', 'auto');
+                ga('send', 'pageview');`,
+              }}
+            />
+          )}
         </Head>
         <AuthProvider {...authProps}>
           <BaseLayout>
