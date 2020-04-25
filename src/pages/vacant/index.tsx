@@ -1,17 +1,18 @@
-import { VacantApi } from '@/api'
-import { VacantBuildings } from '@/api/vacant'
-import Information from '@/components/global/Information'
-import ServerError from '@/components/global/ServerError'
+import './style.scss'
+
 import { ArrowBlock } from '@/components/ui'
 import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
+import Head from 'next/head'
+import Information from '@/components/global/Information'
+import { NextPage } from 'next'
+import React from 'react'
+import ServerError from '@/components/global/ServerError'
+import { VacantApi } from '@/api'
+import { VacantBuildings } from '@/api/vacant'
+import dayjs from 'dayjs'
 import getBuildingName from '@/modules/cau/get-building-name'
 import getSemester from '@/modules/get-semester'
-import dayjs from 'dayjs'
-import { NextPage } from 'next'
-import Head from 'next/head'
-import React from 'react'
-import './style.scss'
 
 interface VacantBuildingsPageProps {
   buildingsInfo: VacantBuildings

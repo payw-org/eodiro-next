@@ -1,15 +1,16 @@
-import { VacantApi } from '@/api'
-import { VacantClassrooms } from '@/api/vacant'
-import ServerError from '@/components/global/ServerError'
+import './style.scss'
+
 import { ArrowBlock } from '@/components/ui'
 import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
-import mergeClassNames from '@/modules/merge-class-name'
-import dayjs from 'dayjs'
-import { NextPage } from 'next'
 import Head from 'next/head'
+import { NextPage } from 'next'
 import React from 'react'
-import './style.scss'
+import ServerError from '@/components/global/ServerError'
+import { VacantApi } from '@/api'
+import { VacantClassrooms } from '@/api/vacant'
+import dayjs from 'dayjs'
+import mergeClassNames from '@/modules/merge-class-name'
 
 type VacantClassroomsPageProps = {
   buildingNumber: string
