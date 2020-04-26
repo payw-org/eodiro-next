@@ -1,3 +1,5 @@
+> It has been moved and merged into [**eodiro**](https://github.com/paywteam/eodiro)
+
 # eodiro-next ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/paywteam/eodiro-next?include_prereleases)
 
 The futuristically next major version of **eodiro.com** using React and Next.
