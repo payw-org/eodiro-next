@@ -64,22 +64,22 @@ const HomePage: NextPage = () => {
     }
   }, [])
 
-  useEffect(() => {
-    const client = new ApolloClient({
-      uri: ApiHost.getHost() + '/graphql',
-    })
-    const query = gql`
-      query GET_USER {
-        users {
-          portalId
-          randomNickname
-        }
-      }
-    `
-    client.query({ query }).then((result) => {
-      console.log(result)
-    })
-  }, [])
+  // useEffect(() => {
+  //   const client = new ApolloClient({
+  //     uri: ApiHost.getHost() + '/graphql',
+  //   })
+  //   const query = gql`
+  //     query GET_USER {
+  //       users {
+  //         portalId
+  //         randomNickname
+  //       }
+  //     }
+  //   `
+  //   client.query({ query }).then((result) => {
+  //     console.log(result)
+  //   })
+  // }, [])
 
   return (
     <>
