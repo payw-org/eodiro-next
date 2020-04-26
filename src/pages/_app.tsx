@@ -112,10 +112,18 @@ export default class EodiroApp extends App<EodiroAppInitialProps> {
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
+          <title>어디로</title>
+          <meta
+            key="description"
+            property="desciption"
+            content="중앙대 학생들만을 위한 특별한 서비스"
+          />
           <meta
             property="og:image"
             content="https://eodiro.com/open-graph/open_graph.png"
           />
+
+          {/* Google Analytics */}
           {!isDev() && (
             <script
               dangerouslySetInnerHTML={{

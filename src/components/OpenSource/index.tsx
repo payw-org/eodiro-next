@@ -2,6 +2,7 @@ import './style.scss'
 
 import Body from '@/layouts/BaseLayout/Body'
 import { Contributor } from '@/types/github-api'
+import Head from 'next/head'
 import WhiteBody from '@/components/utils/WhiteBody'
 
 export type OpenSourceProps = {
@@ -11,11 +12,19 @@ export type OpenSourceProps = {
 const OpenSource: React.FC<OpenSourceProps> = ({ contributors }) => {
   return (
     <Body pageTitle="오픈소스" bodyClassName="component-open-source">
+      <Head>
+        <title>어디로 - 오픈소스</title>
+        <meta
+          key="description"
+          property="description"
+          content="어디로는 자유 공개 소프트웨어입니다."
+        />
+      </Head>
       <WhiteBody />
       <div className="manifesto">
         <p className="paragraph">
-          &ldquo;어디로&rdquo;는 누구나 소스코드를 열람하고 개발에 참여할 수
-          있는 공개 소프트웨어입니다. 모든 소스는{' '}
+          &ldquo;어디로&rdquo;는 자유롭게 소스코드를 들여다보고 개발에 함께
+          참여할 수 있는 공개 소프트웨어입니다. 모든 소스는{' '}
           <a
             href="https://github.com/paywteam"
             target="_blank"
