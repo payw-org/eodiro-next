@@ -1,5 +1,6 @@
 import './index.scss'
 
+import ApolloClient, { gql } from 'apollo-boost'
 import {
   CafeteriaAppIcon,
   LecturesAppIcon,
@@ -9,6 +10,7 @@ import {
 } from '@/components/global/icons'
 import React, { useEffect, useState } from 'react'
 
+import ApiHost from '@/modules/api-host'
 import Body from '@/layouts/BaseLayout/Body'
 import { ColorIcon } from '@/types'
 import Grid from '@/layouts/Grid'
@@ -60,6 +62,23 @@ const HomePage: NextPage = () => {
         setAnimate(true)
       })
     }
+  }, [])
+
+  useEffect(() => {
+    const client = new ApolloClient({
+      uri: ApiHost.getHost() + '/graphql',
+    })
+    const query = gql`
+      query GET_USER {
+        users {
+          portalId
+          randomNickname
+        }
+      }
+    `
+    client.query({ query }).then((result) => {
+      console.log(result)
+    })
   }, [])
 
   return (

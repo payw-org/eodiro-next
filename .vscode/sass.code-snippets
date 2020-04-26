@@ -6,7 +6,7 @@
   },
   "Import style.scss": {
     "scope": "typescriptreact",
-    "prefix": "is",
+    "prefix": "style",
     "body": "import './style.scss'"
   }
 }

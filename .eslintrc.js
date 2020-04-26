@@ -10,7 +10,6 @@ module.exports = {
     es6: true,
   },
   extends: [
-    'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
   ],
@@ -44,6 +43,15 @@ module.exports = {
         anonymous: 'always',
         named: 'never',
         asyncArrow: 'always',
+      },
+    ],
+    'sort-imports': [
+      'error',
+      {
+        ignoreCase: false,
+        ignoreDeclarationSort: false,
+        ignoreMemberSort: false,
+        memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
       },
     ],
   },
