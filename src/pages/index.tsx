@@ -40,9 +40,17 @@ const HomePage: NextPage = () => {
   const [animate, setAnimate] = useState(false)
 
   useEffect(() => {
-    setTimeout(() => {
-      setAnimate(true)
-    }, 0)
+    const documentFonts = (document as any).fonts
+
+    if (!documentFonts) {
+      setTimeout(() => {
+        setAnimate(true)
+      }, 200)
+    } else {
+      documentFonts.ready.then(() => {
+        setAnimate(true)
+      })
+    }
   }, [])
 
   return (
