@@ -1,6 +1,8 @@
-import getState from '@/modules/get-state'
-import React, { useEffect, useRef, useState } from 'react'
 import './style.scss'
+
+import React, { useEffect, useRef, useState } from 'react'
+
+import getState from '@/modules/get-state'
 
 type InfiniteScrollContainerProps = {
   strategy: () => Promise<boolean>
@@ -18,8 +20,8 @@ const InfiniteScrollContainer: React.FC<InfiniteScrollContainerProps> = (
   }
 
   async function processStrategy(): Promise<void> {
-    const isLoading = getState(setIsLoading)
-    const noMore = getState(setNoMore)
+    const isLoading = await getState(setIsLoading)
+    const noMore = await getState(setNoMore)
 
     if (noMore) return
     if (isLoading) return

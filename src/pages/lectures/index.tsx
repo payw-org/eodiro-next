@@ -1,17 +1,19 @@
-import { LecturesApi } from '@/api'
-import ServerError from '@/components/global/ServerError'
+import './style.scss'
+
 import { ArrowBlock, LineInput, LineInputOnChangeHook } from '@/components/ui'
-import InfiniteScrollContainer from '@/components/utils/InfiniteScrollContainer'
+import { GetServerSideProps, NextPage } from 'next'
+import React, { useEffect, useRef, useState } from 'react'
+
 import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
-import { getSyllabusUrl } from '@/modules/cau/get-syllabus-url'
-import getState from '@/modules/get-state'
-import { LecturesWithMajorCode } from '@/types'
-import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import React, { useEffect, useRef, useState } from 'react'
+import InfiniteScrollContainer from '@/components/utils/InfiniteScrollContainer'
+import { LecturesApi } from '@/api'
+import { LecturesWithMajorCode } from '@/types'
+import ServerError from '@/components/global/ServerError'
+import getState from '@/modules/get-state'
+import { getSyllabusUrl } from '@/modules/cau/get-syllabus-url'
 import { useAuth } from '../_app'
-import './style.scss'
 
 interface LecturesPageProps {
   lectures: LecturesWithMajorCode
@@ -57,9 +59,9 @@ const LecturesContent: React.FC<LecturesPageProps> = ({ lectures }) => {
       return false
     }
 
-    const searchQuery = getState(setSearchQuery)
-    const defaultLectures = getState(setDefaultLectures)
-    const displayLectures = getState(setDisplayLectures)
+    const searchQuery = await getState(setSearchQuery)
+    const defaultLectures = await getState(setDefaultLectures)
+    const displayLectures = await getState(setDisplayLectures)
 
     let moreLectures: LecturesWithMajorCode
 

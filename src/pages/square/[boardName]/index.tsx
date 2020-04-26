@@ -1,14 +1,16 @@
-import { Button, FlatBlock } from '@/components/ui'
-import { pathIds } from '@/config/paths'
-import Body from '@/layouts/BaseLayout/Body'
-import ApiHost from '@/modules/api-host'
-import { useAuth } from '@/pages/_app'
-import { oneAPIClient } from '@payw/eodiro-one-api'
-import { GetBoardId } from '@payw/eodiro-one-api/api/one/scheme'
-import { GetServerSideProps, NextPage } from 'next'
-import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
 import './style.scss'
+
+import { Button, FlatBlock } from '@/components/ui'
+import { GetServerSideProps, NextPage } from 'next'
+
+import ApiHost from '@/modules/api-host'
+import Body from '@/layouts/BaseLayout/Body'
+import { GetBoardId } from '@payw/eodiro-one-api/api/one/scheme'
+import dynamic from 'next/dynamic'
+import { oneAPIClient } from '@payw/eodiro-one-api'
+import { pathIds } from '@/config/paths'
+import { useAuth } from '@/pages/_app'
+import { useRouter } from 'next/router'
 
 // Import PostContainer dynamically (only client side rendering)
 const PostContainer = dynamic(

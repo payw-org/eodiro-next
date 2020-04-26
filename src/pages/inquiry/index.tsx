@@ -1,14 +1,16 @@
+import './style.scss'
+
+import { AuthContext, EodiroPage } from '../_app'
 import { InquiryApi, InquiryData } from '@/api'
+import React, { useContext, useRef, useState } from 'react'
+
 import { ArrowBlock } from '@/components/ui'
 import Body from '@/layouts/BaseLayout/Body'
 import Grid from '@/layouts/Grid'
-import getState from '@/modules/get-state'
+import Head from 'next/head'
 import Time from '@/modules/time'
 import dayjs from 'dayjs'
-import Head from 'next/head'
-import React, { useContext, useRef, useState } from 'react'
-import { AuthContext, EodiroPage } from '../_app'
-import './style.scss'
+import getState from '@/modules/get-state'
 type InquiryProps = {
   inquiries: InquiryData[]
 }
@@ -20,7 +22,7 @@ const InquiryPage: EodiroPage<InquiryProps> = ({ inquiries }) => {
 
   const inquiriesContainerRef = useRef<HTMLDivElement>(null)
   async function loadMore(): Promise<boolean> {
-    const items = getState(setItems)
+    const items = await getState(setItems)
 
     const moreInquiries = await InquiryApi.inquiries(items.length)
 

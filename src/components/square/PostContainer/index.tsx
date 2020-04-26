@@ -1,18 +1,19 @@
-import { Spinner } from '@/components/global/Spinner'
-import InfiniteScrollContainer from '@/components/utils/InfiniteScrollContainer'
-import { pathIds } from '@/config/paths'
-import { visualizeBody } from '@/layouts/BaseLayout/Body'
+import React, { useEffect, useRef, useState } from 'react'
+
 import ApiHost from '@/modules/api-host'
+import { GetPostsOfBoard } from '@payw/eodiro-one-api/api/one/scheme'
+import InfiniteScrollContainer from '@/components/utils/InfiniteScrollContainer'
+import { OneApiPayloadData } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
+import PostItem from './PostItem'
+import { ResizeSensor } from 'css-element-queries'
+import { Spinner } from '@/components/global/Spinner'
+import _ from 'lodash'
 import getState from '@/modules/get-state'
 import mergeClassNames from '@/modules/merge-class-name'
 import { oneAPIClient } from '@payw/eodiro-one-api'
-import { GetPostsOfBoard } from '@payw/eodiro-one-api/api/one/scheme'
-import { OneApiPayloadData } from '@payw/eodiro-one-api/api/one/scheme/types/utils'
-import { ResizeSensor } from 'css-element-queries'
-import _ from 'lodash'
+import { pathIds } from '@/config/paths'
 import { useRouter } from 'next/router'
-import React, { useEffect, useRef, useState } from 'react'
-import PostItem from './PostItem'
+import { visualizeBody } from '@/layouts/BaseLayout/Body'
 
 // Dynamic post container component
 type PostContainerProps = {
@@ -21,7 +22,9 @@ type PostContainerProps = {
 const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
   function isFromPostOrNew(): boolean {
     const lastpage = sessionStorage.getItem('lastpage')
+
     if (!lastpage) return false
+
     const writePageRegExp = new RegExp(`/square/.*/${pathIds.writePost}`, 'g')
     return (
       lastpage.match(/\/square\/.*\/[0-9]*/g)?.length > 0 ||
@@ -58,9 +61,11 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
   useEffect(() => {
     if (isFromPostOrNew()) {
       const cached = JSON.parse(sessionStorage.getItem('sbpd'))
+
       if (cached !== null) {
         setPosts(cached)
       }
+
       setTimeout(() => {
         window.scrollTo(0, Number(sessionStorage.getItem('sbsp')))
         visualizeBody()
@@ -71,7 +76,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
   }, [])
 
   async function loadMore(): Promise<boolean> {
-    const posts = getState(setPosts)
+    const posts = await getState(setPosts)
     const { data: newPosts } = await oneAPIClient(ApiHost.getHost(), {
       action: 'getPostsOfBoard',
       data: {
@@ -90,8 +95,15 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
     sessionStorage.setItem('sbpd', JSON.stringify(updatedPosts))
   }
 
+  const [isPostsExist, setIsPostsExist] = useState(false)
+
+  useEffect(() => {
+    loadMore().then((exist) => setIsPostsExist(exist))
+  }, [])
+
   async function loadNew(): Promise<void> {
-    const posts = getState(setPosts)
+    const posts = await getState(setPosts)
+
     if (posts && posts.length > 0) {
       const { data: recentPosts } = await oneAPIClient(ApiHost.getHost(), {
         action: 'getRecentPostsOfBoard',
@@ -100,6 +112,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
           mostRecentPostId: posts[0].id,
         },
       })
+
       if (recentPosts && recentPosts.length > 0) {
         sessionStorage.setItem(
           'sbpd',
@@ -133,10 +146,12 @@ const PostContainer: React.FC<PostContainerProps> = ({ boardId }) => {
           posts.map((post) => {
             return <PostItem key={post.id} boardName={boardName} post={post} />
           })
-        ) : (
+        ) : isPostsExist ? (
           <div className="display-flex justify-content-center">
             <Spinner />
           </div>
+        ) : (
+          <h3 className="text-align-center">포스트가 없습니다.</h3>
         )}
       </InfiniteScrollContainer>
     </div>
