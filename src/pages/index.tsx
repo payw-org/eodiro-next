@@ -20,15 +20,25 @@ type HomeFeatureBoxProps = {
   title: string
   to: string
   Icon: ColorIcon
+  label?: 'new' | 'update' | 'beta'
 }
 
-const HomeFeatureBox: React.FC<HomeFeatureBoxProps> = ({ title, to, Icon }) => {
+const HomeFeatureBox: React.FC<HomeFeatureBoxProps> = ({
+  title,
+  to,
+  Icon,
+  label,
+}) => {
   return (
     <button className="feature-box">
       <div className="wrapper">
         <Icon className="icon" />
         <h2 className="feature-name">{title}</h2>
         <a className="absolute-link" href={to} />
+
+        {label !== undefined && (
+          <span className="label">{label.toUpperCase()}</span>
+        )}
       </div>
     </button>
   )
@@ -36,7 +46,6 @@ const HomeFeatureBox: React.FC<HomeFeatureBoxProps> = ({ title, to, Icon }) => {
 
 const HomePage: NextPage = () => {
   const [isAnimated, setIsAnimated] = useState(false)
-
   const [animate, setAnimate] = useState(false)
 
   useEffect(() => {
@@ -98,11 +107,13 @@ const HomePage: NextPage = () => {
                 title="빼빼로 광장"
                 to="/square"
                 Icon={SquareAppIcon}
+                label="beta"
               />
               <HomeFeatureBox
                 title="오픈 소스"
                 to="/opensource"
                 Icon={OpensourceAppIcon}
+                label="update"
               />
             </Grid>
           </div>

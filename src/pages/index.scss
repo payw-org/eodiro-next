@@ -97,7 +97,7 @@
       flex: 1;
       text-align: left;
       @include block-style;
-      padding: s(6);
+      padding: 1.5rem;
       @include clickable;
 
       .wrapper {
@@ -115,6 +115,20 @@
         font-weight: 600;
         color: $base-gray;
         margin-top: 1rem;
+      }
+
+      .label {
+        position: absolute;
+        right: 1.5rem;
+        top: 1.5rem;
+        background-color: $eodiro-sky-2;
+        border-radius: 0.3rem;
+        color: #fff;
+        padding: 0.4rem;
+        line-height: 1;
+        font-weight: 600;
+        font-size: 0.9rem;
+        letter-spacing: 0.05em;
       }
     }
   }
