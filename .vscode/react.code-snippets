@@ -4,7 +4,7 @@
     "prefix": "comp",
     "description": "Export default component",
     "body": [
-      "type $1Props = {$2}",
+      "export type $1Props = {$2}",
       "",
       "const ${1:Component}: React.FC<$1Props> = (props) => {",
       "  return (",
