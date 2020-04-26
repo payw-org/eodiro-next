@@ -48,13 +48,13 @@
 
       &.shadowed {
         text-shadow: $shadow-distance $shadow-distance $eodiro-primary-color,
-          $shadow-far $shadow-far #ffd07a;
+          $shadow-far $shadow-far #ffc14f;
         color: $base-white;
 
         @include dark-mode {
           color: $pink;
           text-shadow: $shadow-distance $shadow-distance $eodiro-primary-color,
-            $shadow-far $shadow-far #bf8eff;
+            $shadow-far $shadow-far #ff8e8e;
         }
       }
 
